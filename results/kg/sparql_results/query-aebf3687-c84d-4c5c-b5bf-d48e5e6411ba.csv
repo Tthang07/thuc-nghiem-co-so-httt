@@ -1,0 +1,3 @@
+agentId,PolicyHolderID,policynumber,premium,catastropheName,ClaimNumber,LossPaymentAmount,LossReserveAmount,ExpensePaymentAmount,ExpenseReserveAmount
+2,1,31003000336,20000.0,Fire,12312702,2300.0,2100.0,2400.0,2200.0
+2,1,31003000336,20000.0,Fire,12312701,1200.0,1000.0,1300.0,1100.0

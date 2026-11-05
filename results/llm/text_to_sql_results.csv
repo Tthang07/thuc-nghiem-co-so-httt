@@ -1,0 +1,974 @@
+ID,Question,Generated SQL,Raw Response,Prompt Tokens,Output Tokens,Time (s),Status,Error
+1,What is the loss ratio of each policy and agent who sold it by policy number and agent id?,"SELECT 
+    p.Policy_Number,
+    ap.Party_ID,
+    COUNT(lp.Claim_Amount_Identifier) AS Total_Losses,
+    SUM(lp.Claim_Amount) AS Total_Loss_Amount,
+    COUNT(lp.Claim_Amount_Identifier) / SUM(lp.Claim_Amount) AS Loss_Ratio
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+GROUP BY 
+    p.Policy_Number, ap.Party_ID;","```sql
+SELECT 
+    p.Policy_Number,
+    ap.Party_ID,
+    COUNT(lp.Claim_Amount_Identifier) AS Total_Losses,
+    SUM(lp.Claim_Amount) AS Total_Loss_Amount,
+    COUNT(lp.Claim_Amount_Identifier) / SUM(lp.Claim_Amount) AS Loss_Ratio
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+GROUP BY 
+    p.Policy_Number, ap.Party_ID;
+```",1602,156,3.46,OK,
+2,"Return all the policies we have by policy number, effective date and expiration date?","SELECT Policy_Identifier, Effective_Date, Expiration_Date FROM Policy;","```sql
+SELECT Policy_Identifier, Effective_Date, Expiration_Date FROM Policy;
+```",1598,19,0.56,OK,
+3,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid and the agent who sold it?","SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    a.Agent_Name
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party a ON apr.Party_Identifier = a.Party_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier","```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    a.Agent_Name
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party a ON apr.Party_Identifier = a.Party_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier
+```",1618,182,4.0,OK,
+4,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by catastrophe and policy number?","SELECT 
+    c.Catastrophe_Name, 
+    p.Policy_Number, 
+    SUM(lp.Claim_Amount) AS Total_Loss
+FROM 
+    Catastrophe c
+JOIN 
+    Claim cl ON c.Catastrophe_Identifier = cl.Catastrophe_Identifier
+JOIN 
+    Loss_Payment lp ON cl.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Policy p ON cl.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Catastrophe_Name, 
+    p.Policy_Number;","```sql
+SELECT 
+    c.Catastrophe_Name, 
+    p.Policy_Number, 
+    SUM(lp.Claim_Amount) AS Total_Loss
+FROM 
+    Catastrophe c
+JOIN 
+    Claim cl ON c.Catastrophe_Identifier = cl.Catastrophe_Identifier
+JOIN 
+    Loss_Payment lp ON cl.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Policy p ON cl.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Catastrophe_Name, 
+    p.Policy_Number;
+```",1611,122,2.72,OK,
+5,"Return agents and the policy they have sold that have had a claim and the corresponding expense payment amount by agent id, policy number and claim number
+","SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    ep.Expense_Payment_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Id = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Id
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Id
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON ca.Claim_Amount_Identifier = ep.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'","```sql
+SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    ep.Expense_Payment_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Id = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Id
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Id
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON ca.Claim_Amount_Identifier = ep.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'
+```",1611,179,3.8,OK,
+6,What is the average policy size which is the the total amount of premium divided by the number of policies?,SELECT SUM(Policy_Amount) / COUNT(Policy_Identifier) AS Average_Policy_Size FROM Policy_Amount,SELECT SUM(Policy_Amount) / COUNT(Policy_Identifier) AS Average_Policy_Size FROM Policy_Amount,1603,24,0.72,OK,
+7,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?","SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    SUM(lp.Amount) AS Total_Loss
+FROM 
+    Claim c
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Policy p ON ca.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Claim_Number, p.Policy_Number, p.Policy_Holder;","```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    SUM(lp.Amount) AS Total_Loss
+FROM 
+    Claim c
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Policy p ON ca.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Claim_Number, p.Policy_Number, p.Policy_Holder;
+```",1620,124,2.79,OK,
+8,What is the total amount of premiums that a policy holder has paid by policy number?,"SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount
+GROUP BY Policy_Number;","```sql
+SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount
+GROUP BY Policy_Number;
+```",1599,28,0.74,OK,
+9,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid, the catastrophe it had, and the agent who sold it?","SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    c.Catastrophe_Name,
+    a.Agent_Name
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party a ON apr.Party_Identifier = a.Party_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'
+ORDER BY 
+    c.Claim_Number;","```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    c.Catastrophe_Name,
+    a.Agent_Name
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party a ON apr.Party_Identifier = a.Party_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'
+ORDER BY 
+    c.Claim_Number;
+```",1624,211,4.65,OK,
+10,"Return agents and the policy they have sold that have had a claim and the corresponding expense reserve amount by agent id, policy number and claim number ","SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    er.Expense_Reserve_Amount
+FROM 
+    Agreement_Party_Role apr
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Policy p ON a.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON ca.Claim_Amount_Identifier = er.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'","```sql
+SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    er.Expense_Reserve_Amount
+FROM 
+    Agreement_Party_Role apr
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Policy p ON a.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON ca.Claim_Amount_Identifier = er.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'
+```",1611,155,3.48,OK,
+11,How many claims have been placed by policy number?,"SELECT COUNT(DISTINCT Claim_Identifier) AS Number_of_Claims
+FROM Claim
+JOIN Policy ON Claim.Policy_Identifier = Policy.Policy_Identifier;","```sql
+SELECT COUNT(DISTINCT Claim_Identifier) AS Number_of_Claims
+FROM Claim
+JOIN Policy ON Claim.Policy_Identifier = Policy.Policy_Identifier;
+```",1592,38,0.96,OK,
+12,What is the total amount of premiums paid by policy number?,"SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount
+WHERE Policy_Number = 'YourPolicyNumber';","```sql
+SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount
+WHERE Policy_Number = 'YourPolicyNumber';
+```",1594,32,0.85,OK,
+13,"What is the total loss amounts, which is the sum of loss payment, loss reserve amount by claim number?","SELECT SUM(LP.Claim_Amount) AS Total_Loss_Amount
+FROM Loss_Payment LP
+JOIN Claim_Amount CA ON LP.Claim_Amount_Identifier = CA.Claim_Amount_Identifier
+JOIN Loss_Reserve LR ON CA.Claim_Amount_Identifier = LR.Claim_Amount_Identifier;","```sql
+SELECT SUM(LP.Claim_Amount) AS Total_Loss_Amount
+FROM Loss_Payment LP
+JOIN Claim_Amount CA ON LP.Claim_Amount_Identifier = CA.Claim_Amount_Identifier
+JOIN Loss_Reserve LR ON CA.Claim_Amount_Identifier = LR.Claim_Amount_Identifier;
+```",1604,71,1.71,OK,
+14,What are all the premiums that have been paid by policy holders?,"SELECT DISTINCT P.Policy_Amount_Identifier
+FROM Premium P
+JOIN Policy_Amount PA ON P.Policy_Amount_Identifier = PA.Policy_Amount_Identifier","```sql
+SELECT DISTINCT P.Policy_Amount_Identifier
+FROM Premium P
+JOIN Policy_Amount PA ON P.Policy_Amount_Identifier = PA.Policy_Amount_Identifier
+```",1595,41,1.06,OK,
+15,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number?","SELECT 
+    c.Claim_Number,
+    SUM(lp.Claim_Amount) AS Loss_Payment,
+    SUM(lr.Claim_Amount) AS Loss_Reserve,
+    SUM(ep.Claim_Amount) AS Expense_Payment,
+    SUM(er.Claim_Amount) AS Expense_Reserve
+FROM 
+    Claim c
+LEFT JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+LEFT JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Number;","```sql
+SELECT 
+    c.Claim_Number,
+    SUM(lp.Claim_Amount) AS Loss_Payment,
+    SUM(lr.Claim_Amount) AS Loss_Reserve,
+    SUM(ep.Claim_Amount) AS Expense_Payment,
+    SUM(er.Claim_Amount) AS Expense_Reserve
+FROM 
+    Claim c
+LEFT JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+LEFT JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Number;
+```",1601,172,3.86,OK,
+16,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number","SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    lr.Loss_Reserve_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Id = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON ca.Claim_Amount_Identifier = lr.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'","```sql
+SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    lr.Loss_Reserve_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Id = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON ca.Claim_Amount_Identifier = lr.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'
+```",1611,181,4.09,OK,
+17,Return all the policies and the agents that sold them by policy number and agent id,"SELECT P.Policy_Number, APRA.Party_Identifier
+FROM Policy P
+JOIN Agreement_Party_Role APRA ON P.Policy_Identifier = APRA.Policy_Identifier
+JOIN Party_Role PR ON APRA.Party_Role_Code = PR.Party_Role_Code
+WHERE PR.Party_Role_Code = 'Agent';","```sql
+SELECT P.Policy_Number, APRA.Party_Identifier
+FROM Policy P
+JOIN Agreement_Party_Role APRA ON P.Policy_Identifier = APRA.Policy_Identifier
+JOIN Party_Role PR ON APRA.Party_Role_Code = PR.Party_Role_Code
+WHERE PR.Party_Role_Code = 'Agent';
+```",1599,76,1.82,OK,
+18,What is the average time to settle a claim by policy number?,"SELECT 
+    P.Policy_Number,
+    AVG(DATEDIFF(DAY, C.Claim_Open_Date, C.Claim_Close_Date)) AS Average_Time_To_Settle
+FROM 
+    Policy P
+JOIN 
+    Claim C ON P.Policy_Identifier = C.Policy_Identifier
+GROUP BY 
+    P.Policy_Number;","```sql
+SELECT 
+    P.Policy_Number,
+    AVG(DATEDIFF(DAY, C.Claim_Open_Date, C.Claim_Close_Date)) AS Average_Time_To_Settle
+FROM 
+    Policy P
+JOIN 
+    Claim C ON P.Policy_Identifier = C.Policy_Identifier
+GROUP BY 
+    P.Policy_Number;
+```",1595,73,1.75,OK,
+19,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","SELECT 
+    P.Policy_Number,
+    SUM(LP.Loss_Payment_Amount + LR.Loss_Reserve_Amount + EP.Expense_Payment_Amount + ER.Expense_Reserve_Amount) AS Total_Loss
+FROM 
+    Policy P
+JOIN 
+    Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN 
+    Loss_Payment LP ON PA.Policy_Amount_Identifier = LP.Policy_Amount_Identifier
+JOIN 
+    Loss_Reserve LR ON PA.Policy_Amount_Identifier = LR.Policy_Amount_Identifier
+JOIN 
+    Expense_Payment EP ON PA.Policy_Amount_Identifier = EP.Policy_Amount_Identifier
+JOIN 
+    Expense_Reserve ER ON PA.Policy_Amount_Identifier = ER.Policy_Amount_Identifier
+GROUP BY 
+    P.Policy_Number;","```sql
+SELECT 
+    P.Policy_Number,
+    SUM(LP.Loss_Payment_Amount + LR.Loss_Reserve_Amount + EP.Expense_Payment_Amount + ER.Expense_Reserve_Amount) AS Total_Loss
+FROM 
+    Policy P
+JOIN 
+    Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN 
+    Loss_Payment LP ON PA.Policy_Amount_Identifier = LP.Policy_Amount_Identifier
+JOIN 
+    Loss_Reserve LR ON PA.Policy_Amount_Identifier = LR.Policy_Amount_Identifier
+JOIN 
+    Expense_Payment EP ON PA.Policy_Amount_Identifier = EP.Policy_Amount_Identifier
+JOIN 
+    Expense_Reserve ER ON PA.Policy_Amount_Identifier = ER.Policy_Amount_Identifier
+GROUP BY 
+    P.Policy_Number;
+```",1613,184,4.18,OK,
+20,What are the expense reserve amount of all claims by claim number?,"SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Expense_Reserve_Amount
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Expense Reserve'
+GROUP BY T1.Company_Claim_Number;","```sql
+SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Expense_Reserve_Amount
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Expense Reserve'
+GROUP BY T1.Company_Claim_Number;
+```",1595,76,1.78,OK,
+21,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","SELECT 
+    P.Policy_Number,
+    AVG(LP.Loss_Payment + LR.Loss_Reserve + EP.Expense_Payment + ER.Expense_Reserve) AS Average_Loss
+FROM 
+    Policy P
+JOIN 
+    Loss_Payment LP ON P.Policy_Identifier = LP.Policy_Identifier
+JOIN 
+    Loss_Reserve LR ON P.Policy_Identifier = LR.Policy_Identifier
+JOIN 
+    Expense_Payment EP ON P.Policy_Identifier = EP.Policy_Identifier
+JOIN 
+    Expense_Reserve ER ON P.Policy_Identifier = ER.Policy_Identifier
+GROUP BY 
+    P.Policy_Number;","```sql
+SELECT 
+    P.Policy_Number,
+    AVG(LP.Loss_Payment + LR.Loss_Reserve + EP.Expense_Payment + ER.Expense_Reserve) AS Average_Loss
+FROM 
+    Policy P
+JOIN 
+    Loss_Payment LP ON P.Policy_Identifier = LP.Policy_Identifier
+JOIN 
+    Loss_Reserve LR ON P.Policy_Identifier = LR.Policy_Identifier
+JOIN 
+    Expense_Payment EP ON P.Policy_Identifier = EP.Policy_Identifier
+JOIN 
+    Expense_Reserve ER ON P.Policy_Identifier = ER.Policy_Identifier
+GROUP BY 
+    P.Policy_Number;
+```",1612,140,3.25,OK,
+22,What is the premium amount of all policies by policy number?,"SELECT Policy_Number, SUM(Policy_Amount) AS Total_Premium
+FROM Policy_Amount
+GROUP BY Policy_Number;","```sql
+SELECT Policy_Number, SUM(Policy_Amount) AS Total_Premium
+FROM Policy_Amount
+GROUP BY Policy_Number;
+```",1594,30,0.82,OK,
+23,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date","SELECT 
+    P.Policy_Number,
+    PCED.Effective_Date,
+    PCED.Expiration_Date,
+    PA.Premium_Amount
+FROM 
+    Policy P
+JOIN 
+    Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN 
+    Policy_Coverage_Detail PCED ON PA.Effective_Date = PCED.Effective_Date AND PA.Policy_Coverage_Detail_Identifier = PCED.Policy_Coverage_Detail_Identifier;","```sql
+SELECT 
+    P.Policy_Number,
+    PCED.Effective_Date,
+    PCED.Expiration_Date,
+    PA.Premium_Amount
+FROM 
+    Policy P
+JOIN 
+    Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN 
+    Policy_Coverage_Detail PCED ON PA.Effective_Date = PCED.Effective_Date AND PA.Policy_Coverage_Detail_Identifier = PCED.Policy_Coverage_Detail_Identifier;
+```",1602,103,2.35,OK,
+24,Return policy holders and the claims they have made and the correspoinding catastrophe,"SELECT 
+    p.Policy_Number,
+    c.Claim_Identifier,
+    c.Claim_Description,
+    c.Claims_Make_Date,
+    c.Company_Claim_Number,
+    c.Company_Subclaim_Number,
+    c.Insurable_Object_Identifier,
+    c.Occurrence_Identifier,
+    c.Entry_Into_Claims_Make_Program_Date,
+    c.Claim_Open_Date,
+    c.Claim_Close_Date,
+    c.Claim_Reopen_Date,
+    c.Claim_Status_Code,
+    c.Claim_Reported_Date,
+    c.Catastrophe_Identifier
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party pa ON apr.Party_Identifier = pa.Party_Identifier
+JOIN 
+    Claim c ON pa.Party_Identifier = c.Insurable_Object_Identifier
+ORDER BY 
+    p.Policy_Number, c.Claims_Make_Date;","```sql
+SELECT 
+    p.Policy_Number,
+    c.Claim_Identifier,
+    c.Claim_Description,
+    c.Claims_Make_Date,
+    c.Company_Claim_Number,
+    c.Company_Subclaim_Number,
+    c.Insurable_Object_Identifier,
+    c.Occurrence_Identifier,
+    c.Entry_Into_Claims_Make_Program_Date,
+    c.Claim_Open_Date,
+    c.Claim_Close_Date,
+    c.Claim_Reopen_Date,
+    c.Claim_Status_Code,
+    c.Claim_Reported_Date,
+    c.Catastrophe_Identifier
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party pa ON apr.Party_Identifier = pa.Party_Identifier
+JOIN 
+    Claim c ON pa.Party_Identifier = c.Insurable_Object_Identifier
+ORDER BY 
+    p.Policy_Number, c.Claims_Make_Date;
+```",1598,204,4.46,OK,
+25,How many policies do we have?,SELECT COUNT(DISTINCT Policy_Identifier) FROM Policy,SELECT COUNT(DISTINCT Policy_Identifier) FROM Policy,1589,12,0.4,OK,
+26," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?","SELECT 
+    p.Policy_Number,
+    SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve) AS Total_Loss,
+    SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve) / SUM(p.Premium) AS Loss_Ratio
+FROM 
+    Policy p
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+JOIN 
+    Loss_Reserve lr ON p.Policy_Identifier = lr.Policy_Identifier
+JOIN 
+    Expense_Payment ep ON p.Policy_Identifier = ep.Policy_Identifier
+JOIN 
+    Expense_Reserve er ON p.Policy_Identifier = er.Policy_Identifier
+GROUP BY 
+    p.Policy_Number;","```sql
+SELECT 
+    p.Policy_Number,
+    SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve) AS Total_Loss,
+    SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve) / SUM(p.Premium) AS Loss_Ratio
+FROM 
+    Policy p
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+JOIN 
+    Loss_Reserve lr ON p.Policy_Identifier = lr.Policy_Identifier
+JOIN 
+    Expense_Payment ep ON p.Policy_Identifier = ep.Policy_Identifier
+JOIN 
+    Expense_Reserve er ON p.Policy_Identifier = er.Policy_Identifier
+GROUP BY 
+    p.Policy_Number;
+```",1628,190,4.44,OK,
+27,What is the total amount of premiums that a policy holder has paid?,"SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount","SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount",1596,18,0.59,OK,
+28,How many policies have agents sold by agent id?,"SELECT COUNT(DISTINCT Policy_Identifier) AS Number_of_Policies
+FROM Agreement_Party_Role
+WHERE Party_Role_Code = 'Agent';","```sql
+SELECT COUNT(DISTINCT Policy_Identifier) AS Number_of_Policies
+FROM Agreement_Party_Role
+WHERE Party_Role_Code = 'Agent';
+```",1592,36,0.95,OK,
+29,"Return all the claims we have by claim number, open date and close date?","SELECT Company_Claim_Number, Claim_Open_Date, Claim_Close_Date FROM Claim;","```sql
+SELECT Company_Claim_Number, Claim_Open_Date, Claim_Close_Date FROM Claim;
+```",1598,21,0.64,OK,
+30,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?","SELECT 
+    c.Claim_Identifier,
+    SUM(
+        CASE 
+            WHEN la.Claim_Amount_Identifier IS NOT NULL THEN la.Claim_Amount
+            ELSE 0
+        END
+    ) AS Total_Loss
+FROM 
+    Claim c
+LEFT JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+LEFT JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Identifier;","```sql
+SELECT 
+    c.Claim_Identifier,
+    SUM(
+        CASE 
+            WHEN la.Claim_Amount_Identifier IS NOT NULL THEN la.Claim_Amount
+            ELSE 0
+        END
+    ) AS Total_Loss
+FROM 
+    Claim c
+LEFT JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+LEFT JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Identifier;
+```",1613,162,3.7,OK,
+31,How many policies does each policy holder have by policy holder id?,"SELECT Party_Identifier, COUNT(Policy_Identifier) AS Policy_Count
+FROM Agreement_Party_Role
+GROUP BY Party_Identifier;","```sql
+SELECT Party_Identifier, COUNT(Policy_Identifier) AS Policy_Count
+FROM Agreement_Party_Role
+GROUP BY Party_Identifier;
+```",1595,33,0.89,OK,
+32,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number","SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    lp.Loss_Payment_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Id = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Id
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Id
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'","```sql
+SELECT 
+    a.Agent_Id,
+    p.Policy_Number,
+    c.Claim_Number,
+    lp.Loss_Payment_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Id = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Id
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Id
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'
+```",1611,179,4.11,OK,
+33,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,"SELECT 
+    a.Agent_Name,
+    p.Policy_Number,
+    c.Catastrophe_Name
+FROM 
+    Agreement_Party_Role apr
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Policy p ON apr.Party_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+WHERE 
+    c.Claim_Identifier IS NOT NULL;","```sql
+SELECT 
+    a.Agent_Name,
+    p.Policy_Number,
+    c.Catastrophe_Name
+FROM 
+    Agreement_Party_Role apr
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Policy p ON apr.Party_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+WHERE 
+    c.Claim_Identifier IS NOT NULL;
+```",1603,104,2.44,OK,
+34,Return all the policies and their policy holder by id,"SELECT Policy_Identifier, Party_Identifier
+FROM Agreement_Party_Role
+WHERE Party_Role_Code = 'PolicyHolder';","```sql
+SELECT Policy_Identifier, Party_Identifier
+FROM Agreement_Party_Role
+WHERE Party_Role_Code = 'PolicyHolder';
+```",1593,31,0.86,OK,
+35,What are all our policies that have a claim associated to them by policy and claim number?,"SELECT DISTINCT T1.Policy_Identifier
+FROM Policy AS T1
+JOIN Claim AS T2 ON T1.Policy_Identifier = T2.Policy_Identifier;","```sql
+SELECT DISTINCT T1.Policy_Identifier
+FROM Policy AS T1
+JOIN Claim AS T2 ON T1.Policy_Identifier = T2.Policy_Identifier;
+```",1600,40,1.15,OK,
+36,What are the expense payment amount of all claims by claim number?,"SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Expense_Payment_Amount
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Expense'
+GROUP BY T1.Company_Claim_Number;","```sql
+SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Expense_Payment_Amount
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Expense'
+GROUP BY T1.Company_Claim_Number;
+```",1595,75,1.93,OK,
+37,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?","SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    SUM(lp.Amount) AS Loss_Payment,
+    SUM(lr.Amount) AS Loss_Reserve,
+    SUM(ep.Amount) AS Expense_Payment,
+    SUM(er.Amount) AS Expense_Reserve
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount;","```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    SUM(lp.Amount) AS Loss_Payment,
+    SUM(lr.Amount) AS Loss_Reserve,
+    SUM(ep.Amount) AS Expense_Payment,
+    SUM(er.Amount) AS Expense_Reserve
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount;
+```",1612,214,5.5,OK,
+38,"What is the average loss of each policy by policy number and number of claims where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","SELECT 
+    P.Policy_Number,
+    COUNT(C.Claim_Identifier) AS Number_of_Claims,
+    AVG(LP.Amount + LR.Amount + EP.Amount + ER.Amount) AS Average_Loss
+FROM 
+    Policy P
+JOIN 
+    Claim C ON P.Policy_Identifier = C.Policy_Identifier
+JOIN 
+    Loss_Payment LP ON C.Claim_Identifier = LP.Claim_Identifier
+JOIN 
+    Loss_Reserve LR ON C.Claim_Identifier = LR.Claim_Identifier
+JOIN 
+    Expense_Payment EP ON C.Claim_Identifier = EP.Claim_Identifier
+JOIN 
+    Expense_Reserve ER ON C.Claim_Identifier = ER.Claim_Identifier
+GROUP BY 
+    P.Policy_Number;","```sql
+SELECT 
+    P.Policy_Number,
+    COUNT(C.Claim_Identifier) AS Number_of_Claims,
+    AVG(LP.Amount + LR.Amount + EP.Amount + ER.Amount) AS Average_Loss
+FROM 
+    Policy P
+JOIN 
+    Claim C ON P.Policy_Identifier = C.Policy_Identifier
+JOIN 
+    Loss_Payment LP ON C.Claim_Identifier = LP.Claim_Identifier
+JOIN 
+    Loss_Reserve LR ON C.Claim_Identifier = LR.Claim_Identifier
+JOIN 
+    Expense_Payment EP ON C.Claim_Identifier = EP.Claim_Identifier
+JOIN 
+    Expense_Reserve ER ON C.Claim_Identifier = ER.Claim_Identifier
+GROUP BY 
+    P.Policy_Number;
+```",1616,160,3.97,OK,
+39,What are the loss reserve amount of all claims by claim number?,"SELECT Company_Claim_Number, SUM(Claim_Amount) AS Loss_Reserve_Amount
+FROM Claim_Amount
+JOIN Loss_Reserve ON Claim_Amount.Claim_Amount_Identifier = Loss_Reserve.Claim_Amount_Identifier
+GROUP BY Company_Claim_Number;","```sql
+SELECT Company_Claim_Number, SUM(Claim_Amount) AS Loss_Reserve_Amount
+FROM Claim_Amount
+JOIN Loss_Reserve ON Claim_Amount.Claim_Amount_Identifier = Loss_Reserve.Claim_Amount_Identifier
+GROUP BY Company_Claim_Number;
+```",1595,61,1.64,OK,
+40,Return all the claims by claim number that were closed in 2019,"SELECT Company_Claim_Number
+FROM Claim
+WHERE Claim_Close_Date >= '2019-01-01' AND Claim_Close_Date < '2020-01-01';","```sql
+SELECT Company_Claim_Number
+FROM Claim
+WHERE Claim_Close_Date >= '2019-01-01' AND Claim_Close_Date < '2020-01-01';
+```",1599,48,1.44,OK,
+41,"What is the total loss of each policy that an agent has sold by agent id where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","SELECT 
+    p.Policy_Number,
+    SUM(lp.Loss_Payment_Amount) + SUM(lr.Loss_Reserve_Amount) + SUM(ep.Expense_Payment_Amount) + SUM(er.Expense_Reserve_Amount) AS Total_Loss
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party pa ON apr.Party_Identifier = pa.Party_Identifier
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+JOIN 
+    Loss_Reserve lr ON p.Policy_Identifier = lr.Policy_Identifier
+JOIN 
+    Expense_Payment ep ON p.Policy_Identifier = ep.Policy_Identifier
+JOIN 
+    Expense_Reserve er ON p.Policy_Identifier = er.Policy_Identifier
+WHERE 
+    pa.Party_Role_Code = 'Agent'
+GROUP BY 
+    p.Policy_Number;","```sql
+SELECT 
+    p.Policy_Number,
+    SUM(lp.Loss_Payment_Amount) + SUM(lr.Loss_Reserve_Amount) + SUM(ep.Expense_Payment_Amount) + SUM(er.Expense_Reserve_Amount) AS Total_Loss
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party pa ON apr.Party_Identifier = pa.Party_Identifier
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+JOIN 
+    Loss_Reserve lr ON p.Policy_Identifier = lr.Policy_Identifier
+JOIN 
+    Expense_Payment ep ON p.Policy_Identifier = ep.Policy_Identifier
+JOIN 
+    Expense_Reserve er ON p.Policy_Identifier = er.Policy_Identifier
+WHERE 
+    pa.Party_Role_Code = 'Agent'
+GROUP BY 
+    p.Policy_Number;
+```",1618,206,5.49,OK,
+42,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?","SELECT 
+    c.Claim_Number,
+    c.Catastrophe_Name,
+    p.Policy_Number,
+    SUM(lp.Amount) AS Total_Loss
+FROM 
+    Claim c
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Policy p ON ca.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Claim_Number, c.Catastrophe_Name, p.Policy_Number;","```sql
+SELECT 
+    c.Claim_Number,
+    c.Catastrophe_Name,
+    p.Policy_Number,
+    SUM(lp.Amount) AS Total_Loss
+FROM 
+    Claim c
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Policy p ON ca.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Claim_Number, c.Catastrophe_Name, p.Policy_Number;
+```",1615,126,3.84,OK,
+43,How many claims do we have?,SELECT COUNT(Claim_Identifier) FROM Claim,SELECT COUNT(Claim_Identifier) FROM Claim,1589,10,0.65,OK,
+44,What are the loss payment amount of all claims by claim number?,"SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Total_Loss_Payment
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Loss'
+GROUP BY T1.Company_Claim_Number;","```sql
+SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Total_Loss_Payment
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Loss'
+GROUP BY T1.Company_Claim_Number;
+```",1595,75,2.11,OK,

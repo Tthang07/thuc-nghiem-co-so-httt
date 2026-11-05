@@ -1,0 +1,91 @@
+﻿Method,ID,Question,Category,Error
+Text-to-SQL,1,What is the loss ratio of each policy and agent who sold it by policy number and agent id?,Lỗi thực thi,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,2,"Return all the policies we have by policy number, effective date and expiration date?",Sai nội dung,
+Text-to-SQL,3,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid and the agent who sold it?",Lỗi thực thi,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,4,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by catastrophe and policy number?",Lỗi thực thi,"Binder Error: Table ""lp"" does not have a column named ""Claim_Identifier"""
+Text-to-SQL,5,"Return agents and the policy they have sold that have had a claim and the corresponding expense payment amount by agent id, policy number and claim number
+",Lỗi thực thi,Catalog Error: Table with name Agent does not exist!
+Text-to-SQL,6,What is the average policy size which is the the total amount of premium divided by the number of policies?,Sai nội dung,
+Text-to-SQL,7,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",Lỗi thực thi,"Binder Error: Table ""ca"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,8,What is the total amount of premiums that a policy holder has paid by policy number?,Lỗi thực thi,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!"
+Text-to-SQL,9,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid, the catastrophe it had, and the agent who sold it?",Lỗi thực thi,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,10,"Return agents and the policy they have sold that have had a claim and the corresponding expense reserve amount by agent id, policy number and claim number ",Lỗi thực thi,"Binder Error: Table ""a"" does not have a column named ""Agreement_Identifier"""
+Text-to-SQL,11,How many claims have been placed by policy number?,Lỗi thực thi,"Binder Error: Table ""Claim"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,12,What is the total amount of premiums paid by policy number?,Lỗi thực thi,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!"
+Text-to-SQL,13,"What is the total loss amounts, which is the sum of loss payment, loss reserve amount by claim number?",Lỗi thực thi,"Binder Error: Table ""LP"" does not have a column named ""Claim_Amount"""
+Text-to-SQL,14,What are all the premiums that have been paid by policy holders?,Sai nội dung,
+Text-to-SQL,15,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number?",Lỗi thực thi,"Binder Error: Table ""c"" does not have a column named ""Claim_Number"""
+Text-to-SQL,16,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number",Lỗi thực thi,Catalog Error: Table with name Agent does not exist!
+Text-to-SQL,17,Return all the policies and the agents that sold them by policy number and agent id,Lỗi thực thi,"Binder Error: Table ""APRA"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,18,What is the average time to settle a claim by policy number?,Lỗi thực thi,"Binder Error: Table ""C"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,19,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Lỗi thực thi,"Binder Error: Table ""LP"" does not have a column named ""Policy_Amount_Identifier"""
+Text-to-SQL,20,What are the expense reserve amount of all claims by claim number?,Kết quả rỗng,
+Text-to-SQL,21,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Lỗi thực thi,"Binder Error: Table ""LP"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,22,What is the premium amount of all policies by policy number?,Lỗi thực thi,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!"
+Text-to-SQL,23,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date",Lỗi thực thi,"Binder Error: Table ""PA"" does not have a column named ""Premium_Amount"""
+Text-to-SQL,24,Return policy holders and the claims they have made and the correspoinding catastrophe,Lỗi thực thi,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,25,How many policies do we have?,Đúng,
+Text-to-SQL,26," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?",Lỗi thực thi,"Binder Error: Table ""lp"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,27,What is the total amount of premiums that a policy holder has paid?,Sai nội dung,
+Text-to-SQL,28,How many policies have agents sold by agent id?,Lỗi thực thi,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!"
+Text-to-SQL,29,"Return all the claims we have by claim number, open date and close date?",Đúng,
+Text-to-SQL,30,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?",Lỗi thực thi,"Binder Error: Referenced table ""la"" not found!"
+Text-to-SQL,31,How many policies does each policy holder have by policy holder id?,Lỗi thực thi,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!"
+Text-to-SQL,32,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number",Lỗi thực thi,Catalog Error: Table with name Agent does not exist!
+Text-to-SQL,33,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,Lỗi thực thi,"Binder Error: Table ""a"" does not have a column named ""Agreement_Identifier"""
+Text-to-SQL,34,Return all the policies and their policy holder by id,Lỗi thực thi,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!"
+Text-to-SQL,35,What are all our policies that have a claim associated to them by policy and claim number?,Lỗi thực thi,"Binder Error: Table ""T2"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,36,What are the expense payment amount of all claims by claim number?,Kết quả rỗng,
+Text-to-SQL,37,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",Lỗi thực thi,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,38,"What is the average loss of each policy by policy number and number of claims where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Lỗi thực thi,"Binder Error: Table ""C"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,39,What are the loss reserve amount of all claims by claim number?,Lỗi thực thi,"Binder Error: Referenced column ""Company_Claim_Number"" not found in FROM clause!"
+Text-to-SQL,40,Return all the claims by claim number that were closed in 2019,Đúng,
+Text-to-SQL,41,"What is the total loss of each policy that an agent has sold by agent id where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Lỗi thực thi,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,42,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?",Lỗi thực thi,"Binder Error: Table ""ca"" does not have a column named ""Policy_Identifier"""
+Text-to-SQL,43,How many claims do we have?,Đúng,
+Text-to-SQL,44,What are the loss payment amount of all claims by claim number?,Kết quả rỗng,
+Text-to-SPARQL,1,What is the loss ratio of each policy and agent who sold it by policy number and agent id?,Lỗi thực thi,"Expected SelectQuery, found '('  (at char 159), (line:3, col:110)"
+Text-to-SPARQL,2,"Return all the policies we have by policy number, effective date and expiration date?",Sai nội dung,
+Text-to-SPARQL,3,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid and the agent who sold it?",Kết quả rỗng,
+Text-to-SPARQL,4,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by catastrophe and policy number?",Lỗi thực thi,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+Text-to-SPARQL,5,"Return agents and the policy they have sold that have had a claim and the corresponding expense payment amount by agent id, policy number and claim number
+",Kết quả rỗng,
+Text-to-SPARQL,6,What is the average policy size which is the the total amount of premium divided by the number of policies?,Lỗi thực thi,"Expected SelectQuery, found ')'  (at char 96), (line:3, col:47)"
+Text-to-SPARQL,7,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",Kết quả rỗng,
+Text-to-SPARQL,8,What is the total amount of premiums that a policy holder has paid by policy number?,Lỗi thực thi,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+Text-to-SPARQL,9,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid, the catastrophe it had, and the agent who sold it?",Kết quả rỗng,
+Text-to-SPARQL,10,"Return agents and the policy they have sold that have had a claim and the corresponding expense reserve amount by agent id, policy number and claim number ",Lỗi thực thi,Unknown namespace prefix : in
+Text-to-SPARQL,11,How many claims have been placed by policy number?,Sai nội dung,
+Text-to-SPARQL,12,What is the total amount of premiums paid by policy number?,Lỗi thực thi,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+Text-to-SPARQL,13,"What is the total loss amounts, which is the sum of loss payment, loss reserve amount by claim number?",Lỗi thực thi,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+Text-to-SPARQL,14,What are all the premiums that have been paid by policy holders?,Sai nội dung,
+Text-to-SPARQL,15,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number?",Sai nội dung,
+Text-to-SPARQL,16,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number",Kết quả rỗng,
+Text-to-SPARQL,17,Return all the policies and the agents that sold them by policy number and agent id,Kết quả rỗng,
+Text-to-SPARQL,18,What is the average time to settle a claim by policy number?,Lỗi thực thi,"Expected SelectQuery, found 'AVG'  (at char 57), (line:3, col:8)"
+Text-to-SPARQL,19,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Kết quả rỗng,
+Text-to-SPARQL,20,What are the expense reserve amount of all claims by claim number?,Đúng,
+Text-to-SPARQL,21,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Kết quả rỗng,
+Text-to-SPARQL,22,What is the premium amount of all policies by policy number?,Sai nội dung,
+Text-to-SPARQL,23,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date",Sai nội dung,
+Text-to-SPARQL,24,Return policy holders and the claims they have made and the correspoinding catastrophe,Kết quả rỗng,
+Text-to-SPARQL,25,How many policies do we have?,Đúng,
+Text-to-SPARQL,26," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?",Kết quả rỗng,
+Text-to-SPARQL,27,What is the total amount of premiums that a policy holder has paid?,Lỗi thực thi,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+Text-to-SPARQL,28,How many policies have agents sold by agent id?,Sai nội dung,
+Text-to-SPARQL,29,"Return all the claims we have by claim number, open date and close date?",Đúng,
+Text-to-SPARQL,30,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?",Lỗi thực thi,'NotBoundError' object has no attribute 'datatype'
+Text-to-SPARQL,31,How many policies does each policy holder have by policy holder id?,Đúng,
+Text-to-SPARQL,32,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number",Kết quả rỗng,
+Text-to-SPARQL,33,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,Kết quả rỗng,
+Text-to-SPARQL,34,Return all the policies and their policy holder by id,Sai nội dung,
+Text-to-SPARQL,35,What are all our policies that have a claim associated to them by policy and claim number?,Lỗi thực thi,"Expected SelectQuery, found '?'  (at char 285), (line:9, col:3)"
+Text-to-SPARQL,36,What are the expense payment amount of all claims by claim number?,Sai nội dung,
+Text-to-SPARQL,37,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",Kết quả rỗng,
+Text-to-SPARQL,38,"What is the average loss of each policy by policy number and number of claims where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Kết quả rỗng,
+Text-to-SPARQL,39,What are the loss reserve amount of all claims by claim number?,Đúng,
+Text-to-SPARQL,40,Return all the claims by claim number that were closed in 2019,Đúng,
+Text-to-SPARQL,41,"What is the total loss of each policy that an agent has sold by agent id where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",Sai nội dung,
+Text-to-SPARQL,42,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?",Kết quả rỗng,
+Text-to-SPARQL,43,How many claims do we have?,Đúng,
+Text-to-SPARQL,44,What are the loss payment amount of all claims by claim number?,Đúng,

@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+# Local database
+*.duckdb
+*.duckdb.wal
+
+# Secrets
+.env
+.env.*
+!.env.example

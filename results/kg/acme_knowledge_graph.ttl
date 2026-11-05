@@ -1,0 +1,282 @@
+@prefix ins: <http://data.world/schema/insurance/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Catastrophe-1> a ins:Catastrophe ;
+    ins:catastropheName "Hurricane" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Catastrophe-2> a ins:Catastrophe ;
+    ins:catastropheName "Tornado" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Catastrophe-3> a ins:Catastrophe ;
+    ins:catastropheName "Flood" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-3> a ins:Location ;
+    ins:addressLine1 "6303 Indian Canyon Drive" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.028677e+01 ;
+    ins:longitud -9.78371e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78756 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-4> a ins:Location ;
+    ins:addressLine1 "1603 East 14th Street" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.027515e+01 ;
+    ins:longitud -9.772294e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78702 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-5> a ins:Location ;
+    ins:addressLine1 "309 East 11th Street" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.027161e+01 ;
+    ins:longitud -9.773814e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78701 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-6> a ins:Location ;
+    ins:addressLine1 "801 Post Oak Drive" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.025798e+01 ;
+    ins:longitud -9.775495e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78704 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-7> a ins:Location ;
+    ins:addressLine1 "721 Barton Springs Road" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.025862e+01 ;
+    ins:longitud -9.775198e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78704 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-8> a ins:Location ;
+    ins:addressLine1 "3801 Peak Lookout Drive" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.032789e+01 ;
+    ins:longitud -9.797392e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78738 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1> a ins:PolicyHolder ;
+    ins:policyHolderId 1 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Underwriting-Assessment-1> ins:underwritesPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Underwriting-Assessment-2> ins:underwritesPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-2> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Claim-1> a ins:Claim ;
+    ins:against <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-5> ;
+    ins:claimCloseDate "2019-01-31T00:00:00"^^xsd:dateTime ;
+    ins:claimNumber "12312701" ;
+    ins:claimOpenDate "2019-01-15T00:00:00"^^xsd:dateTime ;
+    ins:hasCatastrophe <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Catastrophe-4> ;
+    ins:hasExpensePayment <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-4> ;
+    ins:hasExpenseReserve <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-2> ;
+    ins:hasLossPayment <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-3> ;
+    ins:hasLossReserve <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-1> ;
+    ins:involvesInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Claim-2> a ins:Claim ;
+    ins:against <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-5> ;
+    ins:claimCloseDate "2019-06-27T00:00:00"^^xsd:dateTime ;
+    ins:claimNumber "12312702" ;
+    ins:claimOpenDate "2019-06-02T00:00:00"^^xsd:dateTime ;
+    ins:hasCatastrophe <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Catastrophe-4> ;
+    ins:hasExpensePayment <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-8> ;
+    ins:hasExpenseReserve <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-6> ;
+    ins:hasLossPayment <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-7> ;
+    ins:hasLossReserve <https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-5> ;
+    ins:involvesInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-2> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-1> ins:lossReserveAmount 1e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-2> ins:expenseReserveAmount 1.1e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-3> ins:lossPaymentAmount 1.2e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-4> ins:expensePaymentAmount 1.3e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-5> ins:lossReserveAmount 2.1e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-6> ins:expenseReserveAmount 2.2e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-7> ins:lossPaymentAmount 2.3e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/ClaimAmount-8> ins:expensePaymentAmount 2.4e+03 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-1> a ins:Location ;
+    ins:addressLine1 "5315 Martin Ave" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.031639e+01 ;
+    ins:longitud -9.771592e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78751 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-2> a ins:Location ;
+    ins:addressLine1 "13017 Zen Gardens Way" ;
+    ins:city "Austin" ;
+    ins:country "USA" ;
+    ins:latitude 3.034149e+01 ;
+    ins:longitud -9.792346e+01 ;
+    ins:state "TX" ;
+    ins:zipCode 78732 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-1> a ins:PolicyAmount ;
+    ins:policyAmount 1e+06 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-11> a ins:PolicyAmount ;
+    ins:policyAmount 6e+05 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-3> a ins:PolicyAmount ;
+    ins:policyAmount 1e+06 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-5> a ins:PolicyAmount ;
+    ins:policyAmount 1e+06 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-7> a ins:PolicyAmount ;
+    ins:policyAmount 1e+06 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-9> a ins:PolicyAmount ;
+    ins:policyAmount 1e+06 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-1> a ins:PolicyCoverageDetail ;
+    ins:hasInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> ;
+    ins:hasPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> ;
+    ins:hasPolicyAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-1> ;
+    ins:hasPremiumAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-2> ;
+    ins:policyCoverageDetailId 1 ;
+    ins:policyCoverageEffectiveDate "2015-01-01T00:00:00"^^xsd:dateTime ;
+    ins:policyCoverageExpirationDate "2015-12-31T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-2> a ins:PolicyCoverageDetail ;
+    ins:hasInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> ;
+    ins:hasPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> ;
+    ins:hasPolicyAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-3> ;
+    ins:hasPremiumAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-4> ;
+    ins:policyCoverageDetailId 2 ;
+    ins:policyCoverageEffectiveDate "2016-01-01T00:00:00"^^xsd:dateTime ;
+    ins:policyCoverageExpirationDate "2016-12-31T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-3> a ins:PolicyCoverageDetail ;
+    ins:hasInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> ;
+    ins:hasPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> ;
+    ins:hasPolicyAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-5> ;
+    ins:hasPremiumAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-6> ;
+    ins:policyCoverageDetailId 3 ;
+    ins:policyCoverageEffectiveDate "2017-01-01T00:00:00"^^xsd:dateTime ;
+    ins:policyCoverageExpirationDate "2017-12-31T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-4> a ins:PolicyCoverageDetail ;
+    ins:hasInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> ;
+    ins:hasPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> ;
+    ins:hasPolicyAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-7> ;
+    ins:hasPremiumAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-8> ;
+    ins:policyCoverageDetailId 4 ;
+    ins:policyCoverageEffectiveDate "2018-01-01T00:00:00"^^xsd:dateTime ;
+    ins:policyCoverageExpirationDate "2018-12-31T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-6> a ins:PolicyCoverageDetail ;
+    ins:hasInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-2> ;
+    ins:hasPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-2> ;
+    ins:hasPolicyAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-11> ;
+    ins:hasPremiumAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-12> ;
+    ins:policyCoverageDetailId 6 ;
+    ins:policyCoverageEffectiveDate "2019-06-01T00:00:00"^^xsd:dateTime ;
+    ins:policyCoverageExpirationDate "2020-05-31T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-10> a ins:Premium ;
+    ins:premiumAmount 2e+04 ;
+    ins:premiumAmountMonthly 1.666667e+03 ;
+    ins:premiumPeriod "Year" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-12> a ins:Premium ;
+    ins:premiumAmount 1.2e+04 ;
+    ins:premiumAmountMonthly 1e+03 ;
+    ins:premiumPeriod "Year" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-2> a ins:Premium ;
+    ins:premiumAmount 1.5e+04 ;
+    ins:premiumAmountMonthly 1.25e+03 ;
+    ins:premiumPeriod "Year" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-4> a ins:Premium ;
+    ins:premiumAmount 1.6e+04 ;
+    ins:premiumAmountMonthly 1.333333e+03 ;
+    ins:premiumPeriod "Year" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-6> a ins:Premium ;
+    ins:premiumAmount 1.7e+04 ;
+    ins:premiumAmountMonthly 1.416667e+03 ;
+    ins:premiumPeriod "Year" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-8> a ins:Premium ;
+    ins:premiumAmount 1.8e+04 ;
+    ins:premiumAmountMonthly 1.5e+03 ;
+    ins:premiumPeriod "Year" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/UnderwritingAssessment-1> a ins:UnderwritingAssessment ;
+    ins:hasUnderwriter <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Underwriter-3> ;
+    ins:underwritingBeginDate "2014-11-01T00:00:00"^^xsd:dateTime ;
+    ins:underwritingEndDate "2014-12-15T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/UnderwritingAssessment-2> a ins:UnderwritingAssessment ;
+    ins:hasUnderwriter <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Underwriter-3> ;
+    ins:underwritingBeginDate "2019-05-01T00:00:00"^^xsd:dateTime ;
+    ins:underwritingEndDate "2019-05-27T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Agent-2> a ins:Agent ;
+    ins:agentId 2 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Catastrophe-4> a ins:Catastrophe ;
+    ins:catastropheName "Fire" .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-2> a ins:InsurableObject ;
+    ins:hasLocation <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-2> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-2> a ins:Policy ;
+    ins:hasPolicyCoverageDetail <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-6> ;
+    ins:hasPolicyHolder <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyHolder-1> ;
+    ins:hasUnderwritingAssessment <https://myinsurancecompany.linked.data.world/d/omg-pc-database/UnderwritingAssessment-2> ;
+    ins:policyEffectiveDate "2019-06-01T00:00:00"^^xsd:dateTime ;
+    ins:policyExpirationDate "2020-05-31T00:00:00"^^xsd:dateTime ;
+    ins:policyNumber "31003000337" ;
+    ins:soldByAgent <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Agent-2> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Underwriter-3> a ins:Underwriter ;
+    ins:underwriterId 3 .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-5> a ins:PolicyCoverageDetail ;
+    ins:hasClaim <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Claim-1>,
+        <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Claim-2> ;
+    ins:hasInsurableObject <https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> ;
+    ins:hasPolicy <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> ;
+    ins:hasPolicyAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyAmount-9> ;
+    ins:hasPremiumAmount <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-10> ;
+    ins:policyCoverageDetailId 5 ;
+    ins:policyCoverageEffectiveDate "2019-01-01T00:00:00"^^xsd:dateTime ;
+    ins:policyCoverageExpirationDate "2019-12-31T00:00:00"^^xsd:dateTime .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/InsurableObject-1> a ins:InsurableObject ;
+    ins:hasLocation <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Location-1> .
+
+<https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1> a ins:Policy ;
+    ins:hasPolicyCoverageDetail <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-1>,
+        <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-2>,
+        <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-3>,
+        <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-4>,
+        <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyCoverageDetail-5> ;
+    ins:hasPolicyHolder <https://myinsurancecompany.linked.data.world/d/omg-pc-database/PolicyHolder-1> ;
+    ins:hasUnderwritingAssessment <https://myinsurancecompany.linked.data.world/d/omg-pc-database/UnderwritingAssessment-1> ;
+    ins:policyEffectiveDate "2015-01-01T00:00:00"^^xsd:dateTime ;
+    ins:policyExpirationDate "2019-12-31T00:00:00"^^xsd:dateTime ;
+    ins:policyNumber "31003000336" ;
+    ins:soldByAgent <https://myinsurancecompany.linked.data.world/d/omg-pc-database/Agent-2> .
+

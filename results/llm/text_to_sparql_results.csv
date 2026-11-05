@@ -1,0 +1,940 @@
+ID,Question,Generated SPARQL,Raw Response,Prompt Tokens,Output Tokens,Time (s),Status,Error
+1,What is the loss ratio of each policy and agent who sold it by policy number and agent id?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId (SUM(?lossPaymentAmount) AS ?totalLoss) (SUM(?premiumAmount) AS ?totalPremium) (CASE WHEN ?totalPremium = 0 THEN 0 ELSE (?totalLoss / ?totalPremium) END AS ?lossRatio)
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy.
+  ?policyCoverageDetail in:hasPolicyHolder ?policyHolder.
+  ?policyHolder in:hasPolicyHolderId ?agentId.
+  ?policyHolder in:soldByAgent ?agent.
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail.
+  ?claim in:hasLossPayment ?lossPayment.
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount.
+  ?policyCoverageDetail in:hasPremiumAmount ?premium.
+  ?premium in:premiumAmount ?premiumAmount.
+  FILTER (?totalPremium > 0)
+}
+GROUP BY ?policyNumber ?agentId","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId (SUM(?lossPaymentAmount) AS ?totalLoss) (SUM(?premiumAmount) AS ?totalPremium) (CASE WHEN ?totalPremium = 0 THEN 0 ELSE (?totalLoss / ?totalPremium) END AS ?lossRatio)
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy.
+  ?policyCoverageDetail in:hasPolicyHolder ?policyHolder.
+  ?policyHolder in:hasPolicyHolderId ?agentId.
+  ?policyHolder in:soldByAgent ?agent.
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail.
+  ?claim in:hasLossPayment ?lossPayment.
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount.
+  ?policyCoverageDetail in:hasPremiumAmount ?premium.
+  ?premium in:premiumAmount ?premiumAmount.
+  FILTER (?totalPremium > 0)
+}
+GROUP BY ?policyNumber ?agentId",486,206,12.38,OK,
+2,"Return all the policies we have by policy number, effective date and expiration date?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?policyEffectiveDate ?policyExpirationDate
+WHERE {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:policyEffectiveDate ?policyEffectiveDate .
+  ?policy in:policyExpirationDate ?policyExpirationDate .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?policyEffectiveDate ?policyExpirationDate
+WHERE {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:policyEffectiveDate ?policyEffectiveDate .
+  ?policy in:policyExpirationDate ?policyExpirationDate .
+}",482,92,1.96,OK,
+3,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid and the agent who sold it?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?agentId
+?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy in:policyNumber ?policyNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?agentId
+?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy in:policyNumber ?policyNumber .
+}",502,227,4.56,OK,
+4,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by catastrophe and policy number?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:lossPaymentAmount) AS ?totalLoss
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?catastrophe in:catastropheName ?catastropheName .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:lossPaymentAmount) AS ?totalLoss
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?catastrophe in:catastropheName ?catastropheName .
+}",495,151,3.1,OK,
+5,"Return agents and the policy they have sold that have had a claim and the corresponding expense payment amount by agent id, policy number and claim number
+","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?expensePaymentAmount
+WHERE {
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?expensePaymentAmount
+WHERE {
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}",495,127,2.63,OK,
+6,What is the average policy size which is the the total amount of premium divided by the number of policies?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (SUM(in:premiumAmount) / COUNT(?policy)) AS ?averagePolicySize
+WHERE {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (SUM(in:premiumAmount) / COUNT(?policy)) AS ?averagePolicySize
+WHERE {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}",487,63,1.4,OK,
+7,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?totalLoss
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:policyNumber ?policyNumber .
+  BIND((?lossPayment + ?lossReserve + ?expensePayment + ?expenseReserve) AS ?totalLoss)
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?totalLoss
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:policyNumber ?policyNumber .
+  BIND((?lossPayment + ?lossReserve + ?expensePayment + ?expenseReserve) AS ?totalLoss)
+}",504,200,4.3,OK,
+8,What is the total amount of premiums that a policy holder has paid by policy number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:premiumAmount) AS ?totalPremiumAmount
+WHERE {
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:premiumAmount) AS ?totalPremiumAmount
+WHERE {
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}",483,94,2.09,OK,
+9,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid, the catastrophe it had, and the agent who sold it?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?catastropheName ?agentId
+FROM <http://data.world/schema/insurance/>
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?catastrophe in:catastropheName ?catastropheName .
+  ?claim in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy in:policyNumber ?policyNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?catastropheName ?agentId
+FROM <http://data.world/schema/insurance/>
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?catastrophe in:catastropheName ?catastropheName .
+  ?claim in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy in:policyNumber ?policyNumber .
+}",508,247,5.36,OK,
+10,"Return agents and the policy they have sold that have had a claim and the corresponding expense reserve amount by agent id, policy number and claim number ","SELECT ?agentId ?policyNumber ?claimNumber ?expenseReserveAmount
+WHERE {
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}","```sparql
+SELECT ?agentId ?policyNumber ?claimNumber ?expenseReserveAmount
+WHERE {
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}
+```",495,126,2.81,OK,
+11,How many claims have been placed by policy number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(?claim) AS ?numberOfClaims)
+WHERE {
+  ?claim in:hasPolicy ?policy .
+  ?policy in:policyNumber ""PolicyNumberHere"" .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(?claim) AS ?numberOfClaims)
+WHERE {
+  ?claim in:hasPolicy ?policy .
+  ?policy in:policyNumber ""PolicyNumberHere"" .
+}",476,50,1.2,OK,
+12,What is the total amount of premiums paid by policy number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:premiumAmount) AS ?totalPremium
+WHERE {
+  ?policy in:policyNumber ""PolicyNumber"" .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:premiumAmount) AS ?totalPremium
+WHERE {
+  ?policy in:policyNumber ""PolicyNumber"" .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}",478,66,1.51,OK,
+13,"What is the total loss amounts, which is the sum of loss payment, loss reserve amount by claim number?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:lossPaymentAmount) AS ?totalLossPaymentAmount
+SUM(in:lossReserveAmount) AS ?totalLossReserveAmount
+FROM <http://example.org/insurance-graph>
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossPayment in:amount ?lossPaymentAmount .
+  ?lossReserve in:amount ?lossReserveAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:lossPaymentAmount) AS ?totalLossPaymentAmount
+SUM(in:lossReserveAmount) AS ?totalLossReserveAmount
+FROM <http://example.org/insurance-graph>
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossPayment in:amount ?lossPaymentAmount .
+  ?lossReserve in:amount ?lossReserveAmount .
+}",488,109,2.47,OK,
+14,What are all the premiums that have been paid by policy holders?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?premiumAmount
+WHERE {
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?premiumAmount
+WHERE {
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}",479,61,1.4,OK,
+15,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:claimNumber ?claimNumber .
+}",485,102,2.28,OK,
+16,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossReserveAmount
+WHERE {
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossReserveAmount
+WHERE {
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}",495,133,2.96,OK,
+17,Return all the policies and the agents that sold them by policy number and agent id,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:soldByAgent ?agent .
+  ?policy in:policyNumber ?policyNumber .
+  ?agent in:agentId ?agentId .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:soldByAgent ?agent .
+  ?policy in:policyNumber ?policyNumber .
+  ?agent in:agentId ?agentId .
+}",483,70,1.68,OK,
+18,What is the average time to settle a claim by policy number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT AVG(DATEDIFF(?claimCloseDate, ?claimOpenDate)) AS ?averageSettlementTime
+WHERE {
+  ?claim in:hasClaimNumber ?claimNumber .
+  ?claim in:claimOpenDate ?claimOpenDate .
+  ?claim in:claimCloseDate ?claimCloseDate .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT AVG(DATEDIFF(?claimCloseDate, ?claimOpenDate)) AS ?averageSettlementTime
+WHERE {
+  ?claim in:hasClaimNumber ?claimNumber .
+  ?claim in:claimOpenDate ?claimOpenDate .
+  ?claim in:claimCloseDate ?claimCloseDate .
+}",479,76,1.75,OK,
+19,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+}
+GROUP BY ?policyNumber","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+}
+GROUP BY ?policyNumber",497,141,3.29,OK,
+20,What are the expense reserve amount of all claims by claim number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expenseReserveAmount
+WHERE {
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expenseReserveAmount
+WHERE {
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+  ?claim in:claimNumber ?claimNumber .
+}",479,68,1.62,OK,
+21,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?averageLoss)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+}
+GROUP BY ?policyNumber","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?averageLoss)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+}
+GROUP BY ?policyNumber",496,141,3.15,OK,
+22,What is the premium amount of all policies by policy number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?premiumAmount
+WHERE {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?premiumAmount
+WHERE {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+}",478,75,1.79,OK,
+23,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?policyCoverageEffectiveDate ?policyCoverageExpirationDate ?premiumAmount
+FROM <http://data.world/schema/insurance/>
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:policyCoverageEffectiveDate ?policyCoverageEffectiveDate .
+  ?policyCoverageDetail in:policyCoverageExpirationDate ?policyCoverageExpirationDate .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policy in:policyNumber ?policyNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?policyCoverageEffectiveDate ?policyCoverageExpirationDate ?premiumAmount
+FROM <http://data.world/schema/insurance/>
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:policyCoverageEffectiveDate ?policyCoverageEffectiveDate .
+  ?policyCoverageDetail in:policyCoverageExpirationDate ?policyCoverageExpirationDate .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policy in:policyNumber ?policyNumber .
+}",486,115,3.3,OK,
+24,Return policy holders and the claims they have made and the correspoinding catastrophe,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolder ?claim ?catastrophe
+WHERE {
+  ?claim in:hasPolicyHolder ?policyHolder .
+  ?claim in:hasCatastrophe ?catastrophe .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolder ?claim ?catastrophe
+WHERE {
+  ?claim in:hasPolicyHolder ?policyHolder .
+  ?claim in:hasCatastrophe ?catastrophe .
+}",482,56,2.16,OK,
+25,How many policies do we have?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?policyCount) WHERE {
+  ?policy a in:Policy .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?policyCount) WHERE {
+  ?policy a in:Policy .
+}",473,38,1.46,OK,
+26," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT 
+  (SUM(in:lossPaymentAmount + in:lossReserveAmount + in:expensePaymentAmount + in:expenseReserveAmount) AS ?totalLoss) 
+  (COUNT(?claim) AS ?numberOfClaims) 
+  (SUM(in:lossPaymentAmount + in:lossReserveAmount + in:expensePaymentAmount + in:expenseReserveAmount) / SUM(in:premiumAmount) AS ?lossRatio) 
+  ?policyNumber 
+  (SUM(in:premiumAmount) AS ?totalPremium)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?policyHolder in:premiumAmount ?premiumAmount .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?policyNumber","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT 
+  (SUM(in:lossPaymentAmount + in:lossReserveAmount + in:expensePaymentAmount + in:expenseReserveAmount) AS ?totalLoss) 
+  (COUNT(?claim) AS ?numberOfClaims) 
+  (SUM(in:lossPaymentAmount + in:lossReserveAmount + in:expensePaymentAmount + in:expenseReserveAmount) / SUM(in:premiumAmount) AS ?lossRatio) 
+  ?policyNumber 
+  (SUM(in:premiumAmount) AS ?totalPremium)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?policyHolder in:premiumAmount ?premiumAmount .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?policyNumber",512,306,8.23,OK,
+27,What is the total amount of premiums that a policy holder has paid?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:premiumAmount) AS ?totalPremiumAmount
+WHERE {
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(in:premiumAmount) AS ?totalPremiumAmount
+WHERE {
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}",480,68,2.04,OK,
+28,How many policies have agents sold by agent id?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+}",476,64,1.76,OK,
+29,"Return all the claims we have by claim number, open date and close date?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?claimOpenDate ?claimCloseDate
+WHERE {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:claimOpenDate ?claimOpenDate .
+  ?claim in:claimCloseDate ?claimCloseDate .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?claimOpenDate ?claimCloseDate
+WHERE {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:claimOpenDate ?claimOpenDate .
+  ?claim in:claimCloseDate ?claimCloseDate .
+}",482,66,1.83,OK,
+30,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:claimNumber ?claimNumber .
+}
+GROUP BY ?claimNumber","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:claimNumber ?claimNumber .
+}
+GROUP BY ?claimNumber",497,117,2.8,OK,
+31,How many policies does each policy holder have by policy holder id?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolderId (COUNT(?policy) AS ?policyCount)
+WHERE {
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policy in:hasPolicyHolder ?policyHolder .
+}
+GROUP BY ?policyHolderId","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolderId (COUNT(?policy) AS ?policyCount)
+WHERE {
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policy in:hasPolicyHolder ?policyHolder .
+}
+GROUP BY ?policyHolderId",479,63,1.55,OK,
+32,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount
+WHERE {
+  ?agent in:soldByAgent ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasClaim ?claim .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount
+WHERE {
+  ?agent in:soldByAgent ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasClaim ?claim .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}",495,127,2.91,OK,
+33,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agent ?policy ?catastrophe
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:soldByAgent ?agent .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?claim in:hasCatastrophe ?catastrophe .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agent ?policy ?catastrophe
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:soldByAgent ?agent .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?claim in:hasCatastrophe ?catastrophe .
+}",487,93,2.12,OK,
+34,Return all the policies and their policy holder by id,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policy ?policyHolderId
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policy ?policyHolderId
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+}",477,50,1.23,OK,
+35,What are all our policies that have a claim associated to them by policy and claim number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?claimNumber
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:hasClaim ?claim .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy policyNumber ?policyNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?claimNumber
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:hasClaim ?claim .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy policyNumber ?policyNumber .
+}",484,82,1.93,OK,
+36,What are the expense payment amount of all claims by claim number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expensePaymentAmount
+WHERE {
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expensePaymentAmount
+WHERE {
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:claimNumber ?claimNumber .
+}",479,48,1.74,OK,
+37,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+}",496,187,4.4,OK,
+38,"What is the average loss of each policy by policy number and number of claims where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss) (COUNT(?claim) AS ?numClaims)
+FROM <http://data.world/schema/insurance/graph>
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}
+GROUP BY ?policyNumber","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss) (COUNT(?claim) AS ?numClaims)
+FROM <http://data.world/schema/insurance/graph>
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}
+GROUP BY ?policyNumber",500,173,3.86,OK,
+39,What are the loss reserve amount of all claims by claim number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossReserveAmount
+WHERE {
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossReserveAmount
+WHERE {
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?claim in:claimNumber ?claimNumber .
+}",479,68,1.61,OK,
+40,Return all the claims by claim number that were closed in 2019,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+WHERE {
+  ?claim in:claimCloseDate ?closeDate .
+  ?claim in:claimNumber ?claimNumber .
+  FILTER (YEAR(?closeDate) = 2019)
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+WHERE {
+  ?claim in:claimCloseDate ?closeDate .
+  ?claim in:claimNumber ?claimNumber .
+  FILTER (YEAR(?closeDate) = 2019)
+}",483,59,1.44,OK,
+41,"What is the total loss of each policy that an agent has sold by agent id where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?agentId","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+WHERE {
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?agentId",502,202,4.49,OK,
+42,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber (SUM(?lossPaymentAmount) AS ?totalLoss) (SUM(?expensePaymentAmount) AS ?totalExpense) (SUM(?lossReserveAmount) AS ?totalLossReserve) (SUM(?expenseReserveAmount) AS ?totalExpenseReserve)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?catastrophe in:catastropheName ?catastropheName .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber (SUM(?lossPaymentAmount) AS ?totalLoss) (SUM(?expensePaymentAmount) AS ?totalExpense) (SUM(?lossReserveAmount) AS ?totalLossReserve) (SUM(?expenseReserveAmount) AS ?totalExpenseReserve)
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?claim in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?catastrophe in:catastropheName ?catastropheName .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber",499,294,6.73,OK,
+43,How many claims do we have?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(?claim) AS ?totalClaims) WHERE {
+  ?claim a in:Claim .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(?claim) AS ?totalClaims) WHERE {
+  ?claim a in:Claim .
+}",473,35,0.99,OK,
+44,What are the loss payment amount of all claims by claim number?,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?claim in:claimNumber ?claimNumber .
+}","PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount
+WHERE {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?claim in:claimNumber ?claimNumber .
+}",479,62,1.53,OK,

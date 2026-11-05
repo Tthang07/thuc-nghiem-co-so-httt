@@ -1,0 +1,45 @@
+ID,Status,Rows,Error
+1,ERROR,,"Expected SelectQuery, found '('  (at char 159), (line:3, col:110)"
+2,OK,6.0,
+3,OK,0.0,
+4,ERROR,,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+5,OK,0.0,
+6,ERROR,,"Expected SelectQuery, found ')'  (at char 96), (line:3, col:47)"
+7,OK,0.0,
+8,ERROR,,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+9,OK,0.0,
+10,ERROR,,Unknown namespace prefix : in
+11,OK,1.0,
+12,ERROR,,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+13,ERROR,,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+14,OK,6.0,
+15,OK,2.0,
+16,OK,0.0,
+17,OK,0.0,
+18,ERROR,,"Expected SelectQuery, found 'AVG'  (at char 57), (line:3, col:8)"
+19,OK,0.0,
+20,OK,2.0,
+21,OK,0.0,
+22,OK,6.0,
+23,OK,6.0,
+24,OK,0.0,
+25,OK,1.0,
+26,OK,0.0,
+27,ERROR,,"Expected SelectQuery, found 'SUM'  (at char 57), (line:3, col:8)"
+28,OK,1.0,
+29,OK,2.0,
+30,ERROR,,'NotBoundError' object has no attribute 'datatype'
+31,OK,1.0,
+32,OK,0.0,
+33,OK,0.0,
+34,OK,2.0,
+35,ERROR,,"Expected SelectQuery, found '?'  (at char 285), (line:9, col:3)"
+36,OK,2.0,
+37,OK,0.0,
+38,OK,0.0,
+39,OK,2.0,
+40,OK,2.0,
+41,OK,1.0,
+42,OK,0.0,
+43,OK,1.0,
+44,OK,2.0,

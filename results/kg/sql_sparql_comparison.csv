@@ -1,0 +1,46 @@
+﻿Question,SPARQL Reference ID,SPARQL Status,SPARQL Rows,SQL_References,SQL_Successful,SQL_Rows
+What is the loss ratio of each policy and agent who sold it by policy number and agent id?,https://templates.data.world/query-a916ea29-b4e3-45c6-9cb4-f9e1381f5563,OK,1,1,1,1
+"Return all the policies we have by policy number, effective date and expiration date?",https://templates.data.world/query-481d808c-a3ea-4eef-91d9-9f7ff36d0855,OK,2,1,1,2
+"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid and the agent who sold it?",https://templates.data.world/query-a7e183f5-33f6-4ddf-b3cf-95a31f78277e,OK,2,1,1,2
+"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by catastrophe and policy number?",https://templates.data.world/query-d1fc6863-b430-4199-95de-a3f6f89d63a1,OK,1,1,1,1
+"Return agents and the policy they have sold that have had a claim and the corresponding expense payment amount by agent id, policy number and claim number
+",https://templates.data.world/query-61bca3dc-7ad9-48ee-bf25-1062fda864ed,OK,2,1,1,2
+What is the average policy size which is the the total amount of premium divided by the number of policies?,https://templates.data.world/query-1229101a-9a6d-4c00-93be-7a165a7f349b,OK,1,1,1,1
+"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",https://templates.data.world/query-0d8c074f-3c02-4c65-bc0a-b69da974889c,OK,2,1,1,2
+What is the total amount of premiums that a policy holder has paid by policy number?,https://templates.data.world/query-ae1e0b7b-7f5e-41cc-8bb8-0ee4d364d6c1,OK,2,1,1,2
+"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid, the catastrophe it had, and the agent who sold it?",https://templates.data.world/query-aebf3687-c84d-4c5c-b5bf-d48e5e6411ba,OK,2,1,1,2
+"Return agents and the policy they have sold that have had a claim and the corresponding expense reserve amount by agent id, policy number and claim number ",https://templates.data.world/query-3d645ba9-0c81-4143-9e80-da1fbdd2b9eb,OK,2,1,1,2
+How many claims have been placed by policy number?,https://templates.data.world/query-d3c361b3-795a-4143-91ce-6016ea06eea4,OK,1,1,1,1
+What is the total amount of premiums paid by policy number?,https://templates.data.world/query-50cdf9ca-862c-4847-8cf1-21ea31a1ed0a,OK,2,1,1,2
+"What is the total loss amounts, which is the sum of loss payment, loss reserve amount by claim number?",https://templates.data.world/query-3daee293-dc9d-425c-b974-33c2c3dd402b,OK,2,1,1,2
+What are all the premiums that have been paid by policy holders?,https://templates.data.world/query-f16d0623-ae64-41c6-af76-6df3964334ab,OK,6,1,1,6
+"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number?",https://templates.data.world/query-dd3ed73e-b4aa-4320-bb21-84eb29345f85,OK,2,1,1,2
+"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number",https://templates.data.world/query-3ff591a2-3a2a-47fb-a162-b9faf14f793e,OK,2,1,1,2
+Return all the policies and the agents that sold them by policy number and agent id,https://templates.data.world/query-4b91a28c-6916-47de-817c-1a32a8d130f2,OK,2,1,1,2
+What is the average time to settle a claim by policy number?,https://templates.data.world/query-76d22258-2291-4d86-8f01-063f93a9cf68,OK,1,1,1,1
+"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",https://templates.data.world/query-68666e14-f088-452c-a668-5c2eea03d963,OK,1,1,1,1
+What are the expense reserve amount of all claims by claim number?,https://templates.data.world/query-516d4744-e2c2-4bce-8c62-b2f5e2cfdbc6,OK,2,1,1,2
+"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",https://templates.data.world/query-ef3e8311-fa4e-4119-b75e-943517f84766,OK,1,1,1,1
+What is the premium amount of all policies by policy number?,https://templates.data.world/query-44611072-fbd9-460f-8453-766a1b2fb15c,OK,6,1,1,6
+"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date",https://templates.data.world/query-e50bfb2c-ba28-4605-82d7-575f3541753b,OK,6,1,1,6
+Return policy holders and the claims they have made and the correspoinding catastrophe,https://templates.data.world/query-63d27668-4bc3-4bb3-af1e-477102f7fff6,OK,2,1,1,2
+How many policies do we have?,https://templates.data.world/query-edc75975-e4d8-4c97-a888-15054388635a,OK,1,1,1,1
+" What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?",https://templates.data.world/query-f8f57e57-b043-4a32-bde0-b5950d589cac,OK,1,1,1,1
+What is the total amount of premiums that a policy holder has paid?,https://templates.data.world/query-f638042e-9031-4b27-9b32-8ab0ec778106,OK,1,1,1,1
+How many policies have agents sold by agent id?,https://templates.data.world/query-f8548f16-dfa1-4544-8b32-a8af70d30bfd,OK,1,1,1,1
+"Return all the claims we have by claim number, open date and close date?",https://templates.data.world/query-785a48b0-c9f3-4fbc-a1c7-7e730d519a61,OK,2,1,1,2
+"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?",https://templates.data.world/query-a05f1b80-db94-4d23-8b87-b6f3dd97ef10,OK,2,1,1,2
+How many policies does each policy holder have by policy holder id?,https://templates.data.world/query-7e599d7d-d9b9-4e67-a0d2-231d96305cbb,OK,1,1,1,1
+"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number",https://templates.data.world/query-e9216b56-5fef-433f-a2bd-89c7360d69ed,OK,2,2,2,"2, 2"
+Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,https://templates.data.world/query-9e5882b1-dcd6-4312-a312-50506a0a9144,OK,2,1,1,2
+Return all the policies and their policy holder by id,https://templates.data.world/query-b4ca41e8-68a6-4b85-8f46-790fece9029a,OK,2,1,1,2
+What are all our policies that have a claim associated to them by policy and claim number?,https://templates.data.world/query-f6d8cd1d-db6c-4711-93f0-1177201b6c71,OK,2,1,1,2
+What are the expense payment amount of all claims by claim number?,https://templates.data.world/query-fe7ba4a7-b58e-4d13-8267-40017725a0d8,OK,2,1,1,2
+"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",https://templates.data.world/query-f7a839d9-2751-4dd0-8007-c390fd63ed41,OK,2,1,1,2
+"What is the average loss of each policy by policy number and number of claims where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",https://templates.data.world/query-bec73512-39df-46f5-b5de-4d37ebb51a28,OK,1,1,1,1
+What are the loss reserve amount of all claims by claim number?,https://templates.data.world/query-6513c0a8-f0f7-4d88-ae90-e2bfcf9ffa30,OK,2,1,1,2
+Return all the claims by claim number that were closed in 2019,https://templates.data.world/query-97c94a18-22f3-44ed-9e2f-b6c69422bbf5,OK,2,1,1,2
+"What is the total loss of each policy that an agent has sold by agent id where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",https://templates.data.world/query-83bf0228-382a-4ea8-97b3-c1a040eb4377,OK,1,1,1,1
+"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?",https://templates.data.world/query-e2bac95a-bf53-4b69-b737-b4bd23ab46b8,OK,2,1,1,2
+How many claims do we have?,https://templates.data.world/query-76ad469d-ea2a-467c-a832-92b8522b7ede,OK,1,1,1,1
+What are the loss payment amount of all claims by claim number?,https://templates.data.world/query-fc578af0-b183-422f-8ef0-12ad85c669ee,OK,2,1,1,2

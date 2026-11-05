@@ -1,0 +1,45 @@
+ID,Status,Rows,Error
+1,ERROR,,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier"""
+2,OK,2.0,
+3,ERROR,,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier"""
+4,ERROR,,"Binder Error: Table ""lp"" does not have a column named ""Claim_Identifier"""
+5,ERROR,,Catalog Error: Table with name Agent does not exist!
+6,OK,1.0,
+7,ERROR,,"Binder Error: Table ""ca"" does not have a column named ""Policy_Identifier"""
+8,ERROR,,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!"
+9,ERROR,,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier"""
+10,ERROR,,"Binder Error: Table ""a"" does not have a column named ""Agreement_Identifier"""
+11,ERROR,,"Binder Error: Table ""Claim"" does not have a column named ""Policy_Identifier"""
+12,ERROR,,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!"
+13,ERROR,,"Binder Error: Table ""LP"" does not have a column named ""Claim_Amount"""
+14,OK,6.0,
+15,ERROR,,"Binder Error: Table ""c"" does not have a column named ""Claim_Number"""
+16,ERROR,,Catalog Error: Table with name Agent does not exist!
+17,ERROR,,"Binder Error: Table ""APRA"" does not have a column named ""Policy_Identifier"""
+18,ERROR,,"Binder Error: Table ""C"" does not have a column named ""Policy_Identifier"""
+19,ERROR,,"Binder Error: Table ""LP"" does not have a column named ""Policy_Amount_Identifier"""
+20,OK,0.0,
+21,ERROR,,"Binder Error: Table ""LP"" does not have a column named ""Policy_Identifier"""
+22,ERROR,,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!"
+23,ERROR,,"Binder Error: Table ""PA"" does not have a column named ""Premium_Amount"""
+24,ERROR,,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier"""
+25,OK,1.0,
+26,ERROR,,"Binder Error: Table ""lp"" does not have a column named ""Policy_Identifier"""
+27,OK,1.0,
+28,ERROR,,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!"
+29,OK,2.0,
+30,ERROR,,"Binder Error: Referenced table ""la"" not found!"
+31,ERROR,,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!"
+32,ERROR,,Catalog Error: Table with name Agent does not exist!
+33,ERROR,,"Binder Error: Table ""a"" does not have a column named ""Agreement_Identifier"""
+34,ERROR,,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!"
+35,ERROR,,"Binder Error: Table ""T2"" does not have a column named ""Policy_Identifier"""
+36,OK,0.0,
+37,ERROR,,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier"""
+38,ERROR,,"Binder Error: Table ""C"" does not have a column named ""Policy_Identifier"""
+39,ERROR,,"Binder Error: Referenced column ""Company_Claim_Number"" not found in FROM clause!"
+40,OK,2.0,
+41,ERROR,,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier"""
+42,ERROR,,"Binder Error: Table ""ca"" does not have a column named ""Policy_Identifier"""
+43,OK,1.0,
+44,OK,0.0,

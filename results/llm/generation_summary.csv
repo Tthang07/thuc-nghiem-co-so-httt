@@ -1,0 +1,3 @@
+Method,Questions,Generated,Errors,Prompt Tokens,Output Tokens,Total Time (s),Average Time (s)
+Text-to-SQL,44,44,0,70554,4422,106.6,2.42
+Text-to-SPARQL,44,44,0,21450,4998,125.8,2.86
