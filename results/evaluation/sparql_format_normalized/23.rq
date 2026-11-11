@@ -1,0 +1,9 @@
+SELECT ?policyNumber ?policyCoverageEffectiveDate ?policyCoverageExpirationDate ?premiumAmount
+FROM SERVICE <mapped> {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policyCoverageDetail in:policyCoverageEffectiveDate ?policyCoverageEffectiveDate .
+  ?policyCoverageDetail in:policyCoverageExpirationDate ?policyCoverageExpirationDate .
+  ?policy in:policyNumber ?policyNumber .
+}
+ORDER BY ?policyNumber

@@ -1,0 +1,12 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?totalLoss
+WHERE {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserveAmount ?expenseReserveAmount .
+  BIND((?lossPayment + ?lossReserve + ?expensePayment + ?expenseReserveAmount) AS ?totalLoss)
+}

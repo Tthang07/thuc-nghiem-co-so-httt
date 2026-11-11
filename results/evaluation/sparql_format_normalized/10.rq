@@ -1,0 +1,11 @@
+SELECT ?agent ?policy ?claim ?expenseReserveAmount
+FROM SERVICE <mapped> {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:soldByAgent ?agent .
+  ?claim in:hasPolicy ?policy .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy in:policyNumber ?policyNumber .
+}
+ORDER BY ?agent ?policy ?claimNumber

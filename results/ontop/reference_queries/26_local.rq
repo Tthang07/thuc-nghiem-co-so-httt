@@ -1,0 +1,46 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT  
+  ?policynumber  
+  ?premium
+    (COUNT(?ClaimNumber) AS ?NoOfClaims)
+    (SUM(?loss) AS ?TotalLoss)
+(SUM(?loss) / ?premium AS ?lossRatio)
+WHERE {
+{
+    ?pcd a in:PolicyCoverageDetail;
+        in:hasPremiumAmount [ 
+            in:premiumAmount ?premium;
+        ];
+        in:hasPolicy ?policy. 
+
+     ?policy a in:Policy;
+            in:policyNumber ?policynumber;
+            in:hasPolicyHolder [ 
+                in:policyHolderId ?PolicyHolderID 
+            ];
+    .
+
+    ?claim in:against ?pcd.     
+        ?claim rdf:type in:Claim;
+            in:claimNumber ?ClaimNumber;
+            in:hasLossPayment [
+                in:lossPaymentAmount ?LossPaymentAmount;
+            ];
+            in:hasLossReserve [
+                in:lossReserveAmount ?LossReserveAmount;
+            ];
+            in:hasExpensePayment [
+                in:expensePaymentAmount ?ExpensePaymentAmount;
+            ];
+            in:hasExpenseReserve [
+                in:expenseReserveAmount ?ExpenseReserveAmount;
+            ];
+        .
+        bind (?LossPaymentAmount+ ?LossReserveAmount+ ?ExpensePaymentAmount + ?ExpenseReserveAmount as ?loss)
+
+    }
+
+}
+group by  ?policynumber ?premium

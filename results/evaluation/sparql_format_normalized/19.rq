@@ -1,0 +1,11 @@
+SELECT ?policyNumber ?totalLoss
+WHERE {
+  ?policyPolicyHolder :hasPolicyHolder ?policyHolder .
+  ?policyHolder :policyNumber ?policyNumber .
+  ?policyHolder :policy :hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail :hasLossPayment ?lossPayment .
+  ?policyCoverageDetail :hasLossReserve ?lossReserve .
+  ?policyCoverageDetail :hasExpensePayment ?expensePayment .
+  ?policyCoverageDetail :hasExpenseReserve ?expenseReserve .
+  BIND((?lossPayment + ?lossReserve + ?expensePayment + ?expenseReserve) AS ?totalLoss)
+}

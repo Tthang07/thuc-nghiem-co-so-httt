@@ -1,0 +1,20 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX ds-omg-pc-database: <https://myinsurancecompany.linked.data.world/d/omg-pc-database/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+select ?ClaimNumber  ?LossAmount
+where{
+    SERVICE ds-omg-pc-database:mapped {
+        ?claim rdf:type in:Claim;
+            in:claimNumber ?ClaimNumber;
+            in:hasLossPayment [
+                in:lossPaymentAmount ?LossPaymentAmount;
+            ];
+            in:hasLossReserve [
+                in:lossReserveAmount ?LossReserveAmount;
+            ];
+        .
+    }
+    bind (?LossPaymentAmount+ ?LossReserveAmount as ?LossAmount)
+
+}

@@ -1,0 +1,7 @@
+SELECT ?policyHolderId (COUNT(?policy) AS ?policyCount)
+FROM SERVICE <mapped> {
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policy in:hasPolicyHolder ?policyHolder .
+}
+GROUP BY ?policyHolderId
+ORDER BY ?policyCount DESC

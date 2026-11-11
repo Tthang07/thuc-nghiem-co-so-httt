@@ -1,0 +1,11 @@
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+FROM SERVICE <mapped> {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasLossPayment ?lossPayment .
+  ?policyCoverageDetail in:hasLossReserve ?lossReserve .
+  ?policyCoverageDetail in:hasExpensePayment ?expensePayment .
+  ?policyCoverageDetail in:hasExpenseReserve ?expenseReserve .
+  ?policy in:claim ?claim .
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

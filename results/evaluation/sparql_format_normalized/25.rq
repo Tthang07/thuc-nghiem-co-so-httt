@@ -1,0 +1,6 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?totalPolicies)
+FROM SERVICE <mapped> {
+  ?policy a in:Policy .
+}

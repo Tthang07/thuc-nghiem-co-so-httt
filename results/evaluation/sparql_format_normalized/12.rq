@@ -1,0 +1,9 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT SUM(?premiumAmount) AS ?totalPremiumAmount
+WHERE {
+  SERVICE <mapped> {
+    ?policy in:policyNumber ?policyNumber .
+    ?policy in:premiumAmount ?premiumAmount .
+  }
+}

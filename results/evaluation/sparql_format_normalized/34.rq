@@ -1,0 +1,5 @@
+SELECT ?policy ?policyHolder
+WHERE {
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policy in:policyNumber ?policyNumber .
+}

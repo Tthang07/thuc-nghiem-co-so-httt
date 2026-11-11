@@ -1,0 +1,21 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT  ?PolicyHolderID (sum(?premium) as ?TotalPremiums)
+WHERE {
+{
+    ?pcd a in:PolicyCoverageDetail;
+        in:hasPremiumAmount [ 
+            in:premiumAmount ?premium;
+        ];
+        in:hasPolicy ?policy. 
+
+     ?policy a in:Policy;
+            in:policyNumber ?policynumber;
+            in:hasPolicyHolder [ 
+                in:policyHolderId ?PolicyHolderID 
+            ];
+    .
+    }
+}
+group by ?PolicyHolderID

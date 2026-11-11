@@ -1,0 +1,16 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss) (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) / SUM(?premiumAmount) AS ?lossRatio)
+FROM SERVICE <mapped> {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasLossPayment ?lossPayment .
+  ?policyCoverageDetail in:hasLossReserve ?lossReserve .
+  ?policyCoverageDetail in:hasExpensePayment ?expensePayment .
+  ?policyCoverageDetail in:hasExpenseReserve ?expenseReserve .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policy in:policyNumber ?policyNumber .
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

@@ -1,0 +1,6 @@
+SELECT ?policyNumber ?agentId
+FROM SERVICE <mapped> {
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+}

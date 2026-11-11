@@ -1,0 +1,48 @@
+ID,Status,Error,Time
+1,OK,,0.013
+2,OK,,0.006
+3,OK,,0.027
+4,OK,,0.016
+5,OK,,0.008
+6,OK,,0.007
+7,OK,,0.024
+8,OK,,0.006
+9,OK,,0.019
+10,OK,,0.008
+11,OK,,0.006
+12,OK,,0.007
+13,OK,,0.007
+14,OK,,0.005
+15,OK,,0.01
+16,OK,,0.007
+17,OK,,0.005
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Avera...
+                         ^^^",0.002
+19,OK,,0.01
+20,OK,,0.005
+21,OK,,0.011
+22,OK,,0.005
+23,OK,,0.007
+24,OK,,0.006
+25,OK,,0.002
+26,OK,,0.014
+27,OK,,0.004
+28,OK,,0.004
+29,OK,,0.003
+30,OK,,0.007
+31,OK,,0.004
+32,OK,,0.007
+33,OK,,0.006
+34,OK,,0.003
+35,OK,,0.005
+36,OK,,0.005
+37,OK,,0.014
+38,OK,,0.011
+39,OK,,0.007
+40,OK,,0.014
+41,OK,,0.01
+42,OK,,0.003
+43,OK,,0.005

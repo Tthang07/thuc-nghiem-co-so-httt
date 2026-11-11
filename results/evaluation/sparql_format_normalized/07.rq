@@ -1,0 +1,13 @@
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount ?totalLoss
+WHERE {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserveAmount ?expenseReserveAmount .
+  ?claim in:hasPolicy ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policy in:hasPremiumAmount ?premiumAmount .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  BIND(?lossPayment + ?lossReserve + ?expensePayment + ?expenseReserveAmount AS ?totalLoss)
+}

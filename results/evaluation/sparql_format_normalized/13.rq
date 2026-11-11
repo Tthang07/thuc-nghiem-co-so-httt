@@ -1,0 +1,8 @@
+SELECT SUM(?lossPaymentAmount + ?lossReserveAmount) AS ?totalLossAmount
+FROM SERVICE <mapped> {
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+}
+GROUP BY ?claim

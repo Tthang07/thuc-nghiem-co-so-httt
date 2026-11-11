@@ -1,0 +1,6 @@
+SELECT ?policyNumber ?policyEffectiveDate ?policyExpirationDate
+FROM SERVICE <mapped> {
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:policyEffectiveDate ?policyEffectiveDate .
+  ?policy in:policyExpirationDate ?policyExpirationDate .
+}

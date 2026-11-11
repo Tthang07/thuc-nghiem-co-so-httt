@@ -1,0 +1,6 @@
+SELECT (COUNT(?claim) AS ?number_of_claims) WHERE {
+  SERVICE <mapped> {
+    ?claim in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policy_number .
+  }
+}

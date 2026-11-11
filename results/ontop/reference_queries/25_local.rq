@@ -1,0 +1,10 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+select (count(?policy) as ?NoOfPolicy)
+where{
+    {
+        ?policy rdf:type in:Policy.
+    }
+
+}

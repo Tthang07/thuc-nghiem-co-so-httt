@@ -1,0 +1,9 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?premiumAmount
+FROM SERVICE <mapped> {
+  ?policyHolder owl:hasPremiumAmount ?premiumAmount .
+}

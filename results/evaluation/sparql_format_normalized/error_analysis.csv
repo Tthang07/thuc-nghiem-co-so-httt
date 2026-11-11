@@ -1,0 +1,39 @@
+Question,FROM SERVICE,Missing PREFIX in,Invalid aggregate SELECT,Parser Error
+1,True,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 5, column 6."
+2,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+3,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:Claim' uses an undefined prefix
+4,False,False,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""sum"" ""SUM """" at line 6, column 8."
+6,True,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 4, column 6."
+7,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:claimNumber' uses an undefined prefix
+8,False,False,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""sum"" ""SUM """" at line 3, column 8."
+9,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+10,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+11,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:hasPolicy' uses an undefined prefix
+12,False,False,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""sum"" ""SUM """" at line 3, column 8."
+13,True,True,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""sum"" ""SUM """" at line 1, column 8."
+14,True,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 7, column 6."
+15,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:claimNumber' uses an undefined prefix
+17,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+18,False,False,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""avg"" ""AVG """" at line 4, column 8."
+19,False,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" <VAR1> ""?policyCoverageDetail """" at line 5, column 50."
+21,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+22,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+23,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+24,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:hasPolicy' uses an undefined prefix
+25,True,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 4, column 6."
+26,True,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 6, column 6."
+27,True,False,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""sum"" ""SUM """" at line 3, column 8."
+28,True,True,True,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""count"" ""COUNT """" at line 1, column 8."
+29,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+31,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+32,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+33,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:soldByAgent' uses an undefined prefix
+34,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:hasPolicyHolder' uses an undefined prefix
+35,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+36,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+37,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:claimNumber' uses an undefined prefix
+38,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+39,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."
+40,True,False,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 6, column 6."
+41,False,True,False,org.eclipse.rdf4j.query.MalformedQueryException: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: QName 'in:hasLossPayment' uses an undefined prefix
+43,True,True,False,"org.eclipse.rdf4j.query.MalformedQueryException: Encountered "" ""service"" ""SERVICE """" at line 2, column 6."

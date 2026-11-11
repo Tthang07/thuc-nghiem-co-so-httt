@@ -1,0 +1,6 @@
+SELECT ?policyHolder ?claim ?catastrophe
+WHERE {
+  ?policyHolder in:hasPolicy ?policy .
+  ?policy in:hasClaim ?claim .
+  ?claim in:hasCatastrophe ?catastrophe .
+}

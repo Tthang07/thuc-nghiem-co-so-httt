@@ -1,0 +1,39 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT  ?agentId ?PolicyHolderID ?policynumber ?premium ?catastropheName ?ClaimNumber ?LossPaymentAmount ?LossReserveAmount ?ExpensePaymentAmount ?ExpenseReserveAmount
+WHERE {
+{
+    ?pcd a in:PolicyCoverageDetail;
+        in:hasPremiumAmount [ 
+            in:premiumAmount ?premium;
+        ];
+        in:hasPolicy ?policy. 
+
+     ?policy a in:Policy;
+     		in:soldByAgent [ in:agentId ?agentId];
+            in:policyNumber ?policynumber;
+            in:hasPolicyHolder [ 
+                in:policyHolderId ?PolicyHolderID 
+            ];
+    .
+
+    ?claim in:against ?pcd.     
+        ?claim rdf:type in:Claim;
+            in:claimNumber ?ClaimNumber;
+            in:hasLossPayment [
+                in:lossPaymentAmount ?LossPaymentAmount;
+            ];
+            in:hasLossReserve [
+                in:lossReserveAmount ?LossReserveAmount;
+            ];
+            in:hasExpensePayment [
+                in:expensePaymentAmount ?ExpensePaymentAmount;
+            ];
+            in:hasExpenseReserve [
+                in:expenseReserveAmount ?ExpenseReserveAmount;
+            ];
+           in:hasCatastrophe [in:catastropheName ?catastropheName;];
+        .
+    }
+}

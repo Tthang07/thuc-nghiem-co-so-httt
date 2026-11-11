@@ -1,0 +1,16 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolderId ?policyNumber ?claimNumber  ?catastropheName
+WHERE {
+{
+    ?p a in:Policy.
+    ?p in:policyNumber ?policyNumber.
+    ?p in:hasPolicyHolder [ in:policyHolderId ?policyHolderId] .
+    ?pcd in:hasPolicy ?p.
+    ?c in:against ?pcd.
+    ?c in:claimNumber ?claimNumber.
+    ?c in:hasCatastrophe ?catastrophe .
+    ?catastrophe in:catastropheName ?catastropheName
+    }
+}

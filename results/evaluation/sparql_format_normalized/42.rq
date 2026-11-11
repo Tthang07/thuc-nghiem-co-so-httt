@@ -1,0 +1,6 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(?claim) AS ?number_of_claims)
+WHERE {
+  ?claim a in:Claim .
+}

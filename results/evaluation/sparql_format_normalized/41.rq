@@ -1,0 +1,27 @@
+SELECT ?claimNumber ?totalLoss
+WHERE {
+  ?claimNumber in:hasLossPayment ?lossPayment .
+  ?claimNumber in:hasLossReserve ?lossReserve .
+  ?claimNumber in:hasExpensePayment ?expensePayment .
+  ?claimNumber in:hasExpenseReserveAmount ?expenseReserveAmount .
+  ?claimNumber in:hasCatastrophe ?catastrophe .
+  ?claimNumber in:hasPolicy ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicyCoverageEffectiveDate ?policyCoverageEffectiveDate .
+  ?policyCoverageDetail in:hasPolicyCoverageExpirationDate ?policyCoverageExpirationDate .
+  ?policyCoverageDetail in:hasPremiumAmount ?premiumAmount .
+  ?policyCoverageDetail in:hasPremiumAmountMonthly ?premiumAmountMonthly .
+  ?policyCoverageDetail in:hasPremiumPeriod ?premiumPeriod .
+  ?policyCoverageDetail in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:policyHolderId ?policyHolderId .
+  ?policyHolder in:policyNumber ?policyNumber .
+  ?policyHolder in:policyEffectiveDate ?policyEffectiveDate .
+  ?policyHolder in:policyExpirationDate ?policyExpirationDate .
+  ?policyHolder in:agentId ?agentId .
+  ?catastrophe in:catastropheName ?catastropheName .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+  BIND(SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+}

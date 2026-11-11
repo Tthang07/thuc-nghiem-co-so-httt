@@ -1,0 +1,16 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?expenseReserveAmount
+WHERE {
+{
+    ?p a in:Policy.
+    ?p in:policyNumber ?policyNumber.
+    ?p in:hasPolicyHolder ?ph.
+    ?p in:soldByAgent [ in:agentId ?agentId].
+    ?pcd in:hasPolicy ?p.
+    ?c in:against ?pcd.
+    ?c in:claimNumber ?claimNumber.
+    ?c in:hasExpenseReserve [ in:expenseReserveAmount ?expenseReserveAmount].
+    }
+}

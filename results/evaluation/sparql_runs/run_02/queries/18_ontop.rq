@@ -1,0 +1,22 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber (AVG(?settlementDays) AS ?avgTimeToSettleDays)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimOpenDate ?openDate ;
+           in:claimCloseDate ?closeDate ;
+           in:against ?coverage .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber .
+
+    BIND((xsd:dateTime(?closeDate) - xsd:dateTime(?openDate)) / "P1D"^^xsd:dayTimeDuration AS ?settlementDays)
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

@@ -1,0 +1,22 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX ds-omg-pc-database: <https://myinsurancecompany.linked.data.world/d/omg-pc-database/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+select ?PolicyNumber ?policyCoverageEffectiveDate ?policyCoverageExpirationDate ?PremiumAmount
+where{
+    SERVICE ds-omg-pc-database:mapped {
+        ?policy a in:Policy;
+            in:policyNumber ?PolicyNumber;
+        .
+        ?coverage a in:PolicyCoverageDetail;
+            in:hasPolicy ?policy;
+            in:policyCoverageEffectiveDate ?policyCoverageEffectiveDate;
+            in:policyCoverageExpirationDate ?policyCoverageExpirationDate;
+            in:hasPremiumAmount [ 
+                in:premiumAmount ?PremiumAmount;
+            ];
+        .
+        
+    }
+
+}

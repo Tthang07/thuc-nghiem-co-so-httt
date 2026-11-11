@@ -1,0 +1,20 @@
+PREFIX : <http://data.world/schema/insurance/>
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss
+WHERE {
+  ?claim :hasLossPayment ?lossPayment .
+  ?claim :hasLossReserve ?lossReserve .
+  ?claim :hasExpensePayment ?expensePayment .
+  ?claim :hasExpenseReserve ?expenseReserve .
+  ?claim :hasCatastrophe ?catastrophe .
+  ?claim :hasPolicy ?policy .
+  ?catastrophe :catastropheName ?catastropheName .
+  ?policy :policyNumber ?policyNumber .
+  ?lossPayment :lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve :lossReserveAmount ?lossReserveAmount .
+  ?expensePayment :expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve :expenseReserveAmount ?expenseReserveAmount .
+}

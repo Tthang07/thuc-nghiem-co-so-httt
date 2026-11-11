@@ -1,0 +1,7 @@
+SELECT ?agent ?policy ?claim ?lossPaymentAmount
+FROM SERVICE <mapped> {
+  ?policy in:soldByAgent ?agent .
+  ?policy in:hasClaim ?claim .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+}

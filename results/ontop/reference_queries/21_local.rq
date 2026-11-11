@@ -1,0 +1,35 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+SELECT  
+  ?policynumber  
+    (AVG(?loss) AS ?AvgLoss)
+WHERE {
+{
+    ?pcd a in:PolicyCoverageDetail;
+        in:hasPolicy ?policy. 
+
+     ?policy a in:Policy;
+            in:policyNumber ?policynumber;
+    .
+
+    ?claim in:against ?pcd.     
+        ?claim rdf:type in:Claim;
+            in:hasLossPayment [
+                in:lossPaymentAmount ?LossPaymentAmount;
+            ];
+            in:hasLossReserve [
+                in:lossReserveAmount ?LossReserveAmount;
+            ];
+            in:hasExpensePayment [
+                in:expensePaymentAmount ?ExpensePaymentAmount;
+            ];
+            in:hasExpenseReserve [
+                in:expenseReserveAmount ?ExpenseReserveAmount;
+            ];
+        .
+        bind (?LossPaymentAmount+ ?LossReserveAmount+ ?ExpensePaymentAmount + ?ExpenseReserveAmount as ?loss)
+
+    }
+
+}
+group by  ?policynumber

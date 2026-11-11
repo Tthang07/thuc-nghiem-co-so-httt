@@ -1,0 +1,56 @@
+ID,Status,Error,Time
+1,OK,,0.01
+2,OK,,0.003
+3,OK,,0.019
+4,OK,,0.015
+5,OK,,0.008
+6,OK,,0.005
+7,OK,,0.019
+8,OK,,0.006
+9,ERROR,"Binder Error: Referenced column ""COLUMN_NAME"" not found in FROM clause!
+Candidate bindings: ""Company_Subclaim_Number""
+
+LINE 91:             MAX(CASE WHEN COLUMN_NAME = 'Party_Name' THEN NULL END),
+                                   ^^^^^^^^^^^",0.005
+10,OK,,0.008
+11,OK,,0.009
+12,OK,,0.006
+13,OK,,0.007
+14,OK,,0.005
+15,OK,,0.011
+16,OK,,0.009
+17,OK,,0.003
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Avera...
+                         ^^^",0.001
+19,OK,,0.008
+20,OK,,0.005
+21,OK,,0.01
+22,OK,,0.005
+23,OK,,0.007
+24,OK,,0.007
+25,OK,,0.003
+26,OK,,0.014
+27,OK,,0.005
+28,OK,,0.004
+29,OK,,0.003
+30,OK,,0.006
+31,OK,,0.004
+32,ERROR,"Binder Error: Referenced table ""pcd"" not found!
+Candidate tables: ""p"", ""cc""
+
+LINE 10:     ON cc.Effective_Date = pcd.Effective_Date
+                                    ^^^^^^^^^^^^^^^^^^",0.002
+33,OK,,0.009
+34,OK,,0.003
+35,OK,,0.005
+36,OK,,0.004
+37,OK,,0.015
+38,OK,,0.012
+39,OK,,0.005
+40,OK,,0.014
+41,OK,,0.013
+42,OK,,0.002
+43,OK,,0.005

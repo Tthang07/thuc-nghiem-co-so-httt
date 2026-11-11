@@ -1,0 +1,197 @@
+Question,Generation Row,Fence Removed,Status,Rows,Time (s),Error
+1,0,True,ERROR,,0.057,"BinderException: Binder Error: Table ""a"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Product_Identifier""
+
+LINE 8:     Agreement a ON p.Policy_Identifier = a.Policy_Identifier
+                                                 ^^^^^^^^^^^^^^^^^^^"
+2,2,True,OK,2.0,0.039,
+3,4,True,ERROR,,0.036,"BinderException: Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 10:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^"
+4,6,True,ERROR,,0.034,"BinderException: Binder Error: Table ""cl"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 12:     Policy p ON cl.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^^"
+5,8,True,ERROR,,0.036,"BinderException: Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 8:     Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+                                                              ^^^^^^^^^^^^^^^^^^^^^"
+6,10,True,OK,1.0,0.047,
+7,12,True,ERROR,,0.033,"BinderException: Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 9:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                        ^^^^^^^^^^^^^^^^^^^"
+8,14,True,ERROR,,0.04,"BinderException: Binder Error: Table ""Premium"" does not have a column named ""Premium_Amount""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 1: SELECT P.Policy_Number, SUM(Premium.Premium_Amount) AS Total_Premium
+                                    ^^^^^^^^^^^^^^^^^^^^^^"
+9,16,True,ERROR,,0.04,"BinderException: Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 11:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^"
+10,18,True,ERROR,,0.055,"CatalogException: Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 7:     Agent a
+            ^^^^^^^"
+11,20,True,ERROR,,0.036,"BinderException: Binder Error: Table ""T1"" does not have a column named ""Claim_Identifier""
+
+Candidate bindings: : ""Policy_Identifier""
+
+LINE 1: SELECT COUNT(DISTINCT T1.Claim_Identifier) AS NumberOfClaims
+                              ^^^^^^^^^^^^^^^^^^^"
+12,22,True,ERROR,,0.036,"BinderException: Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!
+Candidate bindings: ""Policy_Amount"", ""Policy_Identifier"", ""Policy_Amount_Identifier"", ""Policy_Coverage_Detail_Identifier""
+
+LINE 3: WHERE Policy_Number = 'YourPolicyNumber';
+              ^^^^^^^^^^^^^"
+13,24,True,OK,0.0,0.045,
+14,26,True,ERROR,,0.039,"BinderException: Binder Error: Table ""P"" does not have a column named ""Premium_Amount_Identifier""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 1: SELECT DISTINCT P.Premium_Amount_Identifier
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+15,28,True,ERROR,,0.035,"BinderException: Binder Error: Referenced column ""Claim_Claim_Number"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Claim_Close_Date"", ""Claim_Status_Code"", ""Company_Subclaim_Number"", ""T2.Claim_Amount_Identifier""
+
+LINE 18:     Claim_Claim_Number;
+             ^^^^^^^^^^^^^^^^^^"
+16,30,True,ERROR,,0.05,"CatalogException: Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 7:     Agent a
+            ^^^^^^^"
+17,32,True,ERROR,,0.035,"BinderException: Binder Error: Table ""APRA"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 3: JOIN Agreement_Party_Role APRA ON P.Policy_Identifier = APRA.Policy_Identifier
+                                                                ^^^^^^^^^^^^^^^^^^^^^^"
+18,34,True,ERROR,,0.034,"BinderException: Binder Error: Table ""Claim"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 3: JOIN Policy ON Claim.Policy_Identifier = Policy.Policy_Identifier
+                       ^^^^^^^^^^^^^^^^^^^^^^^"
+19,36,True,ERROR,,0.035,"BinderException: Binder Error: Table ""Policy"" does not have a column named ""Policy_Amount_Identifier""
+
+Candidate bindings: : ""Policy_Identifier""
+
+LINE 3: JOIN Loss_Payment ON Policy.Policy_Amount_Identifier = Loss_Payment.Claim_Amount...
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+20,38,True,OK,2.0,0.041,
+21,40,True,ERROR,,0.035,"BinderException: Binder Error: Table ""LP"" does not have a column named ""Amount""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 1: SELECT P.Policy_Number, AVG(LP.Amount + LR.Amount + EP.Amount + ER.Amount) AS Average_L...
+                                    ^^^^^^^^^"
+22,42,True,OK,2.0,0.04,
+23,44,True,ERROR,,0.034,"BinderException: Binder Error: Table ""PACP"" does not have a column named ""Premium_Amount""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 5:     PACP.Premium_Amount
+            ^^^^^^^^^^^^^^^^^^^"
+24,46,True,ERROR,,0.033,"BinderException: Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 8:     Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+                                                              ^^^^^^^^^^^^^^^^^^^^^"
+25,48,True,OK,1.0,0.038,
+26,50,True,ERROR,,0.034,"BinderException: Binder Error: Table ""lp"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 8:     Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+                                                     ^^^^^^^^^^^^^^^^^^^^"
+27,52,True,OK,1.0,0.035,
+28,54,True,OK,1.0,0.038,
+29,56,True,OK,2.0,0.036,
+30,58,True,ERROR,,0.033,"BinderException: Binder Error: Table ""lp"" does not have a column named ""Claim_Amount""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 3:     SUM(lp.Claim_Amount) AS Total_Loss
+                ^^^^^^^^^^^^^^^"
+31,60,True,ERROR,,0.033,"BinderException: Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!
+Candidate bindings: ""Party_Identifier"", ""Agreement_Identifier"", ""Party_Role_Code""
+
+LINE 1: SELECT Party_Identifier, COUNT(Policy_Identifier) AS Policy_Count
+                                       ^^^^^^^^^^^^^^^^^"
+32,62,True,ERROR,,0.033,"BinderException: Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 9:     Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+                                                              ^^^^^^^^^^^^^^^^^^^^^"
+33,64,True,ERROR,,0.046,"CatalogException: Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 2: FROM Agent a
+             ^^^^^^^"
+34,66,True,ERROR,,0.036,"BinderException: Binder Error: Table ""A"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Product_Identifier""
+
+LINE 3: JOIN Agreement A ON P.Policy_Identifier = A.Policy_Identifier
+                                                  ^^^^^^^^^^^^^^^^^^^"
+35,68,True,ERROR,,0.033,"BinderException: Binder Error: Table ""C"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 3: JOIN Claim C ON P.Policy_Identifier = C.Policy_Identifier
+                                              ^^^^^^^^^^^^^^^^^^^"
+36,70,True,ERROR,,0.032,"BinderException: Binder Error: Table ""T1"" does not have a column named ""Claim_Number""
+
+Candidate bindings: : ""Claims_Made_Date""
+
+LINE 1: SELECT T1.Claim_Number, T2.Claim_Amount FROM Claim AS T1 INNER...
+               ^^^^^^^^^^^^^^^"
+37,72,True,ERROR,,0.032,"BinderException: Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 13:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^"
+38,74,True,ERROR,,0.032,"BinderException: Binder Error: Referenced column ""Claim_Identifier"" not found in FROM clause!
+Candidate bindings: ""Expense_Payment.Claim_Amount_Identifier"", ""Expense_Reserve.Claim_Amount_Identifier"", ""Loss_Payment.Claim_Amount_Identifier"", ""Loss_Reserve.Claim_Amount_Identifier"", ""Policy.Policy_Identifier""
+
+LINE 1: SELECT Policy_Number, COUNT(Claim_Identifier) AS Number_of_Claims, SUM(Loss_Payment...
+                                    ^^^^^^^^^^^^^^^^"
+39,76,True,ERROR,,0.031,"BinderException: Binder Error: Table ""T1"" does not have a column named ""Claim_Number""
+
+Candidate bindings: : ""Claims_Made_Date""
+
+LINE 5: GROUP BY T1.Claim_Number;
+                 ^^^^^^^^^^^^^^^"
+40,78,True,ERROR,,0.031,"BinderException: Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 7:     Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+                                                              ^^^^^^^^^^^^^^^^^^^^^"
+41,80,True,ERROR,,0.034,"BinderException: Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 14:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^"
+42,82,True,OK,1.0,0.032,
+43,84,True,OK,0.0,0.036,

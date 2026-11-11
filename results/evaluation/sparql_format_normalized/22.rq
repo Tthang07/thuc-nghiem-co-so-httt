@@ -1,0 +1,5 @@
+SELECT ?policyNumber ?premiumAmount
+FROM SERVICE <mapped> {
+  ?policy in:policyNumber ?policyNumber .
+  ?policy in:premiumAmount ?premiumAmount .
+}

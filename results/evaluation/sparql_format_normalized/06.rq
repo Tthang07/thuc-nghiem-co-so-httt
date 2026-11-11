@@ -1,0 +1,8 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (SUM(in:premiumAmountMonthly) AS ?totalPremium) (COUNT(DISTINCT in:policyNumber) AS ?totalPolicies)
+FROM SERVICE <mapped> {
+  in:PolicyCoverageDetail in:hasPremiumAmountMonthly ?premiumAmountMonthly .
+  in:PolicyCoverageDetail in:hasPolicy ?policy .
+  in:Policy ?policyNumber .
+}

@@ -1,0 +1,24 @@
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX ds-omg-pc-database: <https://myinsurancecompany.linked.data.world/d/omg-pc-database/>
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX fn: <http://data.world/function/functions#>
+
+
+select ?PolicyNumber (avg(?Diff) as ?AvgDaysToSettle)
+where{
+    {
+        ?policy a in:Policy;
+            in:policyNumber ?PolicyNumber;
+        .
+        ?coverage in:hasPolicy ?policy. 
+        ?claim in:against ?coverage.     
+        ?claim rdf:type in:Claim;
+            in:claimNumber ?ClaimNumber;
+            in:claimOpenDate ?ClaimOpenDate;
+            in:claimCloseDate ?ClaimCloseDate;
+        .
+    }
+    BIND(ofn:daysBetween(?ClaimOpenDate, ?ClaimCloseDate) as ?Diff)
+}
+group by ?PolicyNumber

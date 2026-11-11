@@ -1,0 +1,13 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT  ?policyNumber ?policyEffectiveDate ?policyExpirationDate 
+WHERE {
+{
+        ?policy rdf:type in:Policy;
+            in:policyNumber ?policyNumber;
+            in:policyEffectiveDate ?policyEffectiveDate;
+            in:policyExpirationDate ?policyExpirationDate;
+
+    }
+}

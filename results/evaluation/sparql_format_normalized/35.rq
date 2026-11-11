@@ -1,0 +1,7 @@
+SELECT ?policyNumber ?claimNumber
+FROM SERVICE <mapped> {
+  ?policy in:hasPolicy ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasClaim ?claim .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy policyNumber ?policyNumber .
+}

@@ -1,0 +1,12 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT  ?agentId (count(?policy) as ?NoOfPolicies)
+WHERE {
+{
+        ?policy rdf:type in:Policy;
+            in:soldByAgent [ in:agentId ?agentId].
+
+    }
+}
+group by ?agentId

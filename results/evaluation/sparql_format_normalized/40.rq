@@ -1,0 +1,18 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?agentId (SUM(?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?totalLoss)
+FROM SERVICE <mapped> {
+  ?policy in:soldByAgent ?agent .
+  ?policy in:hasLossPayment ?lossPayment .
+  ?policy in:hasLossReserve ?lossReserve .
+  ?policy in:hasExpensePayment ?expensePayment .
+  ?policy in:hasExpenseReserve ?expenseReserve .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}
+GROUP BY ?agentId
+ORDER BY ?totalLoss DESC

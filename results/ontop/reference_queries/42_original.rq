@@ -1,0 +1,10 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+select (count(?claim) as ?NoOfClaims)
+where{
+    SERVICE :mapped {
+        ?claim rdf:type in:Claim.
+    }
+
+}

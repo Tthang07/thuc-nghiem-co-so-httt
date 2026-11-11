@@ -1,0 +1,14 @@
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmount ?agentId ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+FROM <mapped>
+WHERE {
+  ?claim a in:Claim .
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:policyNumber ?policyNumber .
+  ?claim in:policyHolder ?policyHolder .
+  ?claim in:premiumAmount ?premiumAmount .
+  ?claim in:agentId ?agentId .
+  ?claim in:lossPaymentAmount ?lossPaymentAmount .
+  ?claim in:lossReserveAmount ?lossReserveAmount .
+  ?claim in:expensePaymentAmount ?expensePaymentAmount .
+  ?claim in:expenseReserveAmount ?expenseReserveAmount .
+}

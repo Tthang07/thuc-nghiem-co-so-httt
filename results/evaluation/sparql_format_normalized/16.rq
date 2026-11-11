@@ -1,0 +1,15 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossReserveAmount
+WHERE {
+  ?agent in:soldByAgent ?policy .
+  ?policy in:hasPolicyHolder ?policyHolder .
+  ?policyHolder in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasLossReserve ?lossReserve .
+  ?claim in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+  ?claim in:claimNumber ?claimNumber .
+}

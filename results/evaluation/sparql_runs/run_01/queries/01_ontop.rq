@@ -1,0 +1,40 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+       (SUM(COALESCE(?lossPaymentAmt, 0) + COALESCE(?lossReserveAmt, 0)) AS ?totalLoss)
+       (SUM(COALESCE(?premiumAmt, 0)) AS ?totalPremium)
+       ((SUM(COALESCE(?lossPaymentAmt, 0) + COALESCE(?lossReserveAmt, 0))) / SUM(COALESCE(?premiumAmt, 0)) AS ?lossRatio)
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+
+    ?agent a in:Agent ;
+           in:agentId ?agentId .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?premium a in:Premium ;
+             in:premiumAmount ?premiumAmt .
+
+    OPTIONAL {
+      ?claim a in:Claim ;
+             in:against ?pcd .
+      OPTIONAL {
+        ?claim in:hasLossPayment ?lp .
+        ?lp a in:LossPayment ;
+            in:lossPaymentAmount ?lossPaymentAmt .
+      }
+      OPTIONAL {
+        ?claim in:hasLossReserve ?lr .
+        ?lr a in:LossReserve ;
+            in:lossReserveAmount ?lossReserveAmt .
+      }
+    }
+  }
+}
+GROUP BY ?policyNumber ?agentId
+HAVING (SUM(COALESCE(?premiumAmt, 0)) > 0)

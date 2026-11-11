@@ -1,0 +1,6 @@
+SELECT ?agent ?policy ?catastrophe
+WHERE {
+  ?policy in:soldByAgent ?agent .
+  ?claim in:hasPolicy ?policy .
+  ?claim in:hasCatastrophe ?catastrophe .
+}

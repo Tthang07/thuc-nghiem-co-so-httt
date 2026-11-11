@@ -1,0 +1,12 @@
+SELECT ?claimNumber ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}

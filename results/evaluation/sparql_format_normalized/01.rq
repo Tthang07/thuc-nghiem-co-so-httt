@@ -1,0 +1,15 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?agentId (SUM(?lossPaymentAmount) AS ?totalLossAmount) (SUM(?premiumAmount) AS ?totalPremiumAmount) (SUM(?lossPaymentAmount) / SUM(?premiumAmount) AS ?lossRatio)
+FROM SERVICE <mapped> {
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasPolicy ?policy .
+  ?policyCoverageDetail in:hasLossPayment ?lossPayment .
+  ?policyCoverageDetail in:hasPremiumAmount ?premium .
+  ?policy in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?policy in:policyNumber ?policyNumber .
+}
+GROUP BY ?policyNumber ?agentId
+ORDER BY ?policyNumber ?agentId

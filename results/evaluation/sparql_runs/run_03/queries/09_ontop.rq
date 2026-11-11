@@ -1,0 +1,56 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmountPaid ?catastrophe ?agent
+       ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?expensePayment .
+      ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:against ?coverage .
+      ?coverage in:hasPolicy ?policy .
+      ?policy in:policyNumber ?policyNumber .
+
+      OPTIONAL {
+        ?policy in:hasPolicyHolder ?policyHolderResource .
+        OPTIONAL { ?policyHolderResource in:policyHolderId ?policyHolder }
+      }
+
+      OPTIONAL {
+        ?coverage in:hasPremiumAmount ?premium .
+        ?premium in:premiumAmount ?premiumAmountPaid .
+      }
+
+      OPTIONAL {
+        ?policy in:soldByAgent ?agentResource .
+        OPTIONAL { ?agentResource in:agentId ?agent }
+      }
+    }
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?catastropheResource .
+      OPTIONAL { ?catastropheResource in:catastropheName ?catastrophe }
+    }
+  }
+}

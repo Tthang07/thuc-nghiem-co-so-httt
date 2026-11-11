@@ -1,0 +1,14 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+select ?ClaimNumber ?ClaimOpenDate ?ClaimCloseDate
+where{
+    {
+        ?claim rdf:type in:Claim;
+            in:claimNumber ?ClaimNumber;
+            in:claimOpenDate ?ClaimOpenDate;
+            in:claimCloseDate ?ClaimCloseDate;
+        .
+    }
+
+}

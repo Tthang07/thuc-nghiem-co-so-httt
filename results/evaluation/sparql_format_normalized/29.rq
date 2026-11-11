@@ -1,0 +1,6 @@
+SELECT ?claimNumber ?claimOpenDate ?claimCloseDate
+FROM SERVICE <mapped> {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:claimOpenDate ?claimOpenDate .
+  ?claim in:claimCloseDate ?claimCloseDate .
+}

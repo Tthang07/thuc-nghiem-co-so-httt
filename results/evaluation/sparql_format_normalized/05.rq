@@ -1,0 +1,14 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX foaf: <http://xmlns.com/foaf/spec/>
+
+SELECT ?agent ?policyNumber ?claimNumber ?expensePaymentAmount
+WHERE {
+  ?agent foaf:AgentId ?agentId .
+  ?agent in:soldByAgent ?policy .
+  ?policy in:hasPolicyCoverageDetail ?policyCoverageDetail .
+  ?policyCoverageDetail in:hasClaim ?claim .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?claim in:claimNumber ?claimNumber .
+  ?policy in:policyNumber ?policyNumber .
+}

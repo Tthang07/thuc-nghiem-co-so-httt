@@ -1,0 +1,15 @@
+PREFIX : <https://myinsurancecompany.linked.data.world/d/chat-with-the-data-benchmark/>
+PREFIX ds-omg-pc-database: <https://myinsurancecompany.linked.data.world/d/omg-pc-database/>
+PREFIX in: <http://data.world/schema/insurance/>
+
+select ?ClaimNumber ?expensePaymentAmount
+where{
+    {
+        ?claim rdf:type in:Claim;
+            in:claimNumber ?ClaimNumber;
+            in:hasExpensePayment [
+                in:expensePaymentAmount ?expensePaymentAmount;
+            ];
+        .
+    }
+}

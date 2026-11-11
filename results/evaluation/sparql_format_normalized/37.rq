@@ -1,0 +1,15 @@
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmount ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:policyNumber ?policyNumber .
+  ?claim in:policyHolder ?policyHolder .
+  ?claim in:premiumAmount ?premiumAmount .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+  ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+}

@@ -1,0 +1,15 @@
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmount ?catastropheName ?agentId
+FROM SERVICE <mapped> {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:policyNumber ?policyNumber .
+  ?claim in:policyHolder ?policyHolder .
+  ?claim in:premiumAmount ?premiumAmount .
+  ?claim in:hasCatastrophe ?catastrophe .
+  ?catastrophe in:catastropheName ?catastropheName .
+  ?claim in:soldByAgent ?agent .
+  ?agent in:agentId ?agentId .
+  ?claim in:hasLossPayment ?lossPayment .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?claim in:hasExpensePayment ?expensePayment .
+  ?claim in:hasExpenseReserve ?expenseReserve .
+}

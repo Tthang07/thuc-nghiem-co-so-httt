@@ -1,0 +1,6 @@
+SELECT ?claimNumber ?lossReserveAmount
+FROM SERVICE <mapped> {
+  ?claim in:claimNumber ?claimNumber .
+  ?claim in:hasLossReserve ?lossReserve .
+  ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+}

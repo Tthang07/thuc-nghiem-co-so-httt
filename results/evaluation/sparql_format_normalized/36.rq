@@ -1,0 +1,6 @@
+SELECT ?claimNumber ?expensePaymentAmount
+FROM SERVICE <mapped> {
+  ?claim in:claimNumber ?claimNumber ;
+         in:hasExpensePayment ?expensePayment .
+  ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+}

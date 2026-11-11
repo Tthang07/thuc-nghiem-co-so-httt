@@ -1,0 +1,10 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT AVG(DATEDIFF(YEAR, in:claimOpenDate, in:claimCloseDate)) AS ?averageTime
+WHERE {
+  SERVICE <mapped> {
+    ?claim in:claimOpenDate ?claimOpenDate .
+    ?claim in:claimCloseDate ?claimCloseDate .
+  }
+}
