@@ -1,0 +1,58 @@
+ID,Inquiry URI,Reference ID,Status,Rows,Time (s),Error
+1,https://templates.data.world/IQ_03fc5a5571db11254049e240e015fb80,https://templates.data.world/query-a916ea29-b4e3-45c6-9cb4-f9e1381f5563,OK,1.0,4.05,
+2,https://templates.data.world/IQ_0d87a2a016062bdeb9a6e4471acd00b2,https://templates.data.world/query-481d808c-a3ea-4eef-91d9-9f7ff36d0855,OK,2.0,3.6,
+3,https://templates.data.world/IQ_1e19282f42eaea84b5bce28c2386ead8,https://templates.data.world/query-a7e183f5-33f6-4ddf-b3cf-95a31f78277e,OK,2.0,3.71,
+4,https://templates.data.world/IQ_1e57233cbc8a71751572a4bf687a03c6,https://templates.data.world/query-d1fc6863-b430-4199-95de-a3f6f89d63a1,OK,1.0,3.65,
+5,https://templates.data.world/IQ_205ac9d7d19a5142bec840952e9f6646,https://templates.data.world/query-61bca3dc-7ad9-48ee-bf25-1062fda864ed,OK,2.0,3.39,
+6,https://templates.data.world/IQ_2b95bb37fe905f8c74b35d72e65f3d08,https://templates.data.world/query-1229101a-9a6d-4c00-93be-7a165a7f349b,OK,1.0,3.33,
+7,https://templates.data.world/IQ_317198ae3c0a79473a3b96aab0ce2dd7,https://templates.data.world/query-0d8c074f-3c02-4c65-bc0a-b69da974889c,OK,2.0,3.49,
+8,https://templates.data.world/IQ_317ef7a6c42204b1933a510805c57e45,https://templates.data.world/query-ae1e0b7b-7f5e-41cc-8bb8-0ee4d364d6c1,OK,2.0,3.54,
+9,https://templates.data.world/IQ_38393fd93e7b54dde596453f6b663b95,https://templates.data.world/query-aebf3687-c84d-4c5c-b5bf-d48e5e6411ba,OK,2.0,3.69,
+10,https://templates.data.world/IQ_39301bf92f7e93608bff059c4a83a845,https://templates.data.world/query-3d645ba9-0c81-4143-9e80-da1fbdd2b9eb,OK,2.0,3.34,
+11,https://templates.data.world/IQ_419b164c362608054523707eaf5a57f3,https://templates.data.world/query-d3c361b3-795a-4143-91ce-6016ea06eea4,OK,1.0,3.2,
+12,https://templates.data.world/IQ_43461e701debb68f0f8ac1dceb945650,https://templates.data.world/query-50cdf9ca-862c-4847-8cf1-21ea31a1ed0a,OK,2.0,3.28,
+13,https://templates.data.world/IQ_5b813c2c3d7949916d33976f2da518a0,https://templates.data.world/query-3daee293-dc9d-425c-b974-33c2c3dd402b,OK,2.0,3.33,
+14,https://templates.data.world/IQ_612b36a4405487ec34831e093e2494dc,https://templates.data.world/query-f16d0623-ae64-41c6-af76-6df3964334ab,OK,6.0,3.23,
+15,https://templates.data.world/IQ_61defb5ce4df26617289ad4cf7c386ab,https://templates.data.world/query-dd3ed73e-b4aa-4320-bb21-84eb29345f85,OK,2.0,3.27,
+16,https://templates.data.world/IQ_66ee72a9520811428711bf451d1d1de7,https://templates.data.world/query-3ff591a2-3a2a-47fb-a162-b9faf14f793e,OK,2.0,3.27,
+17,https://templates.data.world/IQ_6b6e06649d45445bcb0428c599bbbe49,https://templates.data.world/query-4b91a28c-6916-47de-817c-1a32a8d130f2,OK,2.0,3.29,
+18,https://templates.data.world/IQ_6da3f7fcefcdd7453548c0956632a211,https://templates.data.world/query-76d22258-2291-4d86-8f01-063f93a9cf68,ERROR,,3.21,"F4JTupleExprTranslator.java:613)
+	at it.unibz.inf.ontop.query.translation.impl.RDF4JTupleExprTranslator.translate(RDF4JTupleExprTranslator.java:115)
+	at it.unibz.inf.ontop.query.translation.impl.RDF4JTupleExprTranslator.translate(RDF4JTupleExprTranslator.java:94)
+	at it.unibz.inf.ontop.query.translation.impl.RDF4JTupleExprTranslator.getTree(RDF4JTupleExprTranslator.java:89)
+	at it.unibz.inf.ontop.query.translation.impl.RDF4JQueryTranslatorImpl.translateQuery(RDF4JQueryTranslatorImpl.java:100)
+	at it.unibz.inf.ontop.query.impl.RDF4JKGQueryImpl.translate(RDF4JKGQueryImpl.java:37)
+	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:92)
+	... 4 more
+Caused by: it.unibz.inf.ontop.exception.OntopUnsupportedKGQueryException: The expression FunctionCall (http://data.world/function/functions#date_diff)
+   Var (name=ClaimOpenDate)
+   Var (name=ClaimCloseDate)
+   ValueConstant (value=""day"")
+ is not supported yet!
+	... 19 more
+"
+19,https://templates.data.world/IQ_6f7ead3b85413d6fcba8b08522dbda69,https://templates.data.world/query-68666e14-f088-452c-a668-5c2eea03d963,OK,1.0,3.37,
+20,https://templates.data.world/IQ_72d859973d85ae687c9bde924405b868,https://templates.data.world/query-516d4744-e2c2-4bce-8c62-b2f5e2cfdbc6,OK,2.0,3.34,
+21,https://templates.data.world/IQ_7321ddad8d79429070bc9c116e2ef0f3,https://templates.data.world/query-ef3e8311-fa4e-4119-b75e-943517f84766,OK,1.0,3.45,
+22,https://templates.data.world/IQ_73a8fe1304f088d17a454126a17307b8,https://templates.data.world/query-44611072-fbd9-460f-8453-766a1b2fb15c,OK,6.0,3.39,
+23,https://templates.data.world/IQ_7bbadc08fa7691095cd46a219e4a0ea2,https://templates.data.world/query-e50bfb2c-ba28-4605-82d7-575f3541753b,OK,6.0,3.3,
+24,https://templates.data.world/IQ_8b9dc0d26e4b77f615fb74c234c602b4,https://templates.data.world/query-63d27668-4bc3-4bb3-af1e-477102f7fff6,OK,2.0,3.32,
+25,https://templates.data.world/IQ_8f2344e8d1bba2cc39fcae99afd42e4a,https://templates.data.world/query-edc75975-e4d8-4c97-a888-15054388635a,OK,1.0,3.22,
+26,https://templates.data.world/IQ_923f5d4ed19c42ea63c9e0b1c9209509,https://templates.data.world/query-f8f57e57-b043-4a32-bde0-b5950d589cac,OK,1.0,3.47,
+27,https://templates.data.world/IQ_985f30d50b59256c4b01d42901b0f9fb,https://templates.data.world/query-f638042e-9031-4b27-9b32-8ab0ec778106,OK,1.0,3.36,
+28,https://templates.data.world/IQ_a8f3cd24b58a0e3dc8a30c45d315b195,https://templates.data.world/query-f8548f16-dfa1-4544-8b32-a8af70d30bfd,OK,1.0,3.38,
+29,https://templates.data.world/IQ_aa04aad4b2ef9941a9ae456e5ac2efb9,https://templates.data.world/query-785a48b0-c9f3-4fbc-a1c7-7e730d519a61,OK,2.0,3.33,
+30,https://templates.data.world/IQ_adff0403ac3869fc65982c5efd682455,https://templates.data.world/query-a05f1b80-db94-4d23-8b87-b6f3dd97ef10,OK,2.0,3.34,
+31,https://templates.data.world/IQ_b2c56b1858b24690742a6b86af872858,https://templates.data.world/query-7e599d7d-d9b9-4e67-a0d2-231d96305cbb,OK,1.0,3.27,
+32,https://templates.data.world/IQ_b4236934056faa683bbcded57fb3c8e7,https://templates.data.world/query-e9216b56-5fef-433f-a2bd-89c7360d69ed,OK,2.0,3.39,
+33,https://templates.data.world/IQ_b4454e71f05c688d787b89ad8d71e9b9,https://templates.data.world/query-9e5882b1-dcd6-4312-a312-50506a0a9144,OK,2.0,3.29,
+34,https://templates.data.world/IQ_c340bd5670eec67f1c347fb39335cf5b,https://templates.data.world/query-b4ca41e8-68a6-4b85-8f46-790fece9029a,OK,2.0,3.29,
+35,https://templates.data.world/IQ_c4844d67ccc07dbdd134c45536592cb2,https://templates.data.world/query-f6d8cd1d-db6c-4711-93f0-1177201b6c71,OK,2.0,3.3,
+36,https://templates.data.world/IQ_c5c85d5a4433721ff008569dfea75f80,https://templates.data.world/query-fe7ba4a7-b58e-4d13-8267-40017725a0d8,OK,2.0,3.27,
+37,https://templates.data.world/IQ_c92fa9ee6450b79bd0a56e85b4379273,https://templates.data.world/query-f7a839d9-2751-4dd0-8007-c390fd63ed41,OK,2.0,3.47,
+38,https://templates.data.world/IQ_cea56ea8627729b96f12fb4714aa7547,https://templates.data.world/query-bec73512-39df-46f5-b5de-4d37ebb51a28,OK,1.0,3.44,
+39,https://templates.data.world/IQ_d4c4a23ff49b92884beb29163e65add0,https://templates.data.world/query-6513c0a8-f0f7-4d88-ae90-e2bfcf9ffa30,OK,2.0,3.33,
+40,https://templates.data.world/IQ_d9925658820793094d118f94cc82c890,https://templates.data.world/query-83bf0228-382a-4ea8-97b3-c1a040eb4377,OK,1.0,3.72,
+41,https://templates.data.world/IQ_ecee6bdd5000afd4300d0fff6df1fde6,https://templates.data.world/query-e2bac95a-bf53-4b69-b737-b4bd23ab46b8,OK,2.0,3.59,
+42,https://templates.data.world/IQ_f1b8ef62994d657eda300db1a4b71046,https://templates.data.world/query-76ad469d-ea2a-467c-a832-92b8522b7ede,OK,1.0,3.98,
+43,https://templates.data.world/IQ_fd57976dc7499200ec8d8f57f2b19ef6,https://templates.data.world/query-fc578af0-b183-422f-8ef0-12ad85c669ee,OK,2.0,3.37,
