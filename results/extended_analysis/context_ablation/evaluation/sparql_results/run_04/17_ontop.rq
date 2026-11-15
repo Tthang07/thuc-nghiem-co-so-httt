@@ -1,0 +1,12 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+WHERE {
+  {
+    ?policy a ins:Policy ;
+            ins:policyNumber ?policyNumber ;
+            ins:soldByAgent ?agent .
+    ?agent a ins:Agent ;
+           ins:agentId ?agentId .
+  }
+}

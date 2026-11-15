@@ -1,0 +1,17 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?policy ?policyNumber ?claim ?claimNumber
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:against ?pcd .
+
+    ?pcd a ins:PolicyCoverageDetail ;
+         ins:hasPolicy ?policy .
+
+    ?policy a ins:Policy ;
+            ins:policyNumber ?policyNumber .
+  }
+}
+ORDER BY ?policyNumber ?claimNumber

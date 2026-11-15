@@ -1,0 +1,13 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolderId (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  {
+    ?policy a ins:Policy ;
+            ins:hasPolicyHolder ?policyHolder ;
+            ins:policyNumber ?policyNumber .
+    ?policyHolder ins:policyHolderId ?policyHolderId .
+  }
+}
+GROUP BY ?policyHolderId
+ORDER BY ?policyHolderId

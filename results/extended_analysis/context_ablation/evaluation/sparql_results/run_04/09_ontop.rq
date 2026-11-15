@@ -1,0 +1,58 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmountPaid ?catastrophe ?agent
+       ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:against ?pcd .
+
+    OPTIONAL {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?expenseReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasCatastrophe ?cat .
+      OPTIONAL { ?cat ins:catastropheName ?catastropheName . }
+      BIND(COALESCE(?catastropheName, STR(?cat)) AS ?catastrophe)
+    }
+
+    ?pcd ins:hasPolicy ?policy .
+
+    OPTIONAL { ?policy ins:policyNumber ?policyNumber . }
+
+    OPTIONAL {
+      ?policy ins:hasPolicyHolder ?ph .
+      OPTIONAL { ?ph ins:policyHolderId ?policyHolderId . }
+      BIND(COALESCE(?policyHolderId, STR(?ph)) AS ?policyHolder)
+    }
+
+    OPTIONAL {
+      ?pcd ins:hasPremiumAmount ?prem .
+      ?prem ins:premiumAmount ?premiumAmountPaid .
+    }
+
+    OPTIONAL {
+      ?policy ins:soldByAgent ?ag .
+      OPTIONAL { ?ag ins:agentId ?agentId . }
+      BIND(COALESCE(?agentId, STR(?ag)) AS ?agent)
+    }
+  }
+}

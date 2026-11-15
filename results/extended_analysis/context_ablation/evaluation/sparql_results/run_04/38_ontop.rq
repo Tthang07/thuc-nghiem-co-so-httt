@@ -1,0 +1,71 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?numberOfClaims ?averageLoss
+WHERE {
+  {
+    SELECT ?policyNumber (COUNT(DISTINCT ?claim) AS ?numberOfClaims) (AVG(?claimLoss) AS ?averageLoss)
+    WHERE {
+      {
+        ?claim a ins:Claim ;
+               ins:against ?pcd .
+
+        ?pcd ins:hasPolicy ?policy .
+        ?policy ins:policyNumber ?policyNumber .
+
+        OPTIONAL {
+          SELECT ?claim (SUM(?v) AS ?lossPaymentSum)
+          WHERE {
+            {
+              ?claim ins:hasLossPayment ?lp .
+              ?lp ins:lossPaymentAmount ?v .
+            }
+          }
+          GROUP BY ?claim
+        }
+
+        OPTIONAL {
+          SELECT ?claim (SUM(?v) AS ?lossReserveSum)
+          WHERE {
+            {
+              ?claim ins:hasLossReserve ?lr .
+              ?lr ins:lossReserveAmount ?v .
+            }
+          }
+          GROUP BY ?claim
+        }
+
+        OPTIONAL {
+          SELECT ?claim (SUM(?v) AS ?expensePaymentSum)
+          WHERE {
+            {
+              ?claim ins:hasExpensePayment ?ep .
+              ?ep ins:expensePaymentAmount ?v .
+            }
+          }
+          GROUP BY ?claim
+        }
+
+        OPTIONAL {
+          SELECT ?claim (SUM(?v) AS ?expenseReserveSum)
+          WHERE {
+            {
+              ?claim ins:hasExpenseReserve ?er .
+              ?er ins:expenseReserveAmount ?v .
+            }
+          }
+          GROUP BY ?claim
+        }
+
+        BIND(
+          COALESCE(?lossPaymentSum, 0) +
+          COALESCE(?lossReserveSum, 0) +
+          COALESCE(?expensePaymentSum, 0) +
+          COALESCE(?expenseReserveSum, 0)
+          AS ?claimLoss
+        )
+      }
+    }
+    GROUP BY ?policyNumber
+  }
+}
+ORDER BY ?policyNumber

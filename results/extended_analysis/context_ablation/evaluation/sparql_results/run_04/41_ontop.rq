@@ -1,0 +1,46 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber
+       (SUM(?amt) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:against ?pcd .
+
+    ?pcd ins:hasPolicy ?policy .
+    ?policy ins:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      ?claim ins:hasCatastrophe ?cat .
+      OPTIONAL { ?cat ins:catastropheName ?catastropheName . }
+    }
+
+    {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+    UNION
+    {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+    UNION
+    {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+    UNION
+    {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+  }
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber
+ORDER BY ?claimNumber ?catastropheName ?policyNumber

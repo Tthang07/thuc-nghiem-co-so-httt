@@ -1,0 +1,20 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolderId ?policyNumber (SUM(?premiumValue) AS ?totalPremiumPaid)
+WHERE {
+  {
+    ?policy a ins:Policy ;
+            ins:policyNumber ?policyNumber ;
+            ins:hasPolicyHolder ?policyHolder .
+
+    ?policyHolder ins:policyHolderId ?policyHolderId .
+
+    ?coverage a ins:PolicyCoverageDetail ;
+              ins:hasPolicy ?policy ;
+              ins:hasPremiumAmount ?premium .
+
+    ?premium ins:premiumAmount ?premiumValue .
+  }
+}
+GROUP BY ?policyHolderId ?policyNumber
+ORDER BY ?policyHolderId ?policyNumber

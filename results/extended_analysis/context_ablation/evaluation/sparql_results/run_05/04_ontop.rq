@@ -1,0 +1,40 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?catastropheName ?policyNumber
+       (SUM(?lossPaymentVal + ?lossReserveVal + ?expensePaymentVal + ?expenseReserveVal) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:against ?pcd ;
+           ins:hasCatastrophe ?cat .
+
+    ?cat ins:catastropheName ?catastropheName .
+
+    ?pcd ins:hasPolicy ?policy .
+    ?policy ins:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?lossPaymentAmt .
+    }
+    OPTIONAL {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?lossReserveAmt .
+    }
+    OPTIONAL {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?expensePaymentAmt .
+    }
+    OPTIONAL {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?expenseReserveAmt .
+    }
+
+    BIND(COALESCE(xsd:decimal(?lossPaymentAmt), 0) AS ?lossPaymentVal)
+    BIND(COALESCE(xsd:decimal(?lossReserveAmt), 0) AS ?lossReserveVal)
+    BIND(COALESCE(xsd:decimal(?expensePaymentAmt), 0) AS ?expensePaymentVal)
+    BIND(COALESCE(xsd:decimal(?expenseReserveAmt), 0) AS ?expenseReserveVal)
+  }
+}
+GROUP BY ?catastropheName ?policyNumber
+ORDER BY ?catastropheName ?policyNumber

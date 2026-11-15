@@ -1,0 +1,45 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?premiumAmount
+       (COUNT(DISTINCT ?claim) AS ?numberOfClaims)
+       (SUM(?lossComponent) AS ?totalLoss)
+       ((SUM(?lossComponent) / xsd:decimal(?premiumAmount)) AS ?lossRatio)
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:against ?pcd .
+
+    ?pcd ins:hasPolicy ?policy ;
+         ins:hasPremiumAmount ?premium .
+
+    ?policy ins:policyNumber ?policyNumber .
+    ?premium ins:premiumAmount ?premiumAmount .
+
+    {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+  }
+}
+GROUP BY ?policyNumber ?premiumAmount
+ORDER BY ?policyNumber

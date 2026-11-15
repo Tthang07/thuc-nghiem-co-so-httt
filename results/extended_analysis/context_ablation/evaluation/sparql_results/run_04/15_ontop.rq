@@ -1,0 +1,29 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber .
+    
+    OPTIONAL {
+      ?claim ins:hasLossPayment ?lossPayment .
+      ?lossPayment ins:lossPaymentAmount ?lossPaymentAmount .
+    }
+    
+    OPTIONAL {
+      ?claim ins:hasLossReserve ?lossReserve .
+      ?lossReserve ins:lossReserveAmount ?lossReserveAmount .
+    }
+    
+    OPTIONAL {
+      ?claim ins:hasExpensePayment ?expensePayment .
+      ?expensePayment ins:expensePaymentAmount ?expensePaymentAmount .
+    }
+    
+    OPTIONAL {
+      ?claim ins:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve ins:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}

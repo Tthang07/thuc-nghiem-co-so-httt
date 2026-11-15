@@ -1,0 +1,16 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolder ?claim ?catastrophe
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:against ?coverage ;
+           ins:hasCatastrophe ?catastrophe .
+
+    ?coverage a ins:PolicyCoverageDetail ;
+              ins:hasPolicy ?policy .
+
+    ?policy a ins:Policy ;
+            ins:hasPolicyHolder ?policyHolder .
+  }
+}

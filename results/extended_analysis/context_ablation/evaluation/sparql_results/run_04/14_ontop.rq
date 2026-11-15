@@ -1,0 +1,10 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?policyHolder ?premium
+WHERE {
+  {
+    ?policy ins:hasPolicyHolder ?policyHolder ;
+            ins:hasPolicy ?coverage .
+    ?coverage ins:hasPremiumAmount ?premium .
+  }
+}

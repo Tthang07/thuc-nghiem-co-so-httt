@@ -1,0 +1,209 @@
+﻿ID,Inquiry URI,Question,Method,Generated Query,Prompt Tokens,Output Tokens,Time (s),Status,Error
+16,https://templates.data.world/IQ_66ee72a9520811428711bf451d1d1de7,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number",SQL,"SELECT
+    a.Agent_Identifier AS agent_id,
+    p.Policy_Number AS policy_number,
+    c.Company_Claim_Number AS claim_number,
+    ca.Claim_Amount AS loss_reserve_amount
+FROM Loss_Reserve lr
+JOIN Claim_Amount ca
+    ON ca.Claim_Amount_Identifier = lr.Claim_Amount_Identifier
+JOIN Claim c
+    ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN Policy p
+    ON p.Policy_Identifier = c.Insurable_Object_Identifier
+JOIN Agent a
+    ON a.Agent_Identifier = p.Agent_Identifier
+ORDER BY
+    a.Agent_Identifier,
+    p.Policy_Number,
+    c.Company_Claim_Number;",1100,148,3.112,GENERATED,
+16,https://templates.data.world/IQ_66ee72a9520811428711bf451d1d1de7,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number",SPARQL,"PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossReserveAmount
+WHERE {
+  SERVICE <mapped> {
+    ?policy a ins:Policy ;
+            ins:policyNumber ?policyNumber ;
+            ins:soldByAgent ?agent .
+
+    ?agent a ins:Agent ;
+           ins:agentId ?agentId .
+
+    ?coverage a ins:PolicyCoverageDetail ;
+              ins:hasPolicy ?policy .
+
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:against ?coverage ;
+           ins:hasLossReserve ?lossReserve .
+
+    ?lossReserve a ins:LossReserve ;
+                 ins:lossReserveAmount ?lossReserveAmount .
+  }
+}
+ORDER BY ?agentId ?policyNumber ?claimNumber ?lossReserveAmount",2638,172,3.894,GENERATED,
+17,https://templates.data.world/IQ_6b6e06649d45445bcb0428c599bbbe49,Return all the policies and the agents that sold them by policy number and agent id,SQL,"SELECT
+    p.Policy_Number,
+    a.Agent_Identifier
+FROM Policy p
+JOIN Agreement ag
+    ON ag.Agreement_Identifier = p.Policy_Identifier
+JOIN Agent a
+    ON a.Agent_Identifier = ag.Agent_Identifier;",938,54,1.672,GENERATED,
+17,https://templates.data.world/IQ_6b6e06649d45445bcb0428c599bbbe49,Return all the policies and the agents that sold them by policy number and agent id,SPARQL,"PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+WHERE {
+  SERVICE <mapped> {
+    ?policy a ins:Policy ;
+            ins:policyNumber ?policyNumber ;
+            ins:soldByAgent ?agent .
+    ?agent a ins:Agent ;
+           ins:agentId ?agentId .
+  }
+}",2059,77,2.211,GENERATED,
+18,https://templates.data.world/IQ_6da3f7fcefcdd7453548c0956632a211,What is the average time to settle a claim by policy number?,SQL,"SELECT
+    p.Policy_Number,
+    AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Average_Time_To_Settle_Days
+FROM Claim c
+JOIN Claim_Coverage cc
+    ON c.Claim_Identifier = cc.Claim_Identifier
+JOIN Policy_Coverage_Detail pcd
+    ON cc.Effective_Date = pcd.Effective_Date
+   AND cc.Policy_Coverage_Detail_Identifier = pcd.Policy_Coverage_Detail_Identifier
+JOIN Policy p
+    ON pcd.Policy_Identifier = p.Policy_Identifier
+WHERE c.Claim_Open_Date IS NOT NULL
+  AND c.Claim_Close_Date IS NOT NULL
+GROUP BY p.Policy_Number;",948,159,2.655,GENERATED,
+18,https://templates.data.world/IQ_6da3f7fcefcdd7453548c0956632a211,What is the average time to settle a claim by policy number?,SPARQL,"PREFIX ins: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber (AVG(?daysToSettle) AS ?avgTimeToSettleDays)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a ins:Claim ;
+           ins:claimOpenDate ?openDate ;
+           ins:claimCloseDate ?closeDate ;
+           ins:against ?pcd .
+    
+    ?pcd ins:hasPolicy ?policy .
+    ?policy ins:policyNumber ?policyNumber .
+
+    BIND((xsd:dateTime(?closeDate) - xsd:dateTime(?openDate)) / ""P1D""^^xsd:dayTimeDuration AS ?daysToSettle)
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber",2621,177,3.997,GENERATED,
+19,https://templates.data.world/IQ_6f7ead3b85413d6fcba8b08522dbda69,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SQL,"SELECT
+    p.Policy_Number,
+    COALESCE(lp.total_loss_payment, 0)
+    + COALESCE(lr.total_loss_reserve, 0)
+    + COALESCE(ep.total_expense_payment, 0)
+    + COALESCE(er.total_expense_reserve, 0) AS total_loss
+FROM Policy p
+LEFT JOIN (
+    SELECT
+        c.Policy_Identifier,
+        SUM(cp.Amount) AS total_loss_payment
+    FROM Claim c
+    JOIN Claim_Payment cp
+        ON cp.Claim_Identifier = c.Claim_Identifier
+    JOIN Loss_Payment lpay
+        ON lpay.Claim_Amount_Identifier = cp.Claim_Amount_Identifier
+    GROUP BY c.Policy_Identifier
+) lp
+    ON lp.Policy_Identifier = p.Policy_Identifier
+LEFT JOIN (
+    SELECT
+        c.Policy_Identifier,
+        SUM(cr.Amount) AS total_loss_reserve
+    FROM Claim c
+    JOIN Claim_Reserve cr
+        ON cr.Claim_Identifier = c.Claim_Identifier
+    JOIN Loss_Reserve lres
+        ON lres.Claim_Amount_Identifier = cr.Claim_Amount_Identifier
+    GROUP BY c.Policy_Identifier
+) lr
+    ON lr.Policy_Identifier = p.Policy_Identifier
+LEFT JOIN (
+    SELECT
+        c.Policy_Identifier,
+        SUM(cp.Amount) AS total_expense_payment
+    FROM Claim c
+    JOIN Claim_Payment cp
+        ON cp.Claim_Identifier = c.Claim_Identifier
+    JOIN Expense_Payment epay
+        ON epay.Claim_Amount_Identifier = cp.Claim_Amount_Identifier
+    GROUP BY c.Policy_Identifier
+) ep
+    ON ep.Policy_Identifier = p.Policy_Identifier
+LEFT JOIN (
+    SELECT
+        c.Policy_Identifier,
+        SUM(cr.Amount) AS total_expense_reserve
+    FROM Claim c
+    JOIN Claim_Reserve cr
+        ON cr.Claim_Identifier = c.Claim_Identifier
+    JOIN Expense_Reserve eres
+        ON eres.Claim_Amount_Identifier = cr.Claim_Amount_Identifier
+    GROUP BY c.Policy_Identifier
+) er
+    ON er.Policy_Identifier = p.Policy_Identifier;",292,468,6.92,GENERATED,
+19,https://templates.data.world/IQ_6f7ead3b85413d6fcba8b08522dbda69,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SPARQL,"PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber
+       (COALESCE(SUM(?lossPaymentAmount), 0) +
+        COALESCE(SUM(?lossReserveAmount), 0) +
+        COALESCE(SUM(?expensePaymentAmount), 0) +
+        COALESCE(SUM(?expenseReserveAmount), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim ins:against ?pcd .
+
+    ?pcd ins:hasPolicy ?policy .
+    ?policy ins:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber",2639,255,4.296,GENERATED,
+20,https://templates.data.world/IQ_72d859973d85ae687c9bde924405b868,What are the expense reserve amount of all claims by claim number?,SQL,"SELECT
+    c.Company_Claim_Number AS claim_number,
+    ca.Claim_Amount AS expense_reserve_amount
+FROM Expense_Reserve er
+JOIN Claim_Amount ca
+    ON er.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+JOIN Claim c
+    ON ca.Claim_Identifier = c.Claim_Identifier
+ORDER BY c.Company_Claim_Number;",622,83,1.905,GENERATED,
+20,https://templates.data.world/IQ_72d859973d85ae687c9bde924405b868,What are the expense reserve amount of all claims by claim number?,SPARQL,"PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expenseReserveAmount
+WHERE {
+  SERVICE <mapped> {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:hasExpenseReserve ?expenseReserve .
+    ?expenseReserve ins:expenseReserveAmount ?expenseReserveAmount .
+  }
+}",1946,76,2.147,GENERATED,

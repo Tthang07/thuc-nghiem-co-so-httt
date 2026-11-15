@@ -1,0 +1,37 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber
+       (COALESCE(SUM(?lossPaymentAmount), 0) +
+        COALESCE(SUM(?lossReserveAmount), 0) +
+        COALESCE(SUM(?expensePaymentAmount), 0) +
+        COALESCE(SUM(?expenseReserveAmount), 0) AS ?totalLoss)
+WHERE {
+  {
+    ?claim ins:against ?pcd .
+
+    ?pcd ins:hasPolicy ?policy .
+    ?policy ins:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

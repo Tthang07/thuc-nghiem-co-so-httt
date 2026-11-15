@@ -1,0 +1,12 @@
+SELECT ?policyNumber ?premiumAmount
+WHERE {
+  {
+    ?policy a <http://data.world/schema/insurance/Policy> ;
+            <http://data.world/schema/insurance/policyNumber> ?policyNumber .
+
+    ?coverageDetail <http://data.world/schema/insurance/hasPolicy> ?policy ;
+                    <http://data.world/schema/insurance/hasPremiumAmount> ?premium .
+
+    ?premium <http://data.world/schema/insurance/premiumAmount> ?premiumAmount .
+  }
+}

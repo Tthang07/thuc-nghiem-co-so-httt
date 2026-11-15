@@ -1,0 +1,12 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?effectiveDate ?expirationDate
+WHERE {
+  {
+    ?policy a ins:Policy ;
+            ins:policyNumber ?policyNumber ;
+            ins:policyEffectiveDate ?effectiveDate ;
+            ins:policyExpirationDate ?expirationDate .
+  }
+}

@@ -1,0 +1,11 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:hasExpenseReserve ?expenseReserve .
+    ?expenseReserve ins:expenseReserveAmount ?expenseReserveAmount .
+  }
+}

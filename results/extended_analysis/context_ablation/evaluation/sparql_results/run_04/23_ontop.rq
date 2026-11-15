@@ -1,0 +1,14 @@
+SELECT ?policyNumber ?coverageEffectiveDate ?coverageExpirationDate ?premiumAmount
+WHERE {
+  {
+    ?coverage a <http://data.world/schema/insurance/PolicyCoverageDetail> ;
+              <http://data.world/schema/insurance/hasPolicy> ?policy ;
+              <http://data.world/schema/insurance/hasPremiumAmount> ?premium ;
+              <http://data.world/schema/insurance/policyCoverageEffectiveDate> ?coverageEffectiveDate ;
+              <http://data.world/schema/insurance/policyCoverageExpirationDate> ?coverageExpirationDate .
+    
+    ?policy <http://data.world/schema/insurance/policyNumber> ?policyNumber .
+    
+    ?premium <http://data.world/schema/insurance/premiumAmount> ?premiumAmount .
+  }
+}

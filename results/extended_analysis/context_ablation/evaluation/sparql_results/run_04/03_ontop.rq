@@ -1,0 +1,41 @@
+PREFIX ins: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmountPaid ?agent ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a ins:Claim ;
+           ins:claimNumber ?claimNumber ;
+           ins:against ?pcd .
+
+    ?pcd ins:hasPolicy ?policy ;
+         ins:hasPremiumAmount ?premium .
+
+    ?policy ins:policyNumber ?policyNumber ;
+            ins:hasPolicyHolder ?policyHolderRes ;
+            ins:soldByAgent ?agentRes .
+
+    ?policyHolderRes ins:policyHolderId ?policyHolder .
+    ?premium ins:premiumAmount ?premiumAmountPaid .
+    ?agentRes ins:agentId ?agent .
+
+    OPTIONAL {
+      ?claim ins:hasLossPayment ?lp .
+      ?lp ins:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasLossReserve ?lr .
+      ?lr ins:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpensePayment ?ep .
+      ?ep ins:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim ins:hasExpenseReserve ?er .
+      ?er ins:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}
