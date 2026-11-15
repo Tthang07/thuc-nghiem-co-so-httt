@@ -1,0 +1,155 @@
+﻿ID,Inquiry URI,Question,Method,Generated Query,Prompt Tokens,Output Tokens,Time (s),Status,Error
+31,https://templates.data.world/IQ_b2c56b1858b24690742a6b86af872858,How many policies does each policy holder have by policy holder id?,SQL,"SELECT
+    apr.Party_Identifier AS policy_holder_id,
+    COUNT(DISTINCT p.Policy_Identifier) AS policy_count
+FROM Agreement_Party_Role apr
+JOIN Policy p
+    ON p.Policy_Identifier = apr.Agreement_Identifier
+WHERE apr.Party_Role_Code = 'POLICYHOLDER'
+GROUP BY apr.Party_Identifier
+ORDER BY apr.Party_Identifier;",1571,86,2.218,GENERATED,
+31,https://templates.data.world/IQ_b2c56b1858b24690742a6b86af872858,How many policies does each policy holder have by policy holder id?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolderId (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+    ?policyHolder in:policyHolderId ?policyHolderId .
+  }
+}
+GROUP BY ?policyHolderId
+ORDER BY ?policyHolderId",2847,89,2.56,GENERATED,
+32,https://templates.data.world/IQ_b4236934056faa683bbcded57fb3c8e7,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number",SQL,"SELECT
+    apr.Party_Identifier AS agent_id,
+    p.Policy_Number AS policy_number,
+    c.Company_Claim_Number AS claim_number,
+    SUM(ca.Claim_Amount) AS loss_payment_amount
+FROM Agreement_Party_Role apr
+JOIN Policy p
+    ON p.Policy_Identifier = apr.Agreement_Identifier
+JOIN Policy_Coverage_Detail pcd
+    ON pcd.Policy_Identifier = p.Policy_Identifier
+JOIN Claim_Coverage cc
+    ON cc.Effective_Date = pcd.Effective_Date
+   AND cc.Policy_Coverage_Detail_Identifier = pcd.Policy_Coverage_Detail_Identifier
+JOIN Claim c
+    ON c.Claim_Identifier = cc.Claim_Identifier
+JOIN Claim_Amount ca
+    ON ca.Claim_Identifier = c.Claim_Identifier
+JOIN Loss_Payment lp
+    ON lp.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+WHERE apr.Party_Role_Code = 'AGENT'
+GROUP BY
+    apr.Party_Identifier,
+    p.Policy_Number,
+    c.Company_Claim_Number
+ORDER BY
+    apr.Party_Identifier,
+    p.Policy_Number,
+    c.Company_Claim_Number;",1587,257,4.024,GENERATED,
+32,https://templates.data.world/IQ_b4236934056faa683bbcded57fb3c8e7,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount
+WHERE {
+  SERVICE <mapped> {
+    ?policy in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent in:agentId ?agentId .
+
+    ?coverage in:hasPolicy ?policy .
+
+    ?claim in:against ?coverage ;
+           in:claimNumber ?claimNumber ;
+           in:hasLossPayment ?lossPayment .
+
+    ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  }
+}
+ORDER BY ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount",2863,139,3.548,GENERATED,
+33,https://templates.data.world/IQ_b4454e71f05c688d787b89ad8d71e9b9,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,SQL,"SELECT DISTINCT
+    apr.Party_Identifier AS Agent_Identifier,
+    p.Policy_Identifier,
+    c.Claim_Identifier,
+    cat.Catastrophe_Identifier,
+    cat.Catastrophe_Name
+FROM Agreement_Party_Role apr
+JOIN Policy p
+    ON p.Policy_Identifier = apr.Agreement_Identifier
+JOIN Policy_Coverage_Detail pcd
+    ON pcd.Policy_Identifier = p.Policy_Identifier
+JOIN Claim_Coverage cc
+    ON cc.Effective_Date = pcd.Effective_Date
+   AND cc.Policy_Coverage_Detail_Identifier = pcd.Policy_Coverage_Detail_Identifier
+JOIN Claim c
+    ON c.Claim_Identifier = cc.Claim_Identifier
+JOIN Catastrophe cat
+    ON cat.Catastrophe_Identifier = c.Catastrophe_Identifier
+WHERE apr.Party_Role_Code = 'AGENT';",1579,193,3.534,GENERATED,
+33,https://templates.data.world/IQ_b4454e71f05c688d787b89ad8d71e9b9,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?agent ?policy ?claim ?catastrophe
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?claim a in:Claim ;
+           in:against ?coverage ;
+           in:hasCatastrophe ?catastrophe .
+  }
+}",2855,101,2.659,GENERATED,
+34,https://templates.data.world/IQ_c340bd5670eec67f1c347fb39335cf5b,Return all the policies and their policy holder by id,SQL,"SELECT
+    p.Policy_Identifier,
+    apr.Party_Identifier AS Policy_Holder_Identifier
+FROM Policy p
+JOIN Agreement_Party_Role apr
+    ON apr.Agreement_Identifier = p.Policy_Identifier
+WHERE apr.Party_Role_Code = 'Policy Holder';",1569,62,2.07,GENERATED,
+34,https://templates.data.world/IQ_c340bd5670eec67f1c347fb39335cf5b,Return all the policies and their policy holder by id,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policy ?policyNumber ?policyHolder ?policyHolderId
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+    
+    OPTIONAL { ?policy in:policyNumber ?policyNumber . }
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+  }
+}",2845,90,2.483,GENERATED,
+35,https://templates.data.world/IQ_c4844d67ccc07dbdd134c45536592cb2,What are all our policies that have a claim associated to them by policy and claim number?,SQL,"SELECT DISTINCT
+    p.Policy_Number,
+    c.Company_Claim_Number
+FROM Claim c
+JOIN Claim_Coverage cc
+    ON cc.Claim_Identifier = c.Claim_Identifier
+JOIN Policy_Coverage_Detail pcd
+    ON pcd.Effective_Date = cc.Effective_Date
+   AND pcd.Policy_Coverage_Detail_Identifier = cc.Policy_Coverage_Detail_Identifier
+JOIN Policy p
+    ON p.Policy_Identifier = pcd.Policy_Identifier
+WHERE p.Policy_Number IS NOT NULL
+  AND c.Company_Claim_Number IS NOT NULL
+ORDER BY p.Policy_Number, c.Company_Claim_Number;",1575,137,3.196,GENERATED,
+35,https://templates.data.world/IQ_c4844d67ccc07dbdd134c45536592cb2,What are all our policies that have a claim associated to them by policy and claim number?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?policyNumber ?claimNumber
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?coverage .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber .
+  }
+}
+ORDER BY ?policyNumber ?claimNumber",2851,102,2.753,GENERATED,

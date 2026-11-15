@@ -1,0 +1,194 @@
+﻿ID,Inquiry URI,Question,Method,Generated Query,Prompt Tokens,Output Tokens,Time (s),Status,Error
+21,https://templates.data.world/IQ_7321ddad8d79429070bc9c116e2ef0f3,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SQL,"SELECT
+    p.Policy_Number,
+    AVG(COALESCE(claim_loss.total_loss, 0)) AS average_loss
+FROM Policy p
+JOIN Policy_Coverage_Detail pcd
+    ON p.Policy_Identifier = pcd.Policy_Identifier
+JOIN Claim_Coverage cc
+    ON cc.Policy_Coverage_Detail_Identifier = pcd.Policy_Coverage_Detail_Identifier
+   AND cc.Effective_Date = pcd.Effective_Date
+JOIN (
+    SELECT
+        ca.Claim_Identifier,
+        SUM(ca.Claim_Amount) AS total_loss
+    FROM Claim_Amount ca
+    LEFT JOIN Loss_Payment lp
+        ON lp.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+    LEFT JOIN Loss_Reserve lr
+        ON lr.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+    LEFT JOIN Expense_Payment ep
+        ON ep.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+    LEFT JOIN Expense_Reserve er
+        ON er.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+    WHERE lp.Claim_Amount_Identifier IS NOT NULL
+       OR lr.Claim_Amount_Identifier IS NOT NULL
+       OR ep.Claim_Amount_Identifier IS NOT NULL
+       OR er.Claim_Amount_Identifier IS NOT NULL
+    GROUP BY ca.Claim_Identifier
+) claim_loss
+    ON claim_loss.Claim_Identifier = cc.Claim_Identifier
+GROUP BY p.Policy_Number
+ORDER BY p.Policy_Number;",1587,327,4.602,GENERATED,
+21,https://templates.data.world/IQ_7321ddad8d79429070bc9c116e2ef0f3,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (AVG(?claimLoss) AS ?averageLoss)
+WHERE {
+  SERVICE <mapped> {
+    {
+      SELECT ?policyNumber ?claim (COALESCE(SUM(?lossPaymentAmt), 0) + COALESCE(SUM(?lossReserveAmt), 0) + COALESCE(SUM(?expensePaymentAmt), 0) + COALESCE(SUM(?expenseReserveAmt), 0) AS ?claimLoss)
+      WHERE {
+        ?claim a in:Claim ;
+               in:against ?pcd .
+
+        ?pcd in:hasPolicy ?policy .
+        ?policy in:policyNumber ?policyNumber .
+
+        OPTIONAL {
+          ?claim in:hasLossPayment ?lp .
+          ?lp in:lossPaymentAmount ?lossPaymentAmt .
+        }
+
+        OPTIONAL {
+          ?claim in:hasLossReserve ?lr .
+          ?lr in:lossReserveAmount ?lossReserveAmt .
+        }
+
+        OPTIONAL {
+          ?claim in:hasExpensePayment ?ep .
+          ?ep in:expensePaymentAmount ?expensePaymentAmt .
+        }
+
+        OPTIONAL {
+          ?claim in:hasExpenseReserve ?er .
+          ?er in:expenseReserveAmount ?expenseReserveAmt .
+        }
+      }
+      GROUP BY ?policyNumber ?claim
+    }
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber",2863,292,5.247,GENERATED,
+22,https://templates.data.world/IQ_73a8fe1304f088d17a454126a17307b8,What is the premium amount of all policies by policy number?,SQL,"SELECT
+    p.Policy_Number,
+    SUM(pa.Policy_Amount) AS Premium_Amount
+FROM Policy p
+JOIN Policy_Amount pa
+    ON pa.Policy_Identifier = p.Policy_Identifier
+JOIN Premium pr
+    ON pr.Policy_Amount_Identifier = pa.Policy_Amount_Identifier
+GROUP BY
+    p.Policy_Number
+ORDER BY
+    p.Policy_Number;",1569,80,1.797,GENERATED,
+22,https://templates.data.world/IQ_73a8fe1304f088d17a454126a17307b8,What is the premium amount of all policies by policy number?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?premiumAmount
+WHERE {
+  SERVICE <mapped> {
+    ?coverageDetail a in:PolicyCoverageDetail ;
+                    in:hasPolicy ?policy ;
+                    in:hasPremiumAmount ?premium .
+    ?policy in:policyNumber ?policyNumber .
+    ?premium in:premiumAmount ?premiumAmount .
+  }
+}
+ORDER BY ?policyNumber",2845,89,2.816,GENERATED,
+23,https://templates.data.world/IQ_7bbadc08fa7691095cd46a219e4a0ea2,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date",SQL,"SELECT
+    p.Policy_Number,
+    pcd.Effective_Date AS Coverage_Effective_Date,
+    pcd.Expiration_Date AS Coverage_Expiration_Date,
+    SUM(pa.Policy_Amount) AS Premium_Amount
+FROM Policy p
+JOIN Policy_Amount pa
+    ON pa.Policy_Identifier = p.Policy_Identifier
+JOIN Premium pr
+    ON pr.Policy_Amount_Identifier = pa.Policy_Amount_Identifier
+LEFT JOIN Policy_Coverage_Detail pcd
+    ON pcd.Policy_Coverage_Detail_Identifier = pa.Policy_Coverage_Detail_Identifier
+   AND pcd.Effective_Date = pa.Effective_Date
+GROUP BY
+    p.Policy_Number,
+    pcd.Effective_Date,
+    pcd.Expiration_Date
+ORDER BY
+    p.Policy_Number,
+    pcd.Effective_Date,
+    pcd.Expiration_Date;",1577,179,2.736,GENERATED,
+23,https://templates.data.world/IQ_7bbadc08fa7691095cd46a219e4a0ea2,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?coverageEffectiveDate ?coverageExpirationDate ?premiumAmount
+WHERE {
+  SERVICE <mapped> {
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy ;
+              in:hasPremiumAmount ?premium ;
+              in:policyCoverageEffectiveDate ?coverageEffectiveDate ;
+              in:policyCoverageExpirationDate ?coverageExpirationDate .
+
+    ?policy in:policyNumber ?policyNumber .
+
+    ?premium in:premiumAmount ?premiumAmount .
+  }
+}
+ORDER BY ?policyNumber ?coverageEffectiveDate ?coverageExpirationDate",2853,128,2.575,GENERATED,
+24,https://templates.data.world/IQ_8b9dc0d26e4b77f615fb74c234c602b4,Return policy holders and the claims they have made and the correspoinding catastrophe,SQL,"SELECT
+    p.Party_Identifier,
+    c.Claim_Identifier,
+    c.Company_Claim_Number,
+    c.Company_Subclaim_Number,
+    c.Claim_Description,
+    c.Claims_Made_Date,
+    c.Claim_Reported_Date,
+    c.Claim_Open_Date,
+    c.Claim_Close_Date,
+    cat.Catastrophe_Identifier,
+    cat.Catastrophe_Name,
+    cat.Catastrophe_Type_Code,
+    cat.Industry_Catastrophe_Code,
+    cat.Company_Catastrophe_Code
+FROM Policy pol
+JOIN Agreement_Party_Role apr
+    ON apr.Agreement_Identifier = pol.Policy_Identifier
+JOIN Party p
+    ON p.Party_Identifier = apr.Party_Identifier
+JOIN Policy_Coverage_Detail pcd
+    ON pcd.Policy_Identifier = pol.Policy_Identifier
+JOIN Claim_Coverage cc
+    ON cc.Effective_Date = pcd.Effective_Date
+   AND cc.Policy_Coverage_Detail_Identifier = pcd.Policy_Coverage_Detail_Identifier
+JOIN Claim c
+    ON c.Claim_Identifier = cc.Claim_Identifier
+LEFT JOIN Catastrophe cat
+    ON cat.Catastrophe_Identifier = c.Catastrophe_Identifier
+WHERE apr.Party_Role_Code = 'POLICYHOLDER'
+ORDER BY
+    p.Party_Identifier,
+    c.Claim_Identifier;",1574,298,4.297,GENERATED,
+24,https://templates.data.world/IQ_8b9dc0d26e4b77f615fb74c234c602b4,Return policy holders and the claims they have made and the correspoinding catastrophe,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolder ?claim ?catastrophe
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:against ?coverage ;
+           in:hasCatastrophe ?catastrophe .
+    
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+    
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+  }
+}",2850,102,2.129,GENERATED,
+25,https://templates.data.world/IQ_8f2344e8d1bba2cc39fcae99afd42e4a,How many policies do we have?,SQL,"SELECT COUNT(*) AS policy_count
+FROM Policy;",1565,13,1.112,GENERATED,
+25,https://templates.data.world/IQ_8f2344e8d1bba2cc39fcae99afd42e4a,How many policies do we have?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy .
+  }
+}",2841,48,1.765,GENERATED,

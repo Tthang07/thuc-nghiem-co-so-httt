@@ -1,0 +1,116 @@
+﻿ID,Inquiry URI,Question,Method,Generated Query,Prompt Tokens,Output Tokens,Time (s),Status,Error
+41,https://templates.data.world/IQ_ecee6bdd5000afd4300d0fff6df1fde6,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?",SQL,"SELECT
+    c.Company_Claim_Number AS claim_number,
+    cat.Catastrophe_Name AS catastrophe,
+    p.Policy_Number AS policy_number,
+    SUM(COALESCE(ca.Claim_Amount, 0)) AS total_loss
+FROM Claim c
+LEFT JOIN Catastrophe cat
+    ON c.Catastrophe_Identifier = cat.Catastrophe_Identifier
+LEFT JOIN Claim_Amount ca
+    ON c.Claim_Identifier = ca.Claim_Identifier
+LEFT JOIN (
+    SELECT Claim_Amount_Identifier FROM Loss_Payment
+    UNION
+    SELECT Claim_Amount_Identifier FROM Loss_Reserve
+    UNION
+    SELECT Claim_Amount_Identifier FROM Expense_Payment
+    UNION
+    SELECT Claim_Amount_Identifier FROM Expense_Reserve
+) loss_types
+    ON ca.Claim_Amount_Identifier = loss_types.Claim_Amount_Identifier
+LEFT JOIN Claim_Coverage cc
+    ON c.Claim_Identifier = cc.Claim_Identifier
+LEFT JOIN Policy_Coverage_Detail pcd
+    ON cc.Effective_Date = pcd.Effective_Date
+   AND cc.Policy_Coverage_Detail_Identifier = pcd.Policy_Coverage_Detail_Identifier
+LEFT JOIN Policy p
+    ON pcd.Policy_Identifier = p.Policy_Identifier
+WHERE loss_types.Claim_Amount_Identifier IS NOT NULL
+GROUP BY
+    c.Company_Claim_Number,
+    cat.Catastrophe_Name,
+    p.Policy_Number;",1590,309,3.74,GENERATED,
+41,https://templates.data.world/IQ_ecee6bdd5000afd4300d0fff6df1fde6,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber
+       (COALESCE(SUM(?lossPaymentVal), 0) +
+        COALESCE(SUM(?lossReserveVal), 0) +
+        COALESCE(SUM(?expensePaymentVal), 0) +
+        COALESCE(SUM(?expenseReserveVal), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?cat .
+      OPTIONAL { ?cat in:catastropheName ?catastropheName }
+    }
+
+    OPTIONAL {
+      ?claim in:against ?pcd .
+      ?pcd in:hasPolicy ?policy .
+      ?policy in:policyNumber ?policyNumber .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lpAmt .
+      BIND(xsd:decimal(?lpAmt) AS ?lossPaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lrAmt .
+      BIND(xsd:decimal(?lrAmt) AS ?lossReserveVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?epAmt .
+      BIND(xsd:decimal(?epAmt) AS ?expensePaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?erAmt .
+      BIND(xsd:decimal(?erAmt) AS ?expenseReserveVal)
+    }
+  }
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber
+ORDER BY ?claimNumber ?catastropheName ?policyNumber",2866,416,4.748,GENERATED,
+42,https://templates.data.world/IQ_f1b8ef62994d657eda300db1a4b71046,How many claims do we have?,SQL,"SELECT COUNT(*) AS claim_count
+FROM Claim;",1565,13,1.002,GENERATED,
+42,https://templates.data.world/IQ_f1b8ef62994d657eda300db1a4b71046,How many claims do we have?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?claim) AS ?claimCount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim .
+  }
+}",2841,48,1.15,GENERATED,
+43,https://templates.data.world/IQ_fd57976dc7499200ec8d8f57f2b19ef6,What are the loss payment amount of all claims by claim number?,SQL,"SELECT
+    c.Company_Claim_Number AS claim_number,
+    SUM(ca.Claim_Amount) AS loss_payment_amount
+FROM Claim c
+JOIN Claim_Amount ca
+    ON ca.Claim_Identifier = c.Claim_Identifier
+JOIN Loss_Payment lp
+    ON lp.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+GROUP BY c.Company_Claim_Number
+ORDER BY c.Company_Claim_Number;",1570,93,1.786,GENERATED,
+43,https://templates.data.world/IQ_fd57976dc7499200ec8d8f57f2b19ef6,What are the loss payment amount of all claims by claim number?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:hasLossPayment ?lossPayment .
+    ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  }
+}
+ORDER BY ?claimNumber",2846,81,1.956,GENERATED,

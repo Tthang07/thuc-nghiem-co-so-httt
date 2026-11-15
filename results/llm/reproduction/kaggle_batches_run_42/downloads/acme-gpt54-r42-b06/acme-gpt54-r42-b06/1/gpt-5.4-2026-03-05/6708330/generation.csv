@@ -1,0 +1,220 @@
+﻿ID,Inquiry URI,Question,Method,Generated Query,Prompt Tokens,Output Tokens,Time (s),Status,Error
+26,https://templates.data.world/IQ_923f5d4ed19c42ea63c9e0b1c9209509," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?",SQL,"SELECT
+    p.Policy_Number,
+    prm.Policy_Amount AS Premium,
+    COUNT(DISTINCT c.Claim_Identifier) AS Number_Of_Claims,
+    COALESCE(SUM(CASE WHEN lp.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN lr.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN ep.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN er.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) AS Total_Loss,
+    CASE
+        WHEN prm.Policy_Amount IS NULL OR prm.Policy_Amount = 0 THEN NULL
+        ELSE (
+            COALESCE(SUM(CASE WHEN lp.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) +
+            COALESCE(SUM(CASE WHEN lr.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) +
+            COALESCE(SUM(CASE WHEN ep.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0) +
+            COALESCE(SUM(CASE WHEN er.Claim_Amount_Identifier IS NOT NULL THEN ca.Claim_Amount ELSE 0 END), 0)
+        ) / prm.Policy_Amount
+    END AS Loss_Ratio
+FROM Policy p
+JOIN Policy_Amount prm
+    ON prm.Policy_Identifier = p.Policy_Identifier
+JOIN Premium pr
+    ON pr.Policy_Amount_Identifier = prm.Policy_Amount_Identifier
+LEFT JOIN Claim_Coverage cc
+    ON cc.Effective_Date = prm.Effective_Date
+   AND cc.Policy_Coverage_Detail_Identifier = prm.Policy_Coverage_Detail_Identifier
+LEFT JOIN Claim c
+    ON c.Claim_Identifier = cc.Claim_Identifier
+LEFT JOIN Claim_Amount ca
+    ON ca.Claim_Identifier = c.Claim_Identifier
+LEFT JOIN Loss_Payment lp
+    ON lp.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+LEFT JOIN Loss_Reserve lr
+    ON lr.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+LEFT JOIN Expense_Payment ep
+    ON ep.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+LEFT JOIN Expense_Reserve er
+    ON er.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+GROUP BY
+    p.Policy_Number,
+    prm.Policy_Amount;",1604,589,4.497,GENERATED,
+26,https://templates.data.world/IQ_923f5d4ed19c42ea63c9e0b1c9209509," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?premiumAmount
+       (COUNT(DISTINCT ?claim) AS ?numberOfClaims)
+       (SUM(?lossComponent) AS ?totalLoss)
+       ((SUM(?lossComponent) / xsd:decimal(?premiumAmount)) AS ?lossRatio)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:against ?pcd .
+
+    ?pcd in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premiumNode .
+
+    ?policy in:policyNumber ?policyNumber .
+
+    ?premiumNode in:premiumAmount ?premiumAmount .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+  }
+}
+GROUP BY ?policyNumber ?premiumAmount
+ORDER BY ?policyNumber",2880,346,3.535,GENERATED,
+27,https://templates.data.world/IQ_985f30d50b59256c4b01d42901b0f9fb,What is the total amount of premiums that a policy holder has paid?,SQL,"SELECT
+    apr.Party_Identifier AS policy_holder_party_identifier,
+    SUM(pa.Policy_Amount) AS total_premiums_paid
+FROM Premium pr
+JOIN Policy_Amount pa
+    ON pa.Policy_Amount_Identifier = pr.Policy_Amount_Identifier
+JOIN Policy p
+    ON p.Policy_Identifier = pa.Policy_Identifier
+JOIN Agreement_Party_Role apr
+    ON apr.Agreement_Identifier = p.Policy_Identifier
+WHERE apr.Party_Role_Code = 'POLICY_HOLDER'
+GROUP BY apr.Party_Identifier;",1571,117,1.521,GENERATED,
+27,https://templates.data.world/IQ_985f30d50b59256c4b01d42901b0f9fb,What is the total amount of premiums that a policy holder has paid?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyHolder ?policyHolderId (SUM(xsd:decimal(?premiumValue)) AS ?totalPremiumPaid)
+WHERE {
+  SERVICE <mapped> {
+    ?policyHolder a in:PolicyHolder .
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+
+    ?coverageDetail a in:PolicyCoverageDetail ;
+                    in:hasPolicy ?policy ;
+                    in:hasPremiumAmount ?premium .
+
+    ?premium a in:Premium ;
+             in:premiumAmount ?premiumValue .
+  }
+}
+GROUP BY ?policyHolder ?policyHolderId",2847,166,2.372,GENERATED,
+28,https://templates.data.world/IQ_a8f3cd24b58a0e3dc8a30c45d315b195,How many policies have agents sold by agent id?,SQL,"SELECT
+    apr.Party_Identifier AS Agent_ID,
+    COUNT(DISTINCT p.Policy_Identifier) AS Policies_Sold_Count
+FROM Policy p
+JOIN Agreement_Party_Role apr
+    ON apr.Agreement_Identifier = p.Policy_Identifier
+WHERE apr.Party_Role_Code = 'AGENT'
+GROUP BY apr.Party_Identifier
+ORDER BY apr.Party_Identifier;",1568,85,1.365,GENERATED,
+28,https://templates.data.world/IQ_a8f3cd24b58a0e3dc8a30c45d315b195,How many policies have agents sold by agent id?,SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent .
+    ?agent in:agentId ?agentId .
+  }
+}
+GROUP BY ?agentId
+ORDER BY ?agentId",2844,82,1.469,GENERATED,
+29,https://templates.data.world/IQ_aa04aad4b2ef9941a9ae456e5ac2efb9,"Return all the claims we have by claim number, open date and close date?",SQL,"SELECT
+    Company_Claim_Number AS claim_number,
+    Claim_Open_Date AS open_date,
+    Claim_Close_Date AS close_date
+FROM Claim;",1574,33,1.088,GENERATED,
+29,https://templates.data.world/IQ_aa04aad4b2ef9941a9ae456e5ac2efb9,"Return all the claims we have by claim number, open date and close date?",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?openDate ?closeDate
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+    OPTIONAL { ?claim in:claimOpenDate ?openDate . }
+    OPTIONAL { ?claim in:claimCloseDate ?closeDate . }
+  }
+}
+ORDER BY ?claimNumber",2850,89,4.798,GENERATED,
+30,https://templates.data.world/IQ_adff0403ac3869fc65982c5efd682455,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?",SQL,"SELECT
+    c.Company_Claim_Number,
+    SUM(COALESCE(ca.Claim_Amount, 0)) AS Total_Loss
+FROM Claim c
+JOIN Claim_Amount ca
+    ON ca.Claim_Identifier = c.Claim_Identifier
+WHERE EXISTS (
+    SELECT 1
+    FROM Loss_Payment lp
+    WHERE lp.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+)
+OR EXISTS (
+    SELECT 1
+    FROM Loss_Reserve lr
+    WHERE lr.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+)
+OR EXISTS (
+    SELECT 1
+    FROM Expense_Payment ep
+    WHERE ep.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+)
+OR EXISTS (
+    SELECT 1
+    FROM Expense_Reserve er
+    WHERE er.Claim_Amount_Identifier = ca.Claim_Amount_Identifier
+)
+GROUP BY c.Company_Claim_Number;",1588,201,2.034,GENERATED,
+30,https://templates.data.world/IQ_adff0403ac3869fc65982c5efd682455,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?",SPARQL,"PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+       (COALESCE(SUM(?lossPaymentAmount), 0) +
+        COALESCE(SUM(?lossReserveAmount), 0) +
+        COALESCE(SUM(?expensePaymentAmount), 0) +
+        COALESCE(SUM(?expenseReserveAmount), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?expensePayment .
+      ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber",2864,248,2.653,GENERATED,
