@@ -1,0 +1,17 @@
+﻿Model,Method,Execution Status,Count
+NSQL-350M,ontology_guided,ERROR,33
+NSQL-350M,ontology_guided,OK,5
+NSQL-350M,schema_only,ERROR,34
+NSQL-350M,schema_only,OK,4
+NSQL-Llama-2-7B,ontology_guided,ERROR,37
+NSQL-Llama-2-7B,ontology_guided,OK,4
+NSQL-Llama-2-7B,schema_only,ERROR,33
+NSQL-Llama-2-7B,schema_only,OK,8
+Qwen2.5-Coder-3B,ontology_guided,ERROR,29
+Qwen2.5-Coder-3B,ontology_guided,OK,3
+Qwen2.5-Coder-3B,schema_only,ERROR,29
+Qwen2.5-Coder-3B,schema_only,OK,3
+SQLCoder-7B-2,ontology_guided,ERROR,27
+SQLCoder-7B-2,ontology_guided,OK,4
+SQLCoder-7B-2,schema_only,ERROR,28
+SQLCoder-7B-2,schema_only,OK,3

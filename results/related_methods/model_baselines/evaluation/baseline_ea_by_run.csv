@@ -1,0 +1,5 @@
+﻿Model,Run,Questions,Generated,Executed,Correct,Complete,EA (%)
+NSQL-350M,1,43,43,5,3,True,6.98
+NSQL-Llama-2-7B,1,43,43,2,0,True,0.0
+Qwen2.5-Coder-3B,1,43,43,11,4,True,9.3
+SQLCoder-7B-2,1,43,43,12,4,True,9.3

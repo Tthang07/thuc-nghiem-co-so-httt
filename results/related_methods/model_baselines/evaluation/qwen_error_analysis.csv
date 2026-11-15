@@ -1,0 +1,184 @@
+﻿Model,Run,ID,Method,Mode,Status,Correct,Error,Time (s),Quadrant,Error Type
+Qwen2.5-Coder-3B,1,1,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 8:     Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+                                                              ^^^^^^^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,3,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 10:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^",0.002,LQHS,Binder Error
+Qwen2.5-Coder-3B,1,4,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""lp"" does not have a column named ""Claim_Identifier""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 10:     Loss_Payment lp ON cl.Claim_Identifier = lp.Claim_Identifier
+                                                      ^^^^^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,5,SQL,Fence-stripped,ERROR,0,"Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 7:     Agent a
+            ^^^^^^^",0.016,LQHS,Catalog Error
+Qwen2.5-Coder-3B,1,7,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 12:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^",0.002,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,8,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""Premium"" does not have a column named ""Premium_Amount""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 1: SELECT P.Policy_Number, SUM(Premium.Premium_Amount) AS Total_Premium
+                                    ^^^^^^^^^^^^^^^^^^^^^^",0.001,HQLS,Binder Error
+Qwen2.5-Coder-3B,1,9,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 11:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^",0.001,LQHS,Binder Error
+Qwen2.5-Coder-3B,1,10,SQL,Fence-stripped,ERROR,0,"Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 7:     Agent a
+            ^^^^^^^",0.001,LQHS,Catalog Error
+Qwen2.5-Coder-3B,1,11,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""T1"" does not have a column named ""Claim_Identifier""
+
+Candidate bindings: : ""Policy_Identifier""
+
+LINE 1: SELECT COUNT(DISTINCT T1.Claim_Identifier) AS Number_of_Claims
+                              ^^^^^^^^^^^^^^^^^^^",0.001,HQLS,Binder Error
+Qwen2.5-Coder-3B,1,12,SQL,Fence-stripped,ERROR,0,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!
+Candidate bindings: ""Policy_Amount"", ""Policy_Identifier"", ""Policy_Amount_Identifier"", ""Policy_Coverage_Detail_Identifier""
+
+LINE 3: WHERE Policy_Number = 'YourPolicyNumber';
+              ^^^^^^^^^^^^^",0.001,HQLS,Binder Error
+Qwen2.5-Coder-3B,1,13,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""LP"" does not have a column named ""Claim_Amount""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 1: SELECT SUM(LP.Claim_Amount) AS Total_Loss_Amount
+                   ^^^^^^^^^^^^^^^",0.001,HQLS,Binder Error
+Qwen2.5-Coder-3B,1,14,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""p"" does not have a column named ""Premium_Amount_Identifier""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 1: SELECT DISTINCT p.Premium_Amount_Identifier
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,15,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""c"" does not have a column named ""Claim_Number""
+
+Candidate bindings: : ""Claims_Made_Date""
+
+LINE 18:     c.Claim_Number;
+             ^^^^^^^^^^^^^^",0.001,LQHS,Binder Error
+Qwen2.5-Coder-3B,1,16,SQL,Fence-stripped,ERROR,0,"Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 7:     Agent a
+            ^^^^^^^",0.001,LQHS,Catalog Error
+Qwen2.5-Coder-3B,1,17,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""APRA"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 3: JOIN Agreement_Party_Role APRA ON P.Policy_Identifier = APRA.Policy_Identifier
+                                                                ^^^^^^^^^^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,18,SQL,Fence-stripped,ERROR,0,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number"", ""Claim_Description"", ""Claim_Identifier"", ""Claim_Status_Code""
+
+LINE 3: GROUP BY Policy_Number;
+                 ^^^^^^^^^^^^^",0.001,HQLS,Binder Error
+Qwen2.5-Coder-3B,1,19,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""LP"" does not have a column named ""Claim_Amount""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 1: SELECT P.Policy_Number, SUM(LP.Claim_Amount) AS Total_Loss
+                                    ^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,20,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""T1"" does not have a column named ""Claim_Number""
+
+Candidate bindings: : ""Claims_Made_Date""
+
+LINE 1: SELECT T1.Claim_Number, T2.Claim_Amount FROM Claim AS T1 INNER...
+               ^^^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,21,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""LP"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 3: JOIN Loss_Payment LP ON P.Policy_Identifier = LP.Policy_Identifier
+                                                      ^^^^^^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,22,SQL,Fence-stripped,ERROR,0,"Binder Error: Referenced column ""Policy_Number"" not found in FROM clause!
+Candidate bindings: ""Policy_Amount"", ""Policy_Identifier"", ""Policy_Amount_Identifier"", ""Policy_Coverage_Detail_Identifier""
+
+LINE 3: GROUP BY Policy_Number;
+                 ^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,24,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""a"" does not have a column named ""Agreement_Identifier""
+
+Candidate bindings: : ""Agreement_Name""
+
+LINE 10:     Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+                                                       ^^^^^^^^^^^^^^^^^^^^^^",0.001,LQHS,Binder Error
+Qwen2.5-Coder-3B,1,26,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""lp"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 9:     Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+                                                     ^^^^^^^^^^^^^^^^^^^^",0.002,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,30,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""lp"" does not have a column named ""Claim_Amount""
+
+Candidate bindings: : ""Claim_Amount_Identifier""
+
+LINE 3:     SUM(lp.Claim_Amount) AS Total_Loss
+                ^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,32,SQL,Fence-stripped,ERROR,0,"Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 7:     Agent a
+            ^^^^^^^",0.001,LQHS,Catalog Error
+Qwen2.5-Coder-3B,1,33,SQL,Fence-stripped,ERROR,0,"Catalog Error: Table with name Agent does not exist!
+Did you mean ""Agreement_Assessment""?
+
+LINE 2: FROM Agent a
+             ^^^^^^^",0.001,LQHS,Catalog Error
+Qwen2.5-Coder-3B,1,34,SQL,Fence-stripped,ERROR,0,"Binder Error: Referenced column ""Policy_Identifier"" not found in FROM clause!
+Candidate bindings: ""Party_Identifier"", ""Agreement_Identifier"", ""Party_Role_Code""
+
+LINE 1: SELECT Policy_Identifier, Party_Identifier
+               ^^^^^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,35,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""T2"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 3: JOIN Claim AS T2 ON T1.Policy_Identifier = T2.Policy_Identifier;
+                                                   ^^^^^^^^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,36,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""T1"" does not have a column named ""Claim_Number""
+
+Candidate bindings: : ""Claims_Made_Date""
+
+LINE 1: SELECT T1.Claim_Number, T2.Claim_Amount FROM Claim AS T1 INNER...
+               ^^^^^^^^^^^^^^^",0.001,LQLS,Binder Error
+Qwen2.5-Coder-3B,1,37,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""c"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 13:     Policy p ON c.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^",0.001,LQHS,Binder Error
+Qwen2.5-Coder-3B,1,38,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""C"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 8:     Claim C ON P.Policy_Identifier = C.Policy_Identifier
+                                             ^^^^^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,40,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""apr"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Party_Identifier""
+
+LINE 7:     Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+                                                              ^^^^^^^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error
+Qwen2.5-Coder-3B,1,41,SQL,Fence-stripped,ERROR,0,"Binder Error: Table ""ca"" does not have a column named ""Policy_Identifier""
+
+Candidate bindings: : ""Claim_Identifier""
+
+LINE 13:     Policy p ON ca.Policy_Identifier = p.Policy_Identifier
+                         ^^^^^^^^^^^^^^^^^^^^",0.001,HQHS,Binder Error

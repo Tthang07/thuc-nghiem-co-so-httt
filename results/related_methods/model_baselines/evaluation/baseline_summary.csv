@@ -1,0 +1,5 @@
+﻿Model,Complete_Runs,Mean_EA,SD_EA
+NSQL-350M,1,6.98,
+NSQL-Llama-2-7B,1,0.0,
+Qwen2.5-Coder-3B,1,9.3,
+SQLCoder-7B-2,1,9.3,

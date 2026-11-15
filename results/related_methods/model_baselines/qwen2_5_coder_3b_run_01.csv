@@ -1,0 +1,494 @@
+﻿ID,Inquiry URI,Question,Method,Model,Generated Query,Prompt Tokens,Output Tokens,Time (s),Status,Error
+1,https://templates.data.world/IQ_03fc5a5571db11254049e240e015fb80,What is the loss ratio of each policy and agent who sold it by policy number and agent id?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    p.Policy_Number,
+    ap.Party_ID,
+    SUM(lp.Claim_Amount) / SUM(pa.Claim_Amount) AS Loss_Ratio
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party ap ON apr.Party_Identifier = ap.Party_ID
+JOIN 
+    Loss_Payment lp ON p.Policy_Amount_Identifier = lp.Policy_Amount_Identifier
+JOIN 
+    Policy_Amount pa ON p.Policy_Amount_Identifier = pa.Policy_Amount_Identifier
+GROUP BY 
+    p.Policy_Number, ap.Party_ID;
+```",1599,148,19.971,GENERATED,
+2,https://templates.data.world/IQ_0d87a2a016062bdeb9a6e4471acd00b2,"Return all the policies we have by policy number, effective date and expiration date?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT Policy_Number, Effective_Date, Expiration_Date FROM Policy;
+```",1596,18,0.541,GENERATED,
+3,https://templates.data.world/IQ_1e19282f42eaea84b5bce28c2386ead8,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid and the agent who sold it?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    a.Agent_Name
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party a ON apr.Party_Identifier = a.Party_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier
+```",1615,182,3.898,GENERATED,
+4,https://templates.data.world/IQ_1e57233cbc8a71751572a4bf687a03c6,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by catastrophe and policy number?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Catastrophe_Name, 
+    p.Policy_Number, 
+    SUM(lp.Claim_Amount) AS Total_Loss
+FROM 
+    Catastrophe c
+JOIN 
+    Claim cl ON c.Catastrophe_Identifier = cl.Catastrophe_Identifier
+JOIN 
+    Loss_Payment lp ON cl.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Policy p ON cl.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Catastrophe_Name, 
+    p.Policy_Number;
+```",1608,123,2.631,GENERATED,
+5,https://templates.data.world/IQ_205ac9d7d19a5142bec840952e9f6646,"Return agents and the policy they have sold that have had a claim and the corresponding expense payment amount by agent id, policy number and claim number
+",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    a.Agent_Name, 
+    p.Policy_Number, 
+    c.Claim_Number, 
+    ep.Expense_Payment_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Identifier = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON ca.Claim_Amount_Identifier = ep.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Reopened'
+```",1610,186,3.924,GENERATED,
+6,https://templates.data.world/IQ_2b95bb37fe905f8c74b35d72e65f3d08,What is the average policy size which is the the total amount of premium divided by the number of policies?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT SUM(Policy_Amount) / COUNT(Policy_Identifier) AS Average_Policy_Size
+FROM Policy_Amount;
+```",1600,30,13.187,GENERATED,
+7,https://templates.data.world/IQ_317198ae3c0a79473a3b96aab0ce2dd7,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    SUM(lp.Loss_Payment) AS Total_Loss_Payment,
+    SUM(lr.Loss_Reserve) AS Total_Loss_Reserve,
+    SUM(ep.Expense_Payment) AS Total_Expense_Payment,
+    SUM(er.Expense_Reserve) AS Total_Expense_Reserve
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier
+GROUP BY 
+    c.Claim_Number, p.Policy_Number, p.Policy_Holder;
+```",1617,210,4.474,GENERATED,
+8,https://templates.data.world/IQ_317ef7a6c42204b1933a510805c57e45,What is the total amount of premiums that a policy holder has paid by policy number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT P.Policy_Number, SUM(Premium.Premium_Amount) AS Total_Premium
+FROM Policy P
+JOIN Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN Premium ON PA.Policy_Amount_Identifier = Premium.Policy_Amount_Identifier
+GROUP BY P.Policy_Number;
+```",1596,72,1.611,GENERATED,
+9,https://templates.data.world/IQ_38393fd93e7b54dde596453f6b663b95,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder, premium amount paid, the catastrophe it had, and the agent who sold it?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    c.Catastrophe_Name,
+    a.Agent_Name
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Party a ON apr.Party_Identifier = a.Party_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'
+```",1621,202,4.38,GENERATED,
+10,https://templates.data.world/IQ_39301bf92f7e93608bff059c4a83a845,"Return agents and the policy they have sold that have had a claim and the corresponding expense reserve amount by agent id, policy number and claim number ",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    a.Agent_Name, 
+    p.Policy_Number, 
+    c.Claim_Number, 
+    er.Expense_Reserve_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Identifier = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Expense_Reserve er ON ca.Claim_Amount_Identifier = er.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'
+```",1609,175,3.714,GENERATED,
+11,https://templates.data.world/IQ_419b164c362608054523707eaf5a57f3,How many claims have been placed by policy number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT COUNT(DISTINCT T1.Claim_Identifier) AS Number_of_Claims
+FROM Policy_Amount AS T1
+JOIN Policy AS T2 ON T1.Policy_Identifier = T2.Policy_Identifier;
+```",1589,51,1.169,GENERATED,
+12,https://templates.data.world/IQ_43461e701debb68f0f8ac1dceb945650,What is the total amount of premiums paid by policy number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount
+WHERE Policy_Number = 'YourPolicyNumber';
+```",1591,32,0.812,GENERATED,
+13,https://templates.data.world/IQ_5b813c2c3d7949916d33976f2da518a0,"What is the total loss amounts, which is the sum of loss payment, loss reserve amount by claim number?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT SUM(LP.Claim_Amount) AS Total_Loss_Amount
+FROM Loss_Payment LP
+JOIN Claim_Amount CA ON LP.Claim_Amount_Identifier = CA.Claim_Amount_Identifier
+```",1601,49,1.143,GENERATED,
+14,https://templates.data.world/IQ_612b36a4405487ec34831e093e2494dc,What are all the premiums that have been paid by policy holders?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT DISTINCT p.Premium_Amount_Identifier
+FROM Premium p
+JOIN Policy_Amount pa ON p.Policy_Amount_Identifier = pa.Policy_Amount_Identifier
+JOIN Policy p ON pa.Policy_Identifier = p.Policy_Identifier
+```",1592,57,1.297,GENERATED,
+15,https://templates.data.world/IQ_61defb5ce4df26617289ad4cf7c386ab,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Number,
+    SUM(lp.Claim_Amount) AS Loss_Payment,
+    SUM(lr.Claim_Amount) AS Loss_Reserve,
+    SUM(ep.Claim_Amount) AS Expense_Payment,
+    SUM(er.Claim_Amount) AS Expense_Reserve
+FROM 
+    Claim c
+LEFT JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+LEFT JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+LEFT JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Number;
+```",1598,172,3.555,GENERATED,
+16,https://templates.data.world/IQ_66ee72a9520811428711bf451d1d1de7,"Return agents and the policy they have sold that have had a claim and the corresponding loss reserve amount by agent id, policy number and claim number",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    a.Agent_Name, 
+    p.Policy_Number, 
+    c.Claim_Number, 
+    lr.Loss_Reserve_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Identifier = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Reserve lr ON ca.Claim_Amount_Identifier = lr.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open' OR c.Claim_Status_Code = 'Closed'
+```",1609,185,4.104,GENERATED,
+17,https://templates.data.world/IQ_6b6e06649d45445bcb0428c599bbbe49,Return all the policies and the agents that sold them by policy number and agent id,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT P.Policy_Number, APRA.Party_Identifier
+FROM Policy P
+JOIN Agreement_Party_Role APRA ON P.Policy_Identifier = APRA.Policy_Identifier
+JOIN Party_Role PR ON APRA.Party_Role_Code = PR.Party_Role_Code
+WHERE PR.Party_Role_Code = 'Agent';
+```",1597,76,1.775,GENERATED,
+18,https://templates.data.world/IQ_6da3f7fcefcdd7453548c0956632a211,What is the average time to settle a claim by policy number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT AVG(DATEDIFF(Claim_Close_Date, Claim_Open_Date)) AS Average_Time_To_Settle
+FROM Claim
+GROUP BY Policy_Number;
+```",1592,34,0.877,GENERATED,
+19,https://templates.data.world/IQ_6f7ead3b85413d6fcba8b08522dbda69,"What is the total loss of each policy by policy number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT P.Policy_Number, SUM(LP.Claim_Amount) AS Total_Loss
+FROM Policy P
+JOIN Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN Loss_Payment LP ON PA.Policy_Amount_Identifier = LP.Claim_Amount_Identifier
+JOIN Loss_Reserve LR ON PA.Policy_Amount_Identifier = LR.Claim_Amount_Identifier
+JOIN Expense_Payment EP ON PA.Policy_Amount_Identifier = EP.Claim_Amount_Identifier
+JOIN Expense_Reserve ER ON PA.Policy_Amount_Identifier = ER.Claim_Amount_Identifier
+GROUP BY P.Policy_Number;
+```",1610,141,3.226,GENERATED,
+20,https://templates.data.world/IQ_72d859973d85ae687c9bde924405b868,What are the expense reserve amount of all claims by claim number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT T1.Claim_Number, T2.Claim_Amount FROM Claim AS T1 INNER JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier WHERE T2.Amount_Type_Code = 'Expense Reserve';
+```",1592,56,1.358,GENERATED,
+21,https://templates.data.world/IQ_7321ddad8d79429070bc9c116e2ef0f3,"What is the average loss of each policy by policy number where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT P.Policy_Number, AVG(LP.Loss_Payment + LR.Loss_Reserve + EP.Expense_Payment + ER.Expense_Reserve) AS Average_Loss
+FROM Policy P
+JOIN Loss_Payment LP ON P.Policy_Identifier = LP.Policy_Identifier
+JOIN Loss_Reserve LR ON P.Policy_Identifier = LR.Policy_Identifier
+JOIN Expense_Payment EP ON P.Policy_Identifier = EP.Policy_Identifier
+JOIN Expense_Reserve ER ON P.Policy_Identifier = ER.Policy_Identifier
+GROUP BY P.Policy_Number;
+```",1609,125,2.929,GENERATED,
+22,https://templates.data.world/IQ_73a8fe1304f088d17a454126a17307b8,What is the premium amount of all policies by policy number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT Policy_Number, SUM(Policy_Amount) AS Total_Premium
+FROM Policy_Amount
+GROUP BY Policy_Number;
+```",1591,30,0.771,GENERATED,
+23,https://templates.data.world/IQ_7bbadc08fa7691095cd46a219e4a0ea2,"What is the premium amount of all policies by policy number, coverage effective date and coverage expiration date",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT P.Policy_Number, PCED.Effective_Date, PCED.Expiration_Date, PA.Policy_Amount
+FROM Policy P
+JOIN Policy_Amount PA ON P.Policy_Identifier = PA.Policy_Identifier
+JOIN Policy_Coverage_Detail PCED ON PA.Effective_Date = PCED.Effective_Date AND PA.Policy_Coverage_Detail_Identifier = PCED.Policy_Coverage_Detail_Identifier;
+```",1599,92,2.072,GENERATED,
+24,https://templates.data.world/IQ_8b9dc0d26e4b77f615fb74c234c602b4,Return policy holders and the claims they have made and the correspoinding catastrophe,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    p.Party_Name AS Policy_Holder,
+    c.Claim_Description AS Claim_Description,
+    c.Catastrophe_Name AS Catastrophe_Name
+FROM 
+    Party p
+JOIN 
+    Agreement_Party_Role apr ON p.Party_Identifier = apr.Party_Identifier
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Claim c ON a.Agreement_Identifier = c.Agreement_Identifier
+```",1596,107,2.463,GENERATED,
+25,https://templates.data.world/IQ_8f2344e8d1bba2cc39fcae99afd42e4a,How many policies do we have?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT COUNT(DISTINCT Policy_Identifier) AS Number_of_Policies FROM Policy;
+```",1586,22,0.635,GENERATED,
+26,https://templates.data.world/IQ_923f5d4ed19c42ea63c9e0b1c9209509," What is the loss ratio, number of claims, total loss by policy number and premium where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount and loss ratio is total loss divided by premium?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    p.Policy_Number,
+    SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve) AS Total_Loss,
+    SUM(p.Premium) AS Premium,
+    (SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve)) / SUM(p.Premium) AS Loss_Ratio
+FROM 
+    Policy p
+LEFT JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+LEFT JOIN 
+    Loss_Reserve lr ON p.Policy_Identifier = lr.Policy_Identifier
+LEFT JOIN 
+    Expense_Payment ep ON p.Policy_Identifier = ep.Policy_Identifier
+LEFT JOIN 
+    Expense_Reserve er ON p.Policy_Identifier = er.Policy_Identifier
+GROUP BY 
+    p.Policy_Number;
+```",1626,204,4.784,GENERATED,
+27,https://templates.data.world/IQ_985f30d50b59256c4b01d42901b0f9fb,What is the total amount of premiums that a policy holder has paid?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT SUM(Policy_Amount) AS Total_Premiums
+FROM Policy_Amount;
+```",1593,23,0.692,GENERATED,
+28,https://templates.data.world/IQ_a8f3cd24b58a0e3dc8a30c45d315b195,How many policies have agents sold by agent id?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT COUNT(DISTINCT Agreement_Identifier) AS Number_of_Policies
+FROM Agreement_Party_Role
+WHERE Party_Role_Code = 'Agent';
+```",1589,36,0.937,GENERATED,
+29,https://templates.data.world/IQ_aa04aad4b2ef9941a9ae456e5ac2efb9,"Return all the claims we have by claim number, open date and close date?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT Company_Claim_Number, Claim_Open_Date, Claim_Close_Date FROM Claim
+```",1596,21,0.661,GENERATED,
+30,https://templates.data.world/IQ_adff0403ac3869fc65982c5efd682455,"What is the total loss of each claim by claim number where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amount?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Identifier,
+    SUM(lp.Claim_Amount) AS Total_Loss
+FROM 
+    Claim c
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Identifier;
+```",1610,131,3.074,GENERATED,
+31,https://templates.data.world/IQ_b2c56b1858b24690742a6b86af872858,How many policies does each policy holder have by policy holder id?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT Party_Identifier, COUNT(*) AS Policy_Count
+FROM Agreement_Party_Role
+GROUP BY Party_Identifier;
+```",1592,29,0.816,GENERATED,
+32,https://templates.data.world/IQ_b4236934056faa683bbcded57fb3c8e7,"Return agents and the policies they have sold that have had a claim and the corresponding loss payment amount by agent id, policy number and claim number",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    a.Agent_Name, 
+    p.Policy_Number, 
+    c.Claim_Number, 
+    lp.Loss_Payment_Amount
+FROM 
+    Agent a
+JOIN 
+    Agreement_Party_Role apr ON a.Agent_Identifier = apr.Party_Identifier
+JOIN 
+    Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN 
+    Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Claim c ON p.Policy_Identifier = c.Policy_Identifier
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+WHERE 
+    c.Claim_Status_Code = 'Open'
+```",1609,175,3.954,GENERATED,
+33,https://templates.data.world/IQ_b4454e71f05c688d787b89ad8d71e9b9,Return agents and the policy they have sold that have had a claim and the corresponding catastrophe it had. ,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT DISTINCT a.Agent_Name, p.Policy_Number, c.Catastrophe_Name
+FROM Agent a
+JOIN Agreement_Party_Role apr ON a.Agent_Party_Role_ID = apr.Party_Identifier
+JOIN Agreement ag ON apr.Agreement_Identifier = ag.Agreement_Identifier
+JOIN Policy p ON ag.Policy_Identifier = p.Policy_Identifier
+JOIN Claim c ON p.Policy_Identifier = c.Policy_Identifier
+WHERE c.Claim_Identifier IS NOT NULL;
+```",1601,109,2.525,GENERATED,
+34,https://templates.data.world/IQ_c340bd5670eec67f1c347fb39335cf5b,Return all the policies and their policy holder by id,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT Policy_Identifier, Party_Identifier
+FROM Agreement_Party_Role
+WHERE Party_Role_Code = 'PolicyHolder';
+```",1591,31,0.813,GENERATED,
+35,https://templates.data.world/IQ_c4844d67ccc07dbdd134c45536592cb2,What are all our policies that have a claim associated to them by policy and claim number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT DISTINCT T1.Policy_Number
+FROM Policy AS T1
+JOIN Claim AS T2 ON T1.Policy_Identifier = T2.Policy_Identifier;
+```",1597,39,1.044,GENERATED,
+36,https://templates.data.world/IQ_c5c85d5a4433721ff008569dfea75f80,What are the expense payment amount of all claims by claim number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT T1.Claim_Number, T2.Claim_Amount FROM Claim AS T1 INNER JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier WHERE T2.Amount_Type_Code = 'Expense'
+```",1592,55,1.304,GENERATED,
+37,https://templates.data.world/IQ_c92fa9ee6450b79bd0a56e85b4379273,"What are the loss payment, loss reserve, expense payment, expense reserve amount by claim number and corresponding policy number, policy holder and premium amount paid?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Number,
+    p.Policy_Number,
+    p.Policy_Holder,
+    p.Premium_Amount,
+    SUM(lp.Claim_Amount) AS Loss_Payment,
+    SUM(lr.Claim_Amount) AS Loss_Reserve,
+    SUM(ep.Claim_Amount) AS Expense_Payment,
+    SUM(er.Claim_Amount) AS Expense_Reserve
+FROM 
+    Claim c
+JOIN 
+    Policy p ON c.Policy_Identifier = p.Policy_Identifier
+JOIN 
+    Loss_Payment lp ON c.Claim_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Loss_Reserve lr ON c.Claim_Identifier = lr.Claim_Amount_Identifier
+JOIN 
+    Expense_Payment ep ON c.Claim_Identifier = ep.Claim_Amount_Identifier
+JOIN 
+    Expense_Reserve er ON c.Claim_Identifier = er.Claim_Amount_Identifier
+GROUP BY 
+    c.Claim_Number, p.Policy_Number, p.Policy_Holder, p.Premium_Amount;
+```",1609,223,5.025,GENERATED,
+38,https://templates.data.world/IQ_cea56ea8627729b96f12fb4714aa7547,"What is the average loss of each policy by policy number and number of claims where loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    P.Policy_Number,
+    COUNT(C.Claim_Identifier) AS Number_of_Claims,
+    SUM(LP.Claim_Amount + LR.Claim_Amount + EP.Claim_Amount + ER.Claim_Amount) AS Total_Loss
+FROM 
+    Policy P
+JOIN 
+    Claim C ON P.Policy_Identifier = C.Policy_Identifier
+LEFT JOIN 
+    Loss_Payment LP ON C.Claim_Identifier = LP.Claim_Identifier
+LEFT JOIN 
+    Loss_Reserve LR ON C.Claim_Identifier = LR.Claim_Identifier
+LEFT JOIN 
+    Expense_Payment EP ON C.Claim_Identifier = EP.Claim_Identifier
+LEFT JOIN 
+    Expense_Reserve ER ON C.Claim_Identifier = ER.Claim_Identifier
+GROUP BY 
+    P.Policy_Number
+ORDER BY 
+    Total_Loss DESC;
+```",1613,185,4.229,GENERATED,
+39,https://templates.data.world/IQ_d4c4a23ff49b92884beb29163e65add0,What are the loss reserve amount of all claims by claim number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT T1.Company_Claim_Number, SUM(T2.Claim_Amount) AS Loss_Reserve_Amount
+FROM Claim AS T1
+JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier
+WHERE T2.Amount_Type_Code = 'Loss Reserve'
+GROUP BY T1.Company_Claim_Number;
+```",1592,76,1.783,GENERATED,
+40,https://templates.data.world/IQ_d9925658820793094d118f94cc82c890,"What is the total loss of each policy that an agent has sold by agent id where total loss is the sum of loss payment, loss reserve, expense payment, expense reserve amounts?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    p.Policy_Number,
+    SUM(lp.Loss_Payment) + SUM(lr.Loss_Reserve) + SUM(ep.Expense_Payment) + SUM(er.Expense_Reserve) AS Total_Loss
+FROM 
+    Policy p
+JOIN 
+    Agreement_Party_Role apr ON p.Policy_Identifier = apr.Policy_Identifier
+JOIN 
+    Agreement a ON apr.Agreement_Identifier = a.Agreement_Identifier
+JOIN 
+    Loss_Payment lp ON p.Policy_Identifier = lp.Policy_Identifier
+JOIN 
+    Loss_Reserve lr ON p.Policy_Identifier = lr.Policy_Identifier
+JOIN 
+    Expense_Payment ep ON p.Policy_Identifier = ep.Policy_Identifier
+JOIN 
+    Expense_Reserve er ON p.Policy_Identifier = er.Policy_Identifier
+GROUP BY 
+    p.Policy_Number;
+```",1615,187,4.227,GENERATED,
+41,https://templates.data.world/IQ_ecee6bdd5000afd4300d0fff6df1fde6,"What are the total loss, which is the sum of loss payment, loss reserve, expense payment, expense reserve amount by claim number, catastrophe and corresponding policy number?",SQL,Qwen2.5-Coder-3B,"```sql
+SELECT 
+    c.Claim_Number,
+    c.Catastrophe_Name,
+    p.Policy_Number,
+    SUM(lp.Claim_Amount) AS Total_Loss
+FROM 
+    Claim c
+JOIN 
+    Claim_Amount ca ON c.Claim_Identifier = ca.Claim_Identifier
+JOIN 
+    Loss_Payment lp ON ca.Claim_Amount_Identifier = lp.Claim_Amount_Identifier
+JOIN 
+    Policy p ON ca.Policy_Identifier = p.Policy_Identifier
+GROUP BY 
+    c.Claim_Number, c.Catastrophe_Name, p.Policy_Number;
+```",1612,129,2.995,GENERATED,
+42,https://templates.data.world/IQ_f1b8ef62994d657eda300db1a4b71046,How many claims do we have?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT COUNT(Claim_Identifier) AS Total_Claims FROM Claim;
+```",1586,19,0.525,GENERATED,
+43,https://templates.data.world/IQ_fd57976dc7499200ec8d8f57f2b19ef6,What are the loss payment amount of all claims by claim number?,SQL,Qwen2.5-Coder-3B,"```sql
+SELECT T1.Company_Claim_Number, T2.Claim_Amount FROM Claim AS T1 INNER JOIN Claim_Amount AS T2 ON T1.Claim_Identifier = T2.Claim_Identifier WHERE T2.Amount_Type_Code = 'Loss Payment';
+```",1592,57,1.357,GENERATED,

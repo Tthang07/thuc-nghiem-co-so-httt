@@ -1,0 +1,9 @@
+Mode,Quadrant,sum,count,mean,EA (%)
+Fence-stripped,HQHS,0,10,0.0,0.0
+Fence-stripped,HQLS,2,11,0.18181818181818182,18.18
+Fence-stripped,LQHS,0,10,0.0,0.0
+Fence-stripped,LQLS,2,12,0.16666666666666666,16.67
+Verbatim,HQHS,0,10,0.0,0.0
+Verbatim,HQLS,0,11,0.0,0.0
+Verbatim,LQHS,0,10,0.0,0.0
+Verbatim,LQLS,0,12,0.0,0.0

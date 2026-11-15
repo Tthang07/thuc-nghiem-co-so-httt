@@ -1,0 +1,9 @@
+﻿Model,Method,Questions,Baseline_Correct,Correct_After,EA Before (%),EA After (%),Delta EA (pp)
+NSQL-350M,ontology_guided,43,3,3,6.98,6.98,0.0
+NSQL-350M,schema_only,43,3,3,6.98,6.98,0.0
+NSQL-Llama-2-7B,ontology_guided,43,0,3,0.0,6.98,6.98
+NSQL-Llama-2-7B,schema_only,43,0,4,0.0,9.3,9.3
+Qwen2.5-Coder-3B,ontology_guided,43,4,4,9.3,9.3,0.0
+Qwen2.5-Coder-3B,schema_only,43,4,4,9.3,9.3,0.0
+SQLCoder-7B-2,ontology_guided,43,4,4,9.3,9.3,0.0
+SQLCoder-7B-2,schema_only,43,4,4,9.3,9.3,0.0
