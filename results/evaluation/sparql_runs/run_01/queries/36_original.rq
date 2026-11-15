@@ -1,11 +1,11 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?claimNumber ?expensePaymentAmount
-WHERE {
-  SERVICE <mapped> {
-    ?claim a in:Claim ;
-           in:claimNumber ?claimNumber ;
-           in:hasExpensePayment ?expensePayment .
-    ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expensePaymentAmount
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:hasExpensePayment ?expensePayment .
+    ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  }
 }

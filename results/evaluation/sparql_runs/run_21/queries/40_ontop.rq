@@ -1,0 +1,44 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber
+       (COALESCE(SUM(DISTINCT ?lossPaymentAmount), 0) +
+        COALESCE(SUM(DISTINCT ?lossReserveAmount), 0) +
+        COALESCE(SUM(DISTINCT ?expensePaymentAmount), 0) +
+        COALESCE(SUM(DISTINCT ?expenseReserveAmount), 0) AS ?totalLoss)
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+
+    ?agent in:agentId ?agentId .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?claim a in:Claim ;
+           in:against ?coverage .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}
+GROUP BY ?agentId ?policyNumber
+ORDER BY ?agentId ?policyNumber

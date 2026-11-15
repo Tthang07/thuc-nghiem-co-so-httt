@@ -1,0 +1,35 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+       (COALESCE(SUM(?lossPaymentVal), 0) +
+        COALESCE(SUM(?lossReserveVal), 0) +
+        COALESCE(SUM(?expensePaymentVal), 0) +
+        COALESCE(SUM(?expenseReserveVal), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentVal .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveVal .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?expensePayment .
+      ?expensePayment in:expensePaymentAmount ?expensePaymentVal .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve in:expenseReserveAmount ?expenseReserveVal .
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

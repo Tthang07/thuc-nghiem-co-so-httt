@@ -1,59 +1,59 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmountPaid ?catastrophe ?agent
-       ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
-WHERE {
-  {
-    ?claim a in:Claim ;
-           in:claimNumber ?claimNumber .
-
-    OPTIONAL {
-      ?claim in:hasLossPayment ?lossPayment .
-      ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
-    }
-
-    OPTIONAL {
-      ?claim in:hasLossReserve ?lossReserve .
-      ?lossReserve in:lossReserveAmount ?lossReserveAmount .
-    }
-
-    OPTIONAL {
-      ?claim in:hasExpensePayment ?expensePayment .
-      ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
-    }
-
-    OPTIONAL {
-      ?claim in:hasExpenseReserve ?expenseReserve .
-      ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
-    }
-
-    OPTIONAL {
-      ?claim in:hasCatastrophe ?catObj .
-      OPTIONAL { ?catObj in:catastropheName ?catastropheName . }
-      BIND(COALESCE(?catastropheName, STR(?catObj)) AS ?catastrophe)
-    }
-
-    OPTIONAL {
-      ?claim in:against ?coverageDetail .
-      ?coverageDetail in:hasPolicy ?policy .
-      ?policy in:policyNumber ?policyNumber .
-
-      OPTIONAL {
-        ?policy in:hasPolicyHolder ?policyHolderObj .
-        OPTIONAL { ?policyHolderObj in:policyHolderId ?policyHolderId . }
-        BIND(COALESCE(?policyHolderId, STR(?policyHolderObj)) AS ?policyHolder)
-      }
-
-      OPTIONAL {
-        ?coverageDetail in:hasPremiumAmount ?premium .
-        ?premium in:premiumAmount ?premiumAmountPaid .
-      }
-
-      OPTIONAL {
-        ?policy in:soldByAgent ?agentObj .
-        OPTIONAL { ?agentObj in:agentId ?agentId . }
-        BIND(COALESCE(?agentId, STR(?agentObj)) AS ?agent)
-      }
-    }
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmountPaid ?catastrophe ?agent
+       ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?expensePayment .
+      ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?catObj .
+      OPTIONAL { ?catObj in:catastropheName ?catastropheName . }
+      BIND(COALESCE(?catastropheName, STR(?catObj)) AS ?catastrophe)
+    }
+
+    OPTIONAL {
+      ?claim in:against ?coverageDetail .
+      ?coverageDetail in:hasPolicy ?policy .
+      ?policy in:policyNumber ?policyNumber .
+
+      OPTIONAL {
+        ?policy in:hasPolicyHolder ?policyHolderObj .
+        OPTIONAL { ?policyHolderObj in:policyHolderId ?policyHolderId . }
+        BIND(COALESCE(?policyHolderId, STR(?policyHolderObj)) AS ?policyHolder)
+      }
+
+      OPTIONAL {
+        ?coverageDetail in:hasPremiumAmount ?premium .
+        ?premium in:premiumAmount ?premiumAmountPaid .
+      }
+
+      OPTIONAL {
+        ?policy in:soldByAgent ?agentObj .
+        OPTIONAL { ?agentObj in:agentId ?agentId . }
+        BIND(COALESCE(?agentId, STR(?agentObj)) AS ?agent)
+      }
+    }
+  }
 }

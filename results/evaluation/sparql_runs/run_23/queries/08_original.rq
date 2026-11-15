@@ -1,0 +1,18 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolder ?policyHolderId ?policyNumber (SUM(?amount) AS ?totalPremiumAmount)
+WHERE {
+  SERVICE <mapped> {
+    ?policy in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+
+    ?coverageDetail in:hasPolicy ?policy ;
+                    in:hasPremiumAmount ?premium .
+
+    ?premium in:premiumAmount ?amount .
+  }
+}
+GROUP BY ?policyHolder ?policyHolderId ?policyNumber
+ORDER BY ?policyNumber ?policyHolder

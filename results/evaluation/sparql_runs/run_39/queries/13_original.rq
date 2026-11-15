@@ -1,0 +1,25 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber
+       (SUM(?amt) AS ?totalLossAmount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?rawAmt .
+      BIND(xsd:decimal(?rawAmt) AS ?amt)
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?rawAmt .
+      BIND(xsd:decimal(?rawAmt) AS ?amt)
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

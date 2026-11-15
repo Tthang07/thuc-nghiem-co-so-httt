@@ -1,0 +1,48 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?premiumAmount
+       (COUNT(DISTINCT ?claim) AS ?numberOfClaims)
+       (SUM(?lossComponent) AS ?totalLoss)
+       (IF(?premiumAmount != 0, SUM(?lossComponent) / ?premiumAmount, 0) AS ?lossRatio)
+WHERE {
+  SERVICE <mapped> {
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?policy in:policyNumber ?policyNumber .
+
+    ?premium in:premiumAmount ?premiumAmount .
+
+    ?claim a in:Claim ;
+           in:against ?pcd .
+
+    {
+      SELECT ?claim (SUM(?amt) AS ?lossComponent)
+      WHERE {
+        {
+          ?claim in:hasLossPayment ?lp .
+          ?lp in:lossPaymentAmount ?amt .
+        }
+        UNION
+        {
+          ?claim in:hasLossReserve ?lr .
+          ?lr in:lossReserveAmount ?amt .
+        }
+        UNION
+        {
+          ?claim in:hasExpensePayment ?ep .
+          ?ep in:expensePaymentAmount ?amt .
+        }
+        UNION
+        {
+          ?claim in:hasExpenseReserve ?er .
+          ?er in:expenseReserveAmount ?amt .
+        }
+      }
+      GROUP BY ?claim
+    }
+  }
+}
+GROUP BY ?policyNumber ?premiumAmount
+ORDER BY ?policyNumber

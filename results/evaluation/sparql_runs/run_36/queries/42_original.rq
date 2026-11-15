@@ -1,0 +1,8 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?claim) AS ?claimCount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim .
+  }
+}

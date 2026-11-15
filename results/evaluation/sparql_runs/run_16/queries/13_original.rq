@@ -1,0 +1,22 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber
+       ((COALESCE(SUM(xsd:decimal(?lossPaymentAmount)), 0) + COALESCE(SUM(xsd:decimal(?lossReserveAmount)), 0)) AS ?totalLossAmount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+    }
+  }
+}
+GROUP BY ?claimNumber

@@ -1,0 +1,36 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+       (SUM(?amt) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+    UNION
+    {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+    UNION
+    {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?v .
+      BIND(xsd:decimal(?v) AS ?amt)
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

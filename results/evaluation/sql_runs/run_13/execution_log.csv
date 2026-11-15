@@ -1,0 +1,70 @@
+ID,Status,Error,Time
+1,ERROR,"Binder Error: Table ""pr"" does not have a column named ""Policy_Amount""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 6:         / NULLIF(COALESCE(SUM(pr.Policy_Amount), 0), 0)
+                                      ^^^^^^^^^^^^^^^^",0.003
+2,OK,,0.004
+3,ERROR,"Binder Error: Referenced column ""Full_Name"" not found in FROM clause!
+Candidate bindings: ""Party_Name"", ""Policy_Number"", ""loss_payment_amount"", ""End_Date"", ""Claim_Close_Date""
+
+LINE 77:         MAX(COALESCE(Party_Name, Full_Name, Organization_Name, Last_Name + ', ' + First_Name...
+                                          ^^^^^^^^^",0.006
+4,OK,,0.015
+5,ERROR,"Binder Error: Referenced table ""c"" not found!
+Candidate tables: ""cc""
+
+LINE 10:     ON cc.Claim_Identifier = c.Claim_Identifier
+                                      ^^^^^^^^^^^^^^^^^^",0.002
+6,OK,,0.006
+7,OK,,0.017
+8,OK,,0.006
+9,ERROR,"Binder Error: Referenced column ""COLUMN_NAME"" not found in FROM clause!
+Candidate bindings: ""Company_Subclaim_Number""
+
+LINE 85:             MAX(CASE WHEN COLUMN_NAME = 'Party_Name' THEN CAST(NULL AS varchar(1)...
+                                   ^^^^^^^^^^^",0.005
+10,OK,,0.007
+11,OK,,0.005
+12,OK,,0.005
+13,OK,,0.005
+14,ERROR,"Binder Error: Table ""p"" does not have a column named ""Policy_Amount_Identifier""
+
+Candidate bindings: : ""Policy_Identifier""
+
+LINE 2:     p.Policy_Amount_Identifier,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^",0.001
+15,OK,,0.007
+16,OK,,0.007
+17,OK,,0.003
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Avera...
+                         ^^^",0.001
+19,OK,,0.01
+20,OK,,0.004
+21,OK,,0.008
+22,OK,,0.004
+23,OK,,0.005
+24,OK,,0.006
+25,OK,,0.002
+26,OK,,0.014
+27,OK,,0.004
+28,OK,,0.004
+29,OK,,0.003
+30,OK,,0.005
+31,OK,,0.005
+32,OK,,0.007
+33,OK,,0.006
+34,OK,,0.002
+35,OK,,0.005
+36,OK,,0.004
+37,OK,,0.01
+38,OK,,0.009
+39,OK,,0.004
+40,OK,,0.012
+41,OK,,0.008
+42,OK,,0.002
+43,OK,,0.004

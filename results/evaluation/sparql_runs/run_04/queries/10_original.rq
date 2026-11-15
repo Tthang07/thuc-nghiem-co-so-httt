@@ -1,25 +1,25 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?agentId ?policyNumber ?claimNumber ?expenseReserveAmount
-WHERE {
-  SERVICE <mapped> {
-    ?policy a in:Policy ;
-            in:policyNumber ?policyNumber ;
-            in:soldByAgent ?agent .
-
-    ?agent a in:Agent ;
-           in:agentId ?agentId .
-
-    ?claim a in:Claim ;
-           in:claimNumber ?claimNumber ;
-           in:against ?coverage ;
-           in:hasExpenseReserve ?expenseReserve .
-
-    ?coverage a in:PolicyCoverageDetail ;
-              in:hasPolicy ?policy .
-
-    ?expenseReserve a in:ExpenseReserve ;
-                    in:expenseReserveAmount ?expenseReserveAmount .
-  }
-}
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?expenseReserveAmount
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+
+    ?agent a in:Agent ;
+           in:agentId ?agentId .
+
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?coverage ;
+           in:hasExpenseReserve ?expenseReserve .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?expenseReserve a in:ExpenseReserve ;
+                    in:expenseReserveAmount ?expenseReserveAmount .
+  }
+}
 ORDER BY ?agentId ?policyNumber ?claimNumber

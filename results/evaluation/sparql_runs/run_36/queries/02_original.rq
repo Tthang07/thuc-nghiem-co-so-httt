@@ -1,0 +1,13 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?effectiveDate ?expirationDate
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:policyEffectiveDate ?effectiveDate ;
+            in:policyExpirationDate ?expirationDate .
+  }
+}
+ORDER BY ?policyNumber

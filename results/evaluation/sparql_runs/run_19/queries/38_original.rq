@@ -1,0 +1,49 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?numberOfClaims ?averageLoss
+WHERE {
+  SERVICE <mapped> {
+    {
+      SELECT ?policyNumber
+             (COUNT(DISTINCT ?claim) AS ?numberOfClaims)
+             (AVG(?claimLoss) AS ?averageLoss)
+      WHERE {
+        ?claim a in:Claim ;
+               in:against ?pcd .
+
+        ?pcd in:hasPolicy ?policy .
+        ?policy in:policyNumber ?policyNumber .
+
+        {
+          SELECT ?claim
+                 (COALESCE(SUM(DISTINCT xsd:decimal(?lossPaymentAmount)), 0) +
+                  COALESCE(SUM(DISTINCT xsd:decimal(?lossReserveAmount)), 0) +
+                  COALESCE(SUM(DISTINCT xsd:decimal(?expensePaymentAmount)), 0) +
+                  COALESCE(SUM(DISTINCT xsd:decimal(?expenseReserveAmount)), 0) AS ?claimLoss)
+          WHERE {
+            OPTIONAL {
+              ?claim in:hasLossPayment ?lp .
+              ?lp in:lossPaymentAmount ?lossPaymentAmount .
+            }
+            OPTIONAL {
+              ?claim in:hasLossReserve ?lr .
+              ?lr in:lossReserveAmount ?lossReserveAmount .
+            }
+            OPTIONAL {
+              ?claim in:hasExpensePayment ?ep .
+              ?ep in:expensePaymentAmount ?expensePaymentAmount .
+            }
+            OPTIONAL {
+              ?claim in:hasExpenseReserve ?er .
+              ?er in:expenseReserveAmount ?expenseReserveAmount .
+            }
+          }
+          GROUP BY ?claim
+        }
+      }
+      GROUP BY ?policyNumber
+    }
+  }
+}
+ORDER BY ?policyNumber

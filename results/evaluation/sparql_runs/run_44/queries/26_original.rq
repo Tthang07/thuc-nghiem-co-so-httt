@@ -1,0 +1,49 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?premiumValue
+       (COUNT(DISTINCT ?claim) AS ?numberOfClaims)
+       (SUM(?lossComponent) AS ?totalLoss)
+       ((SUM(?lossComponent) / ?premiumValue) AS ?lossRatio)
+WHERE {
+  SERVICE <mapped> {
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?policy in:policyNumber ?policyNumber .
+
+    ?premium in:premiumAmount ?premiumAmtRaw .
+
+    BIND(xsd:decimal(?premiumAmtRaw) AS ?premiumValue)
+
+    ?claim a in:Claim ;
+           in:against ?pcd .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?amtRaw .
+      BIND(xsd:decimal(?amtRaw) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?amtRaw .
+      BIND(xsd:decimal(?amtRaw) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?amtRaw .
+      BIND(xsd:decimal(?amtRaw) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?amtRaw .
+      BIND(xsd:decimal(?amtRaw) AS ?lossComponent)
+    }
+  }
+}
+GROUP BY ?policyNumber ?premiumValue
+ORDER BY ?policyNumber

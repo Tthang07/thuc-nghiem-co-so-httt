@@ -1,8 +1,8 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT (COUNT(DISTINCT ?claim) AS ?claimCount)
-WHERE {
-  {
-    ?claim a in:Claim .
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?claim) AS ?claimCount)
+WHERE {
+  {
+    ?claim a in:Claim .
+  }
 }

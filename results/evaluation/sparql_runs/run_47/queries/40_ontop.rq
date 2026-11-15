@@ -1,0 +1,49 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?agentId ?policy ?policyNumber
+       (SUM(?lossPaymentVal + ?lossReserveVal + ?expensePaymentVal + ?expenseReserveVal) AS ?totalLoss)
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent in:agentId ?agentId .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy .
+
+    OPTIONAL {
+      ?claim a in:Claim ;
+             in:against ?pcd .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lpAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lrAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?epAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?erAmt .
+    }
+
+    BIND(COALESCE(xsd:decimal(?lpAmt), 0) AS ?lossPaymentVal)
+    BIND(COALESCE(xsd:decimal(?lrAmt), 0) AS ?lossReserveVal)
+    BIND(COALESCE(xsd:decimal(?epAmt), 0) AS ?expensePaymentVal)
+    BIND(COALESCE(xsd:decimal(?erAmt), 0) AS ?expenseReserveVal)
+  }
+}
+GROUP BY ?agentId ?policy ?policyNumber
+ORDER BY ?agentId ?policyNumber

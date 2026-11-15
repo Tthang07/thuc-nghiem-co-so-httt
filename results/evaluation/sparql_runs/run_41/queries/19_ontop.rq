@@ -1,0 +1,57 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber
+       (SUM(?amount) AS ?totalLoss)
+WHERE {
+  {
+    {
+      SELECT ?policyNumber ?lossPaymentAmount AS ?amount
+      WHERE {
+        ?claim a in:Claim ;
+               in:against ?pcd ;
+               in:hasLossPayment ?lp .
+        ?pcd in:hasPolicy ?policy .
+        ?policy in:policyNumber ?policyNumber .
+        ?lp in:lossPaymentAmount ?lossPaymentAmount .
+      }
+    }
+    UNION
+    {
+      SELECT ?policyNumber ?lossReserveAmount AS ?amount
+      WHERE {
+        ?claim a in:Claim ;
+               in:against ?pcd ;
+               in:hasLossReserve ?lr .
+        ?pcd in:hasPolicy ?policy .
+        ?policy in:policyNumber ?policyNumber .
+        ?lr in:lossReserveAmount ?lossReserveAmount .
+      }
+    }
+    UNION
+    {
+      SELECT ?policyNumber ?expensePaymentAmount AS ?amount
+      WHERE {
+        ?claim a in:Claim ;
+               in:against ?pcd ;
+               in:hasExpensePayment ?ep .
+        ?pcd in:hasPolicy ?policy .
+        ?policy in:policyNumber ?policyNumber .
+        ?ep in:expensePaymentAmount ?expensePaymentAmount .
+      }
+    }
+    UNION
+    {
+      SELECT ?policyNumber ?expenseReserveAmount AS ?amount
+      WHERE {
+        ?claim a in:Claim ;
+               in:against ?pcd ;
+               in:hasExpenseReserve ?er .
+        ?pcd in:hasPolicy ?policy .
+        ?policy in:policyNumber ?policyNumber .
+        ?er in:expenseReserveAmount ?expenseReserveAmount .
+      }
+    }
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

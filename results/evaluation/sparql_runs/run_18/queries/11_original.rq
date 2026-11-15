@@ -1,0 +1,17 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (COUNT(DISTINCT ?claim) AS ?claimCount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:against ?coverage .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber .
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

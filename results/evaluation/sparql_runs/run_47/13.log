@@ -1,0 +1,35 @@
+org.eclipse.rdf4j.query.MalformedQueryException: BIND clause alias 'lossPaymentVal' was previously used
+	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.buildQueryModel(SPARQLParser.java:248)
+	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.parseQuery(SPARQLParser.java:206)
+	at org.eclipse.rdf4j.query.parser.QueryParserUtil.parseQuery(QueryParserUtil.java:96)
+	at it.unibz.inf.ontop.rdf4j.repository.impl.OntopRepositoryConnectionImpl.prepareTupleQuery(OntopRepositoryConnectionImpl.java:437)
+	at it.unibz.inf.ontop.rdf4j.repository.impl.OntopRepositoryConnectionImpl.prepareTupleQuery(OntopRepositoryConnectionImpl.java:425)
+	at it.unibz.inf.ontop.rdf4j.repository.impl.OntopRepositoryConnectionImpl.prepareTupleQuery(OntopRepositoryConnectionImpl.java:419)
+	at it.unibz.inf.ontop.cli.OntopQuery.run(OntopQuery.java:104)
+	at it.unibz.inf.ontop.cli.Ontop.main(Ontop.java:19)
+Caused by: org.eclipse.rdf4j.query.parser.sparql.ast.VisitorException: BIND clause alias 'lossPaymentVal' was previously used
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:2391)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTBind.jjtAccept(ASTBind.java:28)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SimpleNode.childrenAccept(SimpleNode.java:102)
+	at org.eclipse.rdf4j.query.parser.sparql.AbstractASTVisitor.visit(AbstractASTVisitor.java:381)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTBasicGraphPattern.jjtAccept(ASTBasicGraphPattern.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:1205)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTGraphPatternGroup.jjtAccept(ASTGraphPatternGroup.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:1205)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTGraphPatternGroup.jjtAccept(ASTGraphPatternGroup.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SimpleNode.childrenAccept(SimpleNode.java:102)
+	at org.eclipse.rdf4j.query.parser.sparql.AbstractASTVisitor.visit(AbstractASTVisitor.java:880)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTWhereClause.jjtAccept(ASTWhereClause.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:359)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTSelectQuery.jjtAccept(ASTSelectQuery.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:350)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTQueryContainer.jjtAccept(ASTQueryContainer.java:29)
+	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.buildQueryModel(SPARQLParser.java:246)
+	... 7 more
+
+21:47:56.965 |-INFO  in i.u.i.o.a.impl.OntopQueryEngineImpl - Ontop has completed the setup and it is ready for query answering!
+21:47:56.967 |-INFO  in i.u.i.o.r.r.i.OntopVirtualRepository - Ontop virtual repository initialized successfully!

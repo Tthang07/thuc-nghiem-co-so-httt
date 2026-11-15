@@ -1,0 +1,56 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+       (COALESCE(SUM(?lossPaymentVal), 0) +
+        COALESCE(SUM(?lossReserveVal), 0) +
+        COALESCE(SUM(?expensePaymentVal), 0) +
+        COALESCE(SUM(?expenseReserveVal), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+
+    ?policyHolder a in:PolicyHolder ;
+                  in:policyHolderId ?policyHolderId .
+
+    OPTIONAL {
+      ?pcd in:hasPremiumAmount ?premium .
+      ?premium a in:Premium ;
+               in:premiumAmount ?premiumAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentRaw .
+      BIND(xsd:decimal(?lossPaymentRaw) AS ?lossPaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveRaw .
+      BIND(xsd:decimal(?lossReserveRaw) AS ?lossReserveVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?expensePayment .
+      ?expensePayment in:expensePaymentAmount ?expensePaymentRaw .
+      BIND(xsd:decimal(?expensePaymentRaw) AS ?expensePaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve in:expenseReserveAmount ?expenseReserveRaw .
+      BIND(xsd:decimal(?expenseReserveRaw) AS ?expenseReserveVal)
+    }
+  }
+}
+GROUP BY ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+ORDER BY ?claimNumber ?policyNumber

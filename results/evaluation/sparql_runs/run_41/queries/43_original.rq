@@ -1,0 +1,11 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?lossPaymentAmount
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:hasLossPayment ?lossPayment .
+    ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  }
+}

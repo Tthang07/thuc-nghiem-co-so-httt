@@ -1,20 +1,20 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount
-WHERE {
-  SERVICE <mapped> {
-    ?policy in:soldByAgent ?agent ;
-            in:policyNumber ?policyNumber .
-
-    ?agent in:agentId ?agentId .
-
-    ?coverage in:hasPolicy ?policy .
-
-    ?claim in:against ?coverage ;
-           in:claimNumber ?claimNumber ;
-           in:hasLossPayment ?lossPayment .
-
-    ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
-  }
-}
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount
+WHERE {
+  SERVICE <mapped> {
+    ?policy in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent in:agentId ?agentId .
+
+    ?coverage in:hasPolicy ?policy .
+
+    ?claim in:against ?coverage ;
+           in:claimNumber ?claimNumber ;
+           in:hasLossPayment ?lossPayment .
+
+    ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+  }
+}
 ORDER BY ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount

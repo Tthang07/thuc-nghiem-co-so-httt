@@ -1,0 +1,20 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?expensePaymentAmount
+WHERE {
+  {
+    ?policy in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent in:agentId ?agentId .
+
+    ?coverage in:hasPolicy ?policy .
+
+    ?claim in:against ?coverage ;
+           in:claimNumber ?claimNumber ;
+           in:hasExpensePayment ?expensePayment .
+
+    ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  }
+}
+ORDER BY ?agentId ?policyNumber ?claimNumber ?expensePaymentAmount

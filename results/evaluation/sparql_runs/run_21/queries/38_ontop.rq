@@ -1,0 +1,37 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (COUNT(DISTINCT ?claim) AS ?numberOfClaims) (AVG(?claimLoss) AS ?averageLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:against ?coverage .
+
+    ?coverage in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+
+    {
+      SELECT ?claim (COALESCE(SUM(?lpAmt),0) + COALESCE(SUM(?lrAmt),0) + COALESCE(SUM(?epAmt),0) + COALESCE(SUM(?erAmt),0) AS ?claimLoss)
+      WHERE {
+        OPTIONAL {
+          ?claim in:hasLossPayment ?lp .
+          ?lp in:lossPaymentAmount ?lpAmt .
+        }
+        OPTIONAL {
+          ?claim in:hasLossReserve ?lr .
+          ?lr in:lossReserveAmount ?lrAmt .
+        }
+        OPTIONAL {
+          ?claim in:hasExpensePayment ?ep .
+          ?ep in:expensePaymentAmount ?epAmt .
+        }
+        OPTIONAL {
+          ?claim in:hasExpenseReserve ?er .
+          ?er in:expenseReserveAmount ?erAmt .
+        }
+      }
+      GROUP BY ?claim
+    }
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

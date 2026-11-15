@@ -1,0 +1,49 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmount ?catastropheName ?agentId
+       ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?coverage .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy ;
+              in:hasPremiumAmount ?premium .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolderRes ;
+            in:soldByAgent ?agent .
+
+    ?policyHolderRes in:policyHolderId ?policyHolder .
+    ?premium in:premiumAmount ?premiumAmount .
+    ?agent in:agentId ?agentId .
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?catastrophe .
+      ?catastrophe in:catastropheName ?catastropheName .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?expensePayment .
+      ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?expenseReserve .
+      ?expenseReserve in:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}

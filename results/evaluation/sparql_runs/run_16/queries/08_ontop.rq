@@ -1,0 +1,23 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyHolderId ?policyNumber (SUM(xsd:decimal(?premiumValue)) AS ?totalPremiumPaid)
+WHERE {
+  {
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+    
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+    
+    ?policyHolder a in:PolicyHolder ;
+                  in:policyHolderId ?policyHolderId .
+    
+    ?premium a in:Premium ;
+             in:premiumAmount ?premiumValue .
+  }
+}
+GROUP BY ?policyHolderId ?policyNumber
+ORDER BY ?policyHolderId ?policyNumber

@@ -1,0 +1,53 @@
+ID,Status,Error,Time
+1,OK,,0.008
+2,OK,,0.003
+3,OK,,0.015
+4,OK,,0.012
+5,OK,,0.007
+6,OK,,0.005
+7,OK,,0.016
+8,OK,,0.005
+9,ERROR,"Binder Error: Table ""prm"" does not have a column named ""Policy_Amount""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 11:     COALESCE(SUM(DISTINCT prm.Policy_Amount), 0) AS premium_amount_paid
+                                   ^^^^^^^^^^^^^^^^^",0.004
+10,OK,,0.007
+11,OK,,0.008
+12,OK,,0.005
+13,OK,,0.007
+14,OK,,0.005
+15,OK,,0.008
+16,OK,,0.006
+17,OK,,0.004
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Avera...
+                         ^^^",0.002
+19,OK,,0.011
+20,OK,,0.005
+21,OK,,0.008
+22,OK,,0.005
+23,OK,,0.006
+24,OK,,0.007
+25,OK,,0.003
+26,OK,,0.014
+27,OK,,0.004
+28,OK,,0.004
+29,OK,,0.003
+30,OK,,0.006
+31,OK,,0.004
+32,OK,,0.006
+33,OK,,0.006
+34,OK,,0.003
+35,OK,,0.006
+36,OK,,0.005
+37,OK,,0.014
+38,OK,,0.01
+39,OK,,0.004
+40,OK,,0.013
+41,OK,,0.011
+42,OK,,0.002
+43,OK,,0.005

@@ -1,0 +1,47 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber
+       (COALESCE(SUM(DISTINCT xsd:decimal(?lossPaymentAmount)), 0) +
+        COALESCE(SUM(DISTINCT xsd:decimal(?lossReserveAmount)), 0) +
+        COALESCE(SUM(DISTINCT xsd:decimal(?expensePaymentAmount)), 0) +
+        COALESCE(SUM(DISTINCT xsd:decimal(?expenseReserveAmount)), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?coverage .
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?catastrophe .
+      ?catastrophe in:catastropheName ?catastropheName .
+    }
+
+    OPTIONAL {
+      ?coverage in:hasPolicy ?policy .
+      ?policy in:policyNumber ?policyNumber .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expensePaymentAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expenseReserveAmount .
+    }
+  }
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber
+ORDER BY ?claimNumber ?catastropheName ?policyNumber

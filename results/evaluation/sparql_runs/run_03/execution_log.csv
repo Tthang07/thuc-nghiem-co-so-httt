@@ -1,85 +1,181 @@
-ID,Status,Error
-1,OK,
-2,OK,
-3,OK,
-4,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+﻿ID,Status,Error,Time (s),Query SHA256,Mapping SHA256,Ontology SHA256,Properties SHA256
+1,OK,,5.113,2c5312eda7d36acbed76e44828131c1492cc78cbc0a4a79813131676d4c63120,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+2,OK,,4.825,813f3b343092da0077eadcc1b9dab39524466711abe9bce484e2d7dbba519b39,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+3,OK,,5.203,dac5dde0a3eb187a8b550d79f04221eedc97f970acc1d02c02cd4d11be690b11,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+4,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-5,OK,
-6,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+	... 4 common frames omitted
+",7.237,5c528ebb46d3cfa6976c1628b7fb1d1ee5294d0f261254eb8c871ee10e89effb,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+5,OK,,5.126,4d69ac8f008c52cd16a966f598c7449dcc2bf071ab6c4e02214bf1cdb421af54,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+6,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-7,OK,
-8,OK,
-9,OK,
-10,OK,
-11,OK,
-12,OK,
-13,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+	... 4 common frames omitted
+",6.387,6b3cfb22f31e6de04ed7421efcdb45335d8fd5bdfa47a2ae705f60ba1e387bf6,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+7,OK,,6.544,175f3c46b994ec36b6a8a7cb4a8a04aa5ae2aeb567572f800b10891334175e13,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+8,OK,,5.093,ea238c3eb3ae197d63a0ea60ae88ab02905b164f86ea6834c7be1489e368542d,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+9,OK,,5.008,57413e2fb742c3314c1366279c85e8d30f0952b9517d7b6a9943148758f8cce5,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+10,OK,,4.876,dfad46533ad044c6e0cd61af004e1df4aca6a52766db43d8509eec5e98bf970e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+11,OK,,4.937,3961db160a6509ae22b127967caf4dd177b06d8f29666fba9323b35de9e2272d,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+12,OK,,4.869,1035956aef4470eec3536d5641809a39f23fbc9c791b06c59a3bf24709426eb9,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+13,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-14,OK,
-15,OK,
-16,OK,
-17,OK,
-18,OK,
-19,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+	... 4 common frames omitted
+",6.681,325e91a5b5b77e0c822fffa01f359b791c53b46f2bf35cb21078b1d0da8219a3,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+14,OK,,5.229,a7791ba8e604806f8f80215163528b60a149897de5940598932bb1bd4b2e1d21,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+15,OK,,5.14,c624ab39487aa660174075f66f936243d185d15a2681d2c64efe306aa94dfbae,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+16,OK,,5.03,80668ad9357afbfe2c0a9a3a98340bab9ee7d392d22df987453530088be14c11,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+17,OK,,4.842,d74ff3954e50655addfc473178793c37a4057daf4f9dae6c1d1bd2c6af593578,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+18,OK,,5.144,04e463f5b35bf3d68afe5d4b9414a5360d30b84929224a6c6ad033e026b3a173,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+19,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-20,OK,
-21,OK,
-22,OK,
-23,OK,
-24,OK,
-25,OK,
-26,OK,
-27,OK,
-28,OK,
-29,OK,
-30,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+	... 4 common frames omitted
+",6.34,c1fecd27c169e92bc15e4a3a958268227f3f0485ab512badd1cb2f26934d2917,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+20,OK,,4.75,aa4b8e4d8f1f702d2e4e43192dad2eb36bc6eff96044cdfa01f89462cf356ade,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+21,OK,,6.335,b3e7309d6ef64e472181e600bb31fd1eaeff786b2b204396a38fe0dc03eaeb0d,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+22,OK,,5.0,abf647c612d9a0419145508235563241e7ec9cc6948dd2bbf4f50ba7e1fff7f1,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+23,OK,,5.099,08bcc0ac46d080a69c197dddc32c0d228a2461ccebf667184ee917c42b987cc2,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+24,OK,,4.81,5396ec2f4dc7bbb349cd61feac03bb211ddefd68b341ee11f9b863615389bdcc,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+25,OK,,5.151,8990652f1661cdb6c72dd484f7b407eeadd272926de2f69c84267f6568a3a98e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+26,OK,,6.382,c38ac99b5a6cb79e0b4ad5225a99571f84fbde90b75c538ebeb8482763071121,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+27,OK,,5.427,8506c79c71529f72bdcec7260014244b5d64f552478e7c96242f754ac734efe8,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+28,OK,,5.451,ae3fd7a9d0015d01f302075d8b0f84b40ccbe38c1c92452e805424e23648ad18,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+29,OK,,4.884,e57966c08eabdf5839300b3594e79beec281d29b53a8ba8917307505e06dad27,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+30,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-31,OK,
-32,OK,
-33,OK,
-34,OK,
-35,OK,
-36,OK,
-37,OK,
-38,ERROR,"parql.ast.SyntaxTreeBuilder.generateParseException(SyntaxTreeBuilder.java:9571)
+	... 4 common frames omitted
+",6.158,ac737dc9c19657408995361fda409949503ffa36afe0a270aef6e7866c18240e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+31,OK,,4.804,bb65843f945f0a4ec765a63aaaaf60ee132a181fc6519eb537baf63f796d63a8,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+32,OK,,4.913,ea1546656639b73c47dfcc941cf7e742db4d68e9e45e2be63091634594edbca2,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+33,OK,,5.011,d0f9a08a60619a32656b87652aa5751908515ba733a2242f3995666437b363f1,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+34,OK,,5.155,73fbe52e2eb7dff392b814a73169fbe011e1ed1e63fe652170d78abebc618d3e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+35,OK,,5.005,2b00986ca72e89af3c5550ffbf3f1874abb2c79a15e727dc66415a643e27b723,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+36,OK,,5.424,d5720a5cd04c50434890f09f012ca7ce9ae02da4dfb22a5e74c98443426d0f61,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+37,OK,,5.477,4e017a3a6cd6168a5aa8669d198cb9d47208ce43b571a38baf4de185031c3c1c,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+38,ERROR,"uuid"" ...
+    <IRI> ...
+    ""if"" ...
+    ""regex"" ...
+    ""bindings"" ...
+    ""values"" ...
+    ""strlen"" ...
+    ""substr"" ...
+    ""strStarts"" ...
+    ""strEnds"" ...
+    ""strBefore"" ...
+    ""strAfter"" ...
+    ""replace"" ...
+    ""ucase"" ...
+    ""lcase"" ...
+    ""concat"" ...
+    ""contains"" ...
+    ""encode_for_URI"" ...
+    ""rand"" ...
+    ""abs"" ...
+    ""ceil"" ...
+    ""floor"" ...
+    ""round"" ...
+    ""now"" ...
+    ""year"" ...
+    ""month"" ...
+    ""day"" ...
+    ""hours"" ...
+    ""minutes"" ...
+    ""seconds"" ...
+    ""timezone"" ...
+    ""tz"" ...
+    ""md5"" ...
+    ""sha1"" ...
+    ""sha224"" ...
+    ""sha256"" ...
+    ""sha384"" ...
+    ""sha512"" ...
+    <Q_IRI_REF> ...
+    <PNAME_NS> ...
+    <PNAME_LN> ...
+    <VAR1> ...
+    <VAR2> ...
+    
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.generateParseException(SyntaxTreeBuilder.java:9571)
 	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.jj_consume_token(SyntaxTreeBuilder.java:9402)
 	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.QueryContainer(SyntaxTreeBuilder.java:207)
 	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.parseQuery(SyntaxTreeBuilder.java:40)
 	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.parseQuery(SPARQLParser.java:195)
 	... 6 more
-"
-39,OK,
-40,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+
+20:34:18.420 |-INFO  in i.u.i.o.a.impl.OntopQueryEngineImpl - Ontop has completed the setup and it is ready for query answering!
+20:34:18.423 |-INFO  in i.u.i.o.r.r.i.OntopVirtualRepository - Ontop virtual repository initialized successfully!
+",5.506,0192c4ddd2cc3ca37e53bcd8966721704708b4aa5ee00c016d97d9dc7c5816f1,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+39,OK,,5.03,c9215f8a7c23f177df1e20ba8ecb33e55894b37f8898fdf2a4323edb9c4248fe,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+40,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-41,ERROR,"top.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+	... 4 common frames omitted
+",6.219,c79ba997c20af2f5a1ccdb0139ddbd80f6b54c8238abfd0b94c63c9da185b4a3,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+41,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
 	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
 	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
-	... 4 more
-"
-42,OK,
-43,OK,
+	... 4 common frames omitted
+",5.767,32251f6d75d2edc8842593e3a42447741024df4914be8ca13232dc578254393c,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+42,OK,,6.791,40ec9202423ada2bd79d88010b009b2ae89dc55a32b04dc5cca2c20f29459712,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+43,OK,,6.046,04d8220bed1bf32a024675261299b901963831108696103c5c246301fa7cfe8e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791

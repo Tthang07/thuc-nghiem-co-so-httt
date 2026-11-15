@@ -1,36 +1,36 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?policyNumber ?agentId
-       (SUM(COALESCE(?lossPaid, 0) + COALESCE(?lossReserved, 0)) AS ?totalLoss)
-       (SUM(COALESCE(?premiumValue, 0)) AS ?totalPremium)
-       ((SUM(COALESCE(?lossPaid, 0) + COALESCE(?lossReserved, 0))) / SUM(COALESCE(?premiumValue, 0)) AS ?lossRatio)
-WHERE {
-  SERVICE <mapped> {
-    ?policy a in:Policy ;
-            in:policyNumber ?policyNumber ;
-            in:soldByAgent ?agent .
-
-    ?agent in:agentId ?agentId .
-
-    ?pcd a in:PolicyCoverageDetail ;
-         in:hasPolicy ?policy ;
-         in:hasPremiumAmount ?premium .
-
-    ?premium in:premiumAmount ?premiumValue .
-
-    OPTIONAL {
-      ?claim a in:Claim ;
-             in:against ?pcd .
-      OPTIONAL {
-        ?claim in:hasLossPayment ?lp .
-        ?lp in:lossPaymentAmount ?lossPaid .
-      }
-      OPTIONAL {
-        ?claim in:hasLossReserve ?lr .
-        ?lr in:lossReserveAmount ?lossReserved .
-      }
-    }
-  }
-}
-GROUP BY ?policyNumber ?agentId
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+       (SUM(COALESCE(?lossPaid, 0) + COALESCE(?lossReserved, 0)) AS ?totalLoss)
+       (SUM(COALESCE(?premiumValue, 0)) AS ?totalPremium)
+       ((SUM(COALESCE(?lossPaid, 0) + COALESCE(?lossReserved, 0))) / SUM(COALESCE(?premiumValue, 0)) AS ?lossRatio)
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+
+    ?agent in:agentId ?agentId .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?premium in:premiumAmount ?premiumValue .
+
+    OPTIONAL {
+      ?claim a in:Claim ;
+             in:against ?pcd .
+      OPTIONAL {
+        ?claim in:hasLossPayment ?lp .
+        ?lp in:lossPaymentAmount ?lossPaid .
+      }
+      OPTIONAL {
+        ?claim in:hasLossReserve ?lr .
+        ?lr in:lossReserveAmount ?lossReserved .
+      }
+    }
+  }
+}
+GROUP BY ?policyNumber ?agentId
 HAVING (SUM(COALESCE(?premiumValue, 0)) > 0)

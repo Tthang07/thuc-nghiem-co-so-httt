@@ -1,0 +1,42 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+       (COALESCE(SUM(?lossPay), 0) + COALESCE(SUM(?lossRes), 0) + COALESCE(SUM(?expPay), 0) + COALESCE(SUM(?expRes), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    ?pcd in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?policy in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+
+    ?policyHolder in:policyHolderId ?policyHolderId .
+
+    ?premium in:premiumAmount ?premiumAmount .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPay .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossRes .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expPay .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expRes .
+    }
+  }
+}
+GROUP BY ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount

@@ -1,11 +1,11 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT DISTINCT ?agent ?policy ?claim ?catastrophe
-WHERE {
-  SERVICE <mapped> {
-    ?policy in:soldByAgent ?agent .
-    ?claim in:against ?policyCoverageDetail ;
-           in:hasCatastrophe ?catastrophe .
-    ?policyCoverageDetail in:hasPolicy ?policy .
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?agent ?policy ?claim ?catastrophe
+WHERE {
+  SERVICE <mapped> {
+    ?policy in:soldByAgent ?agent .
+    ?claim in:against ?policyCoverageDetail ;
+           in:hasCatastrophe ?catastrophe .
+    ?policyCoverageDetail in:hasPolicy ?policy .
+  }
 }

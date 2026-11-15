@@ -1,0 +1,13 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?openDate ?closeDate
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:claimOpenDate ?openDate .
+    OPTIONAL { ?claim in:claimCloseDate ?closeDate . }
+  }
+}
+ORDER BY ?claimNumber

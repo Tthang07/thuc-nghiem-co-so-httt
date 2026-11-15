@@ -1,0 +1,47 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+       (COALESCE(SUM(DISTINCT ?lossPaymentAmt), 0) +
+        COALESCE(SUM(DISTINCT ?lossReserveAmt), 0) +
+        COALESCE(SUM(DISTINCT ?expensePaymentAmt), 0) +
+        COALESCE(SUM(DISTINCT ?expenseReserveAmt), 0) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+    OPTIONAL { ?premium in:premiumAmount ?premiumAmount . }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expensePaymentAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expenseReserveAmt .
+    }
+  }
+}
+GROUP BY ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+ORDER BY ?claimNumber ?policyNumber

@@ -1,0 +1,25 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+       (SUM(?lossPaymentVal + ?lossReserveVal) AS ?totalLossAmount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentVal .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveVal .
+    }
+
+    BIND(COALESCE(xsd:decimal(?lossPaymentVal), 0) AS ?lossPaymentVal)
+    BIND(COALESCE(xsd:decimal(?lossReserveVal), 0) AS ?lossReserveVal)
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

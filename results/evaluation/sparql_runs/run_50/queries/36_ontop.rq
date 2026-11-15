@@ -1,0 +1,6 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expensePaymentAmount
+WHERE {
+  {
+    ?claim a in:Claim

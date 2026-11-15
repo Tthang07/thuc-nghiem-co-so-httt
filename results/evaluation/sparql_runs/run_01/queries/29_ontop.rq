@@ -1,11 +1,11 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?claimNumber ?openDate ?closeDate
-WHERE {
-  {
-    ?claim a in:Claim ;
-           in:claimNumber ?claimNumber .
-    OPTIONAL { ?claim in:claimOpenDate ?openDate . }
-    OPTIONAL { ?claim in:claimCloseDate ?closeDate . }
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?openDate ?closeDate
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+    OPTIONAL { ?claim in:claimOpenDate ?openDate . }
+    OPTIONAL { ?claim in:claimCloseDate ?closeDate . }
+  }
 }

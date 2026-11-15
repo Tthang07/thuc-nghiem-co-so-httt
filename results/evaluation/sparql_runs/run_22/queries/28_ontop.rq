@@ -1,0 +1,12 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent .
+    ?agent in:agentId ?agentId .
+  }
+}
+GROUP BY ?agentId
+ORDER BY ?agentId

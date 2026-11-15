@@ -1,0 +1,41 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber
+       (SUM(?amount) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?cat .
+      ?cat in:catastropheName ?catastropheName .
+    }
+
+    ?pcd in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?amount .
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?amount .
+    }
+    UNION
+    {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?amount .
+    }
+    UNION
+    {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?amount .
+    }
+  }
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber
+ORDER BY ?claimNumber ?catastropheName ?policyNumber

@@ -1,0 +1,58 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (AVG(?claimLoss) AS ?averageLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:against ?coverage .
+
+    ?coverage in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?lpVal) AS ?sumLossPayment)
+      WHERE {
+        ?claim in:hasLossPayment ?lp .
+        ?lp in:lossPaymentAmount ?lpVal .
+      }
+      GROUP BY ?claim
+    }
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?lrVal) AS ?sumLossReserve)
+      WHERE {
+        ?claim in:hasLossReserve ?lr .
+        ?lr in:lossReserveAmount ?lrVal .
+      }
+      GROUP BY ?claim
+    }
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?epVal) AS ?sumExpensePayment)
+      WHERE {
+        ?claim in:hasExpensePayment ?ep .
+        ?ep in:expensePaymentAmount ?epVal .
+      }
+      GROUP BY ?claim
+    }
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?erVal) AS ?sumExpenseReserve)
+      WHERE {
+        ?claim in:hasExpenseReserve ?er .
+        ?er in:expenseReserveAmount ?erVal .
+      }
+      GROUP BY ?claim
+    }
+
+    BIND(
+      COALESCE(?sumLossPayment, 0) +
+      COALESCE(?sumLossReserve, 0) +
+      COALESCE(?sumExpensePayment, 0) +
+      COALESCE(?sumExpenseReserve, 0)
+      AS ?claimLoss
+    )
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

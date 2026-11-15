@@ -1,0 +1,55 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+       (COALESCE(SUM(?lossPaymentVal), 0) AS ?totalLossPayment)
+       (COALESCE(SUM(?lossReserveVal), 0) AS ?totalLossReserve)
+       (COALESCE(SUM(?expensePaymentVal), 0) AS ?totalExpensePayment)
+       (COALESCE(SUM(?expenseReserveVal), 0) AS ?totalExpenseReserve)
+       ((COALESCE(SUM(?lossPaymentVal), 0) +
+         COALESCE(SUM(?lossReserveVal), 0) +
+         COALESCE(SUM(?expensePaymentVal), 0) +
+         COALESCE(SUM(?expenseReserveVal), 0)) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?coverage .
+
+    ?coverage in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+
+    OPTIONAL {
+      ?coverage in:hasPremiumAmount ?premium .
+      ?premium in:premiumAmount ?premiumAmount .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentRaw .
+      BIND(xsd:decimal(?lossPaymentRaw) AS ?lossPaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveRaw .
+      BIND(xsd:decimal(?lossReserveRaw) AS ?lossReserveVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expensePaymentRaw .
+      BIND(xsd:decimal(?expensePaymentRaw) AS ?expensePaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expenseReserveRaw .
+      BIND(xsd:decimal(?expenseReserveRaw) AS ?expenseReserveVal)
+    }
+  }
+}
+GROUP BY ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+ORDER BY ?claimNumber ?policyNumber

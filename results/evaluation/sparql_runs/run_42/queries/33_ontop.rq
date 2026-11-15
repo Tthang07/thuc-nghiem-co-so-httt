@@ -1,0 +1,16 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?agent ?policy ?claim ?catastrophe
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent .
+    
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+    
+    ?claim a in:Claim ;
+           in:against ?coverage ;
+           in:hasCatastrophe ?catastrophe .
+  }
+}

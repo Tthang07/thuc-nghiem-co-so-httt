@@ -1,0 +1,17 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?policy ?policyNumber ?claim ?claimNumber
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?coverageDetail .
+
+    ?coverageDetail a in:PolicyCoverageDetail ;
+                    in:hasPolicy ?policy .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber .
+  }
+}
+ORDER BY ?policyNumber ?claimNumber

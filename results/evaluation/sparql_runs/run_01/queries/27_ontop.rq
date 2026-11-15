@@ -1,15 +1,15 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?policyHolder ?policyHolderId (SUM(?amount) AS ?totalPremiumPaid)
-WHERE {
-  {
-    ?policy in:hasPolicyHolder ?policyHolder .
-    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
-
-    ?coverageDetail in:hasPolicy ?policy ;
-                    in:hasPremiumAmount ?premium .
-
-    ?premium in:premiumAmount ?amount .
-  }
-}
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyHolder ?policyHolderId (SUM(?amount) AS ?totalPremiumPaid)
+WHERE {
+  {
+    ?policy in:hasPolicyHolder ?policyHolder .
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+
+    ?coverageDetail in:hasPolicy ?policy ;
+                    in:hasPremiumAmount ?premium .
+
+    ?premium in:premiumAmount ?amount .
+  }
+}
 GROUP BY ?policyHolder ?policyHolderId

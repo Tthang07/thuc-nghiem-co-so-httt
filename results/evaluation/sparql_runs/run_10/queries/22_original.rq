@@ -1,0 +1,14 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?policyNumber ?premiumAmount
+WHERE {
+  SERVICE <mapped> {
+    ?policyCoverageDetail a in:PolicyCoverageDetail ;
+                          in:hasPolicy ?policy ;
+                          in:hasPremiumAmount ?premium .
+    ?policy in:policyNumber ?policyNumber .
+    ?premium in:premiumAmount ?premiumAmount .
+  }
+}
+ORDER BY ?policyNumber

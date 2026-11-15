@@ -1,0 +1,25 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossPaymentAmount
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent a in:Agent ;
+           in:agentId ?agentId .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy .
+
+    ?claim a in:Claim ;
+           in:against ?pcd ;
+           in:claimNumber ?claimNumber ;
+           in:hasLossPayment ?lossPayment .
+
+    ?lossPayment a in:LossPayment ;
+                 in:lossPaymentAmount ?lossPaymentAmount .
+  }
+}
+ORDER BY ?agentId ?policyNumber ?claimNumber

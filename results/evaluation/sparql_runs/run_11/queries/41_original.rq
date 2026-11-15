@@ -1,0 +1,51 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber
+       (COALESCE(SUM(?lossPaymentVal), 0) +
+        COALESCE(SUM(?lossReserveVal), 0) +
+        COALESCE(SUM(?expensePaymentVal), 0) +
+        COALESCE(SUM(?expenseReserveVal), 0) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?cat .
+      OPTIONAL { ?cat in:catastropheName ?catastropheName }
+    }
+
+    OPTIONAL {
+      ?claim in:against ?pcd .
+      ?pcd in:hasPolicy ?policy .
+      ?policy in:policyNumber ?policyNumber .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lpAmt .
+      BIND(xsd:decimal(?lpAmt) AS ?lossPaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lrAmt .
+      BIND(xsd:decimal(?lrAmt) AS ?lossReserveVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?epAmt .
+      BIND(xsd:decimal(?epAmt) AS ?expensePaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?erAmt .
+      BIND(xsd:decimal(?erAmt) AS ?expenseReserveVal)
+    }
+  }
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber
+ORDER BY ?claimNumber ?catastropheName ?policyNumber

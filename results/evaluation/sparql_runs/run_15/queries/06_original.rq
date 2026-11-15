@@ -1,0 +1,25 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (xsd:decimal(?totalPremium) / xsd:decimal(?policyCount) AS ?averagePolicySize)
+WHERE {
+  {
+    SELECT (SUM(?amt) AS ?totalPremium)
+    WHERE {
+      SERVICE <mapped> {
+        ?pcd a in:PolicyCoverageDetail ;
+             in:hasPolicy ?policy ;
+             in:hasPremiumAmount ?premium .
+        ?premium in:premiumAmount ?amt .
+      }
+    }
+  }
+  {
+    SELECT (COUNT(DISTINCT ?policy) AS ?policyCount)
+    WHERE {
+      SERVICE <mapped> {
+        ?pcd a in:PolicyCoverageDetail ;
+             in:hasPolicy ?policy .
+      }
+    }
+  }
+}

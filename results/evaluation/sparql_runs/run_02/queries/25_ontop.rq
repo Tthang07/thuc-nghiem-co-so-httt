@@ -1,8 +1,8 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT (COUNT(DISTINCT ?policy) AS ?policyCount)
-WHERE {
-  {
-    ?policy a in:Policy .
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT (COUNT(DISTINCT ?policy) AS ?policyCount)
+WHERE {
+  {
+    ?policy a in:Policy .
+  }
 }

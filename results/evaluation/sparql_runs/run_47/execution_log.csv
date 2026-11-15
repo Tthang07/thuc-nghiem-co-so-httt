@@ -1,0 +1,143 @@
+﻿ID,Status,Error,Time (s),Query SHA256,Mapping SHA256,Ontology SHA256,Properties SHA256
+1,OK,,5.666,f044fb6083664b579d9b37583bd66a10e2e75dbc5f98692c6d6b31ce8c7d1a0f,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+2,OK,,5.222,9a84fe92b11fb3d55afff2a7a9657264c007a4b3f0a40912dd7a1515bdd351b8,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+3,OK,,5.273,27254aae8a55715ee3a59554cd84dd6d55e0f889536e496d3e83f2737f381ac5,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+4,OK,,6.969,3fafecdfcde048e5b0be3b7b533071afcce9d075d0d20781569033c5c485fae7,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+5,OK,,5.01,44e42a41b5e2d7afe9054a46688cd7928aca8ee7f44abb65cc0d52919dc65349,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+6,OK,,5.026,99b800a9437e20338512b05e3e5fa5685d6ca7839abd2ec9c7533077d45ff526,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+7,OK,,6.512,e045a8efb251c5e29412a7c7aac8eea5be5f4c630769a48b701e5565d0496caf,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+8,OK,,4.988,a0304ae017db9ff72c5bff0b535b153c11a61c78781478530eccc22c49acfa02,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+9,OK,,5.187,123a2766f1463567b6efe4b445dd082018df955eceaf804e3b56c17bc827f8d2,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+10,OK,,4.917,dfad46533ad044c6e0cd61af004e1df4aca6a52766db43d8509eec5e98bf970e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+11,OK,,6.067,c0d4310cd4396259d99d9eef3ece8e94f7ca7decfaea75578b769f67d4db1178,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+12,OK,,6.825,97c20f1e0c22385f047ef2ce3387440fa50d04e298d77105afc34e7bafe42533,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+13,ERROR,".java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:1205)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTGraphPatternGroup.jjtAccept(ASTGraphPatternGroup.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SimpleNode.childrenAccept(SimpleNode.java:102)
+	at org.eclipse.rdf4j.query.parser.sparql.AbstractASTVisitor.visit(AbstractASTVisitor.java:880)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTWhereClause.jjtAccept(ASTWhereClause.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:359)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTSelectQuery.jjtAccept(ASTSelectQuery.java:27)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:350)
+	at org.eclipse.rdf4j.query.parser.sparql.TupleExprBuilder.visit(TupleExprBuilder.java:239)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.ASTQueryContainer.jjtAccept(ASTQueryContainer.java:29)
+	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.buildQueryModel(SPARQLParser.java:246)
+	... 7 more
+
+21:47:56.965 |-INFO  in i.u.i.o.a.impl.OntopQueryEngineImpl - Ontop has completed the setup and it is ready for query answering!
+21:47:56.967 |-INFO  in i.u.i.o.r.r.i.OntopVirtualRepository - Ontop virtual repository initialized successfully!
+",5.218,e142a9e9b9742e3cb641cf28aa0e979ab3423958432eb4d13c19782a68096023,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+14,OK,,6.45,d51a78a2f15495cf388ff4ff9c4adeecace606c2c0a630d554b7db85155604aa,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+15,OK,,5.846,7551e85751cbc015538bd0b982ae91bae4938522e50fea062f9349fa51871b1a,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+16,OK,,6.607,80668ad9357afbfe2c0a9a3a98340bab9ee7d392d22df987453530088be14c11,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+17,OK,,6.107,d74ff3954e50655addfc473178793c37a4057daf4f9dae6c1d1bd2c6af593578,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+18,OK,,7.021,4e9f24cb7e1bc6e0fbdb9463837bbb54579e330846505eb0a5560cb628a0f7c9,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+19,OK,,8.655,fd9822738ff11e146904570f5b952333ca35bccf081e01f73741508b6fbc232e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+20,OK,,6.464,aa4b8e4d8f1f702d2e4e43192dad2eb36bc6eff96044cdfa01f89462cf356ade,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+21,OK,,7.558,fbd5a55e88ec7217fa92b722747671e3182f0ce30e4ea499878e836837ebcf40,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+22,OK,,6.026,75d45305838c092b78c068058dd898e9423899212e7fc4d268c11d9e1c2cc979,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+23,OK,,6.017,ef68e1e2cfa294c1bcbc9c4e66bd2d0db2d986c8bd37ef9e2920b3b68b00d65a,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+24,OK,,5.994,a1438f0798e3ef7c6e5290aa14830160c7625c2a7f25b86eabaab922d79e9883,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+25,OK,,5.579,8990652f1661cdb6c72dd484f7b407eeadd272926de2f69c84267f6568a3a98e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+26,ERROR,".query.parser.sparql.ast.SyntaxTreeBuilder.RelationalExpression(SyntaxTreeBuilder.java:4196)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.ValueLogical(SyntaxTreeBuilder.java:4192)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.ConditionalAndExpression(SyntaxTreeBuilder.java:4157)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.ConditionalOrExpression(SyntaxTreeBuilder.java:4122)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.Expression(SyntaxTreeBuilder.java:4111)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.ProjectionElem(SyntaxTreeBuilder.java:538)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.Select(SyntaxTreeBuilder.java:479)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.SelectQuery(SyntaxTreeBuilder.java:355)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.Query(SyntaxTreeBuilder.java:328)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.QueryContainer(SyntaxTreeBuilder.java:206)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.parseQuery(SyntaxTreeBuilder.java:40)
+	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.parseQuery(SPARQLParser.java:195)
+	... 6 more
+
+21:49:20.112 |-INFO  in i.u.i.o.a.impl.OntopQueryEngineImpl - Ontop has completed the setup and it is ready for query answering!
+21:49:20.116 |-INFO  in i.u.i.o.r.r.i.OntopVirtualRepository - Ontop virtual repository initialized successfully!
+",4.802,c31ce70fb736cc5a26b0fd1612d99df089ebe0067dff286a4e3340b1d9862e49,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+27,OK,,5.273,4bcf96c665e7a58976f929ea557d167c560630cab12e9e47391f35c409dd338b,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+28,OK,,5.014,ae3fd7a9d0015d01f302075d8b0f84b40ccbe38c1c92452e805424e23648ad18,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+29,OK,,5.021,f2626c6556c2aba6cb7eed8634d751fc42d1a72099129e8081a53ae827b8da81,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+30,ERROR,"hereSerializer$DefaultRelationVisitingSerializer.serializeProjection(DefaultSelectFromWhereSerializer.java:158)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:86)
+	at it.unibz.inf.ontop.generation.serializer.impl.DefaultSelectFromWhereSerializer$DefaultRelationVisitingSerializer.visit(DefaultSelectFromWhereSerializer.java:61)
+	at it.unibz.inf.ontop.generation.algebra.impl.SelectFromWhereWithModifiersImpl.acceptVisitor(SelectFromWhereWithModifiersImpl.java:99)
+	at it.unibz.inf.ontop.generation.serializer.impl.DuckDBSelectFromWhereSerializer.serialize(DuckDBSelectFromWhereSerializer.java:34)
+	at it.unibz.inf.ontop.generation.DefaultSQLIQTree2NativeNodeGenerator.generate(DefaultSQLIQTree2NativeNodeGenerator.java:52)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:112)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:87)
+	at it.unibz.inf.ontop.answering.reformulation.generation.impl.SQLGeneratorImpl.generateSourceQuery(SQLGeneratorImpl.java:82)
+	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.generateExecutableQuery(QuestQueryProcessor.java:158)
+	at it.unibz.inf.ontop.answering.reformulation.impl.QuestQueryProcessor.reformulateIntoNativeQuery(QuestQueryProcessor.java:122)
+	... 4 common frames omitted
+",5.254,e5826b664d5f05b2166f339b5e34cc86b0f88bb20d7ba1ea29aea4354483d666,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+31,OK,,4.99,bb65843f945f0a4ec765a63aaaaf60ee132a181fc6519eb537baf63f796d63a8,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+32,OK,,5.007,b3bb238ffa7c9d356486bfb42b80b0d35830198fb50f06a5acd2cc5086b3eac5,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+33,OK,,5.132,d0f9a08a60619a32656b87652aa5751908515ba733a2242f3995666437b363f1,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+34,OK,,4.985,80d49e98e68ac646ba698de6b398882632ba40bef9d5d6c637089b3706913fc2,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+35,OK,,5.005,2b00986ca72e89af3c5550ffbf3f1874abb2c79a15e727dc66415a643e27b723,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+36,OK,,5.019,d5720a5cd04c50434890f09f012ca7ce9ae02da4dfb22a5e74c98443426d0f61,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+37,OK,,5.218,352ab67801711697877802de0f31f719bcf99cf120ed46fd3daeaa0f5dcedf64,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+38,ERROR,"uuid"" ...
+    <IRI> ...
+    ""if"" ...
+    ""regex"" ...
+    ""bindings"" ...
+    ""values"" ...
+    ""strlen"" ...
+    ""substr"" ...
+    ""strStarts"" ...
+    ""strEnds"" ...
+    ""strBefore"" ...
+    ""strAfter"" ...
+    ""replace"" ...
+    ""ucase"" ...
+    ""lcase"" ...
+    ""concat"" ...
+    ""contains"" ...
+    ""encode_for_URI"" ...
+    ""rand"" ...
+    ""abs"" ...
+    ""ceil"" ...
+    ""floor"" ...
+    ""round"" ...
+    ""now"" ...
+    ""year"" ...
+    ""month"" ...
+    ""day"" ...
+    ""hours"" ...
+    ""minutes"" ...
+    ""seconds"" ...
+    ""timezone"" ...
+    ""tz"" ...
+    ""md5"" ...
+    ""sha1"" ...
+    ""sha224"" ...
+    ""sha256"" ...
+    ""sha384"" ...
+    ""sha512"" ...
+    <Q_IRI_REF> ...
+    <PNAME_NS> ...
+    <PNAME_LN> ...
+    <VAR1> ...
+    <VAR2> ...
+    
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.generateParseException(SyntaxTreeBuilder.java:9571)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.jj_consume_token(SyntaxTreeBuilder.java:9402)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.QueryContainer(SyntaxTreeBuilder.java:207)
+	at org.eclipse.rdf4j.query.parser.sparql.ast.SyntaxTreeBuilder.parseQuery(SyntaxTreeBuilder.java:40)
+	at org.eclipse.rdf4j.query.parser.sparql.SPARQLParser.parseQuery(SPARQLParser.java:195)
+	... 6 more
+
+21:50:20.920 |-INFO  in i.u.i.o.a.impl.OntopQueryEngineImpl - Ontop has completed the setup and it is ready for query answering!
+21:50:20.924 |-INFO  in i.u.i.o.r.r.i.OntopVirtualRepository - Ontop virtual repository initialized successfully!
+",4.808,b851f01cc0e72d24dbfb4c662ef16cc7ef8aa3c80a249b9e240187e1a2c22899,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+39,OK,,5.053,c9215f8a7c23f177df1e20ba8ecb33e55894b37f8898fdf2a4323edb9c4248fe,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+40,OK,,6.67,e258f634cbaeda69a071e76fb4cd3ed254db2c7d33d5bf27a4c9307508c9e601,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+41,OK,,8.187,47cf06a236c31926161d08eaa7ff187320848e2eb2434bb80ef94ca340da3545,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+42,OK,,6.979,40ec9202423ada2bd79d88010b009b2ae89dc55a32b04dc5cca2c20f29459712,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791
+43,OK,,7.267,04d8220bed1bf32a024675261299b901963831108696103c5c246301fa7cfe8e,60b01d08394017d75a14a46bd0e9873f9fa50125861bebf1a7b87ae1ed903e7d,485ecb19d00cc2906270ecee4b75dc9cbf55c7c653fdef74b0d80ba6de2c2acd,045b4f7ce8f6941364be66f2a87064484c9a1f6b70ea410f6e90d4c7dd525791

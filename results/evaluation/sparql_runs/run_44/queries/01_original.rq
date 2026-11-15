@@ -1,0 +1,28 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?agentId
+       (SUM(DISTINCT ?lossAmt) AS ?totalLossPayments)
+       (SUM(DISTINCT ?premiumAmt) AS ?totalPremium)
+       ((SUM(DISTINCT ?lossAmt) / SUM(DISTINCT ?premiumAmt)) AS ?lossRatio)
+WHERE {
+  SERVICE <mapped> {
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+    
+    ?policy in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+    
+    ?agent in:agentId ?agentId .
+    
+    ?premium in:premiumAmount ?premiumAmt .
+    
+    ?claim a in:Claim ;
+           in:against ?pcd ;
+           in:hasLossPayment ?lossPayment .
+    
+    ?lossPayment in:lossPaymentAmount ?lossAmt .
+  }
+}
+GROUP BY ?policyNumber ?agentId
+ORDER BY ?policyNumber ?agentId

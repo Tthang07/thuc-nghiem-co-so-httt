@@ -1,0 +1,38 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (AVG(?loss) AS ?averageLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:against ?pcd .
+
+    ?pcd in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentAmountRaw .
+    }
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveAmountRaw .
+    }
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expensePaymentAmountRaw .
+    }
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expenseReserveAmountRaw .
+    }
+
+    BIND(COALESCE(xsd:decimal(?lossPaymentAmountRaw), 0) AS ?lossPaymentAmount)
+    BIND(COALESCE(xsd:decimal(?lossReserveAmountRaw), 0) AS ?lossReserveAmount)
+    BIND(COALESCE(xsd:decimal(?expensePaymentAmountRaw), 0) AS ?expensePaymentAmount)
+    BIND(COALESCE(xsd:decimal(?expenseReserveAmountRaw), 0) AS ?expenseReserveAmount)
+
+    BIND((?lossPaymentAmount + ?lossReserveAmount + ?expensePaymentAmount + ?expenseReserveAmount) AS ?loss)
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

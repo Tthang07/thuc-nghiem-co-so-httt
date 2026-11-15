@@ -1,0 +1,35 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+       (COALESCE(SUM(DISTINCT ?lpAmt), 0) +
+        COALESCE(SUM(DISTINCT ?lrAmt), 0) +
+        COALESCE(SUM(DISTINCT ?epAmt), 0) +
+        COALESCE(SUM(DISTINCT ?erAmt), 0) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lpAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lrAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?epAmt .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?erAmt .
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

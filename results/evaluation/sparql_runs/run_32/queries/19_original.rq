@@ -1,0 +1,39 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber
+       (SUM(?lossComponent) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:against ?coverage .
+
+    ?coverage in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+    UNION
+    {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?amt .
+      BIND(xsd:decimal(?amt) AS ?lossComponent)
+    }
+  }
+}
+GROUP BY ?policyNumber
+ORDER BY ?policyNumber

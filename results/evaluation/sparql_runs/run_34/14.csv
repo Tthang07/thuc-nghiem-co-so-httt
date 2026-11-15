@@ -1,0 +1,7 @@
+policyHolder,policyHolderId,policy,policyNumber,premium,premiumAmount
+https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1,1,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1,31003000336,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-4,16000.00
+https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1,1,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1,31003000336,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-6,17000.00
+https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1,1,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-2,31003000337,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-12,12000.00
+https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1,1,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1,31003000336,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-2,15000.00
+https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1,1,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1,31003000336,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-8,18000.00
+https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-Holder-1,1,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Policy-1,31003000336,https://myinsurancecompany.linked.data.world/d/omg-pc-database/Premium-10,20000.00

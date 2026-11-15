@@ -1,0 +1,15 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?averagePolicySize
+WHERE {
+  {
+    SELECT ((SUM(?premiumValue) / COUNT(DISTINCT ?policy)) AS ?averagePolicySize)
+    WHERE {
+      SERVICE <mapped> {
+        ?coverage in:hasPolicy ?policy ;
+                  in:hasPremiumAmount ?premium .
+        ?premium in:premiumAmount ?premiumValue .
+      }
+    }
+  }
+}

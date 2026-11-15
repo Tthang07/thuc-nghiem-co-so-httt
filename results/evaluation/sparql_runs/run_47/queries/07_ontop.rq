@@ -1,0 +1,50 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+       (SUM(?lpAmt + ?lrAmt + ?epAmt + ?erAmt) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder .
+
+    ?policyHolder a in:PolicyHolder ;
+                  in:policyHolderId ?policyHolderId .
+
+    ?premium a in:Premium ;
+             in:premiumAmount ?premiumAmount .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lpVal .
+    }
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lrVal .
+    }
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?epVal .
+    }
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?erVal .
+    }
+
+    BIND(COALESCE(xsd:decimal(?lpVal), 0) AS ?lpAmt)
+    BIND(COALESCE(xsd:decimal(?lrVal), 0) AS ?lrAmt)
+    BIND(COALESCE(xsd:decimal(?epVal), 0) AS ?epAmt)
+    BIND(COALESCE(xsd:decimal(?erVal), 0) AS ?erAmt)
+  }
+}
+GROUP BY ?claimNumber ?policyNumber ?policyHolderId ?premiumAmount
+ORDER BY ?claimNumber

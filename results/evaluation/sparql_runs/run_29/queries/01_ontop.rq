@@ -1,0 +1,44 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?agentId
+       (COALESCE(SUM(DISTINCT xsd:decimal(?lossPaymentAmt)), 0) AS ?totalLossPayments)
+       (COALESCE(SUM(DISTINCT xsd:decimal(?expensePaymentAmt)), 0) AS ?totalExpensePayments)
+       (COALESCE(SUM(DISTINCT xsd:decimal(?premiumAmt)), 0) AS ?totalPremium)
+       ((COALESCE(SUM(DISTINCT xsd:decimal(?lossPaymentAmt)), 0) + COALESCE(SUM(DISTINCT xsd:decimal(?expensePaymentAmt)), 0)) / COALESCE(SUM(DISTINCT xsd:decimal(?premiumAmt)), 1) AS ?lossRatio)
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+
+    ?agent a in:Agent ;
+           in:agentId ?agentId .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premiumNode .
+
+    ?premiumNode a in:Premium ;
+                 in:premiumAmount ?premiumAmt .
+
+    OPTIONAL {
+      ?claim a in:Claim ;
+             in:against ?pcd .
+
+      OPTIONAL {
+        ?claim in:hasLossPayment ?lossPayment .
+        ?lossPayment a in:LossPayment ;
+                     in:lossPaymentAmount ?lossPaymentAmt .
+      }
+
+      OPTIONAL {
+        ?claim in:hasExpensePayment ?expensePayment .
+        ?expensePayment a in:ExpensePayment ;
+                        in:expensePaymentAmount ?expensePaymentAmt .
+      }
+    }
+  }
+}
+GROUP BY ?policyNumber ?agentId
+ORDER BY ?policyNumber ?agentId

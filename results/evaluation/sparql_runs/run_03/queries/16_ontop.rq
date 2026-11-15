@@ -1,20 +1,20 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?agentId ?policyNumber ?claimNumber ?lossReserveAmount
-WHERE {
-  {
-    ?policy in:soldByAgent ?agent ;
-            in:policyNumber ?policyNumber .
-
-    ?agent in:agentId ?agentId .
-
-    ?coverage in:hasPolicy ?policy .
-
-    ?claim in:against ?coverage ;
-           in:claimNumber ?claimNumber ;
-           in:hasLossReserve ?lossReserve .
-
-    ?lossReserve in:lossReserveAmount ?lossReserveAmount .
-  }
-}
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policyNumber ?claimNumber ?lossReserveAmount
+WHERE {
+  {
+    ?policy in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent in:agentId ?agentId .
+
+    ?coverage in:hasPolicy ?policy .
+
+    ?claim in:against ?coverage ;
+           in:claimNumber ?claimNumber ;
+           in:hasLossReserve ?lossReserve .
+
+    ?lossReserve in:lossReserveAmount ?lossReserveAmount .
+  }
+}
 ORDER BY ?agentId ?policyNumber ?claimNumber

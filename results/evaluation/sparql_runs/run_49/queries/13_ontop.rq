@@ -1,0 +1,21 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber (SUM(?amount) AS ?totalLossAmount)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?amount .
+    }
+    UNION
+    {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?amount .
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

@@ -1,0 +1,47 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber ?catastropheName ?policyNumber
+       (SUM(?lossPaymentVal + ?lossReserveVal + ?expensePaymentVal + ?expenseReserveVal) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?cat .
+      OPTIONAL { ?cat in:catastropheName ?catastropheName }
+    }
+
+    ?pcd in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lpAmtRaw .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lrAmtRaw .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?epAmtRaw .
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?erAmtRaw .
+    }
+
+    BIND(COALESCE(xsd:decimal(?lpAmtRaw), 0) AS ?lossPaymentVal)
+    BIND(COALESCE(xsd:decimal(?lrAmtRaw), 0) AS ?lossReserveVal)
+    BIND(COALESCE(xsd:decimal(?epAmtRaw), 0) AS ?expensePaymentVal)
+    BIND(COALESCE(xsd:decimal(?erAmtRaw), 0) AS ?expenseReserveVal)
+  }
+}
+GROUP BY ?claimNumber ?catastropheName ?policyNumber
+ORDER BY ?claimNumber ?catastropheName ?policyNumber

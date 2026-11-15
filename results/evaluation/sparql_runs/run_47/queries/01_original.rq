@@ -1,0 +1,39 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?policyNumber ?agentId
+       (SUM(?premiumVal) AS ?totalPremium)
+       (SUM(?lossPaymentVal) AS ?totalLossPayment)
+       ((SUM(?lossPaymentVal) / SUM(?premiumVal)) AS ?lossRatio)
+WHERE {
+  SERVICE <mapped> {
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+    
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:soldByAgent ?agent .
+    
+    ?agent a in:Agent ;
+           in:agentId ?agentId .
+    
+    ?premium a in:Premium ;
+             in:premiumAmount ?premiumAmt .
+    
+    OPTIONAL {
+      ?claim a in:Claim ;
+             in:against ?pcd ;
+             in:hasLossPayment ?lossPayment .
+      
+      ?lossPayment a in:LossPayment ;
+                   in:lossPaymentAmount ?lossPaymentAmt .
+    }
+    
+    BIND(xsd:decimal(?premiumAmt) AS ?premiumVal)
+    BIND(COALESCE(xsd:decimal(?lossPaymentAmt), 0) AS ?lossPaymentVal)
+  }
+}
+GROUP BY ?policyNumber ?agentId
+HAVING (SUM(?premiumVal) > 0)
+ORDER BY ?policyNumber ?agentId

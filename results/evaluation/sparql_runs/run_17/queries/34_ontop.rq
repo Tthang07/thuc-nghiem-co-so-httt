@@ -1,0 +1,10 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policy ?policyHolderId
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+    ?policyHolder in:policyHolderId ?policyHolderId .
+  }
+}

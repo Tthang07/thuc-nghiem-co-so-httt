@@ -1,0 +1,16 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?coverageEffectiveDate ?coverageExpirationDate ?premiumAmount
+WHERE {
+  {
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy ;
+              in:hasPremiumAmount ?premium ;
+              in:policyCoverageEffectiveDate ?coverageEffectiveDate ;
+              in:policyCoverageExpirationDate ?coverageExpirationDate .
+
+    ?policy in:policyNumber ?policyNumber .
+    ?premium in:premiumAmount ?premiumAmount .
+  }
+}
+ORDER BY ?policyNumber ?coverageEffectiveDate ?coverageExpirationDate

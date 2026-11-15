@@ -1,0 +1,20 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?policyHolder ?policyHolderId ?policy ?policyNumber ?premium ?premiumAmount ?premiumAmountMonthly ?premiumPeriod
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+    OPTIONAL { ?policy in:policyNumber ?policyNumber . }
+
+    ?coverageDetail a in:PolicyCoverageDetail ;
+                    in:hasPolicy ?policy ;
+                    in:hasPremiumAmount ?premium .
+
+    OPTIONAL { ?premium in:premiumAmount ?premiumAmount . }
+    OPTIONAL { ?premium in:premiumAmountMonthly ?premiumAmountMonthly . }
+    OPTIONAL { ?premium in:premiumPeriod ?premiumPeriod . }
+  }
+}

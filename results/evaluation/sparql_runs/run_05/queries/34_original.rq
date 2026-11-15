@@ -1,11 +1,11 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?policy ?policyNumber ?policyHolder ?policyHolderId
-WHERE {
-  SERVICE <mapped> {
-    ?policy a in:Policy ;
-            in:hasPolicyHolder ?policyHolder .
-    OPTIONAL { ?policy in:policyNumber ?policyNumber . }
-    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
-  }
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policy ?policyNumber ?policyHolder ?policyHolderId
+WHERE {
+  SERVICE <mapped> {
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+    OPTIONAL { ?policy in:policyNumber ?policyNumber . }
+    OPTIONAL { ?policyHolder in:policyHolderId ?policyHolderId . }
+  }
 }

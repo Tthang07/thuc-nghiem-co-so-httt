@@ -1,0 +1,40 @@
+PREFIX in: <http://data.world/schema/insurance/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?claimNumber
+       ((COALESCE(SUM(?lossPaymentVal), 0) +
+         COALESCE(SUM(?lossReserveVal), 0) +
+         COALESCE(SUM(?expensePaymentVal), 0) +
+         COALESCE(SUM(?expenseReserveVal), 0)) AS ?totalLoss)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      ?lp in:lossPaymentAmount ?lossPaymentRaw .
+      BIND(xsd:decimal(?lossPaymentRaw) AS ?lossPaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      ?lr in:lossReserveAmount ?lossReserveRaw .
+      BIND(xsd:decimal(?lossReserveRaw) AS ?lossReserveVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      ?ep in:expensePaymentAmount ?expensePaymentRaw .
+      BIND(xsd:decimal(?expensePaymentRaw) AS ?expensePaymentVal)
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      ?er in:expenseReserveAmount ?expenseReserveRaw .
+      BIND(xsd:decimal(?expenseReserveRaw) AS ?expenseReserveVal)
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

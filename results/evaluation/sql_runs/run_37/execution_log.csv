@@ -1,0 +1,52 @@
+ID,Status,Error,Time
+1,OK,,0.009
+2,OK,,0.003
+3,OK,,0.015
+4,OK,,0.013
+5,OK,,0.007
+6,OK,,0.005
+7,OK,,0.017
+8,OK,,0.005
+9,ERROR,"Binder Error: Referenced table ""pt"" not found!
+Candidate tables: ""p"", ""pcd"", ""prm""
+
+LINE 36:         MAX(COALESCE(pt.Full_Name, pt.Organization_Name, CAST(apr.Party_Identifier...
+                              ^^^^^^^^^^^^",0.007
+10,OK,,0.006
+11,OK,,0.006
+12,OK,,0.004
+13,OK,,0.004
+14,OK,,0.004
+15,OK,,0.007
+16,OK,,0.007
+17,OK,,0.003
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Avera...
+                         ^^^",0.001
+19,OK,,0.01
+20,OK,,0.004
+21,OK,,0.008
+22,OK,,0.004
+23,OK,,0.005
+24,OK,,0.007
+25,OK,,0.002
+26,OK,,0.013
+27,OK,,0.006
+28,OK,,0.005
+29,OK,,0.004
+30,OK,,0.007
+31,OK,,0.006
+32,OK,,0.008
+33,OK,,0.006
+34,OK,,0.003
+35,OK,,0.006
+36,OK,,0.005
+37,OK,,0.017
+38,OK,,0.009
+39,OK,,0.005
+40,OK,,0.017
+41,OK,,0.012
+42,OK,,0.003
+43,OK,,0.005

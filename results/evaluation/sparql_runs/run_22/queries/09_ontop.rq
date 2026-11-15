@@ -1,0 +1,53 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmountPaid ?catastrophe ?agent
+       ?lossPaymentAmount ?lossReserveAmount ?expensePaymentAmount ?expenseReserveAmount
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:against ?pcd .
+      ?pcd in:hasPolicy ?policy .
+      OPTIONAL { ?policy in:policyNumber ?policyNumber . }
+      OPTIONAL { 
+        ?policy in:hasPolicyHolder ?ph .
+        OPTIONAL { ?ph in:policyHolderId ?policyHolder . }
+      }
+      OPTIONAL {
+        ?pcd in:hasPremiumAmount ?premium .
+        OPTIONAL { ?premium in:premiumAmount ?premiumAmountPaid . }
+      }
+      OPTIONAL {
+        ?policy in:soldByAgent ?ag .
+        OPTIONAL { ?ag in:agentId ?agent . }
+      }
+    }
+
+    OPTIONAL {
+      ?claim in:hasCatastrophe ?cat .
+      OPTIONAL { ?cat in:catastropheName ?catastrophe . }
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lp .
+      OPTIONAL { ?lp in:lossPaymentAmount ?lossPaymentAmount . }
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lr .
+      OPTIONAL { ?lr in:lossReserveAmount ?lossReserveAmount . }
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpensePayment ?ep .
+      OPTIONAL { ?ep in:expensePaymentAmount ?expensePaymentAmount . }
+    }
+
+    OPTIONAL {
+      ?claim in:hasExpenseReserve ?er .
+      OPTIONAL { ?er in:expenseReserveAmount ?expenseReserveAmount . }
+    }
+  }
+}

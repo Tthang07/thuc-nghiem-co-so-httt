@@ -1,0 +1,13 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?premiumAmount
+WHERE {
+  {
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy ;
+         in:hasPremiumAmount ?premium .
+    ?policy in:policyNumber ?policyNumber .
+    ?premium in:premiumAmount ?premiumAmount .
+  }
+}
+ORDER BY ?policyNumber

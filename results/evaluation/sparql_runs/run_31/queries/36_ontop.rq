@@ -1,0 +1,12 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?expensePaymentAmount
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:hasExpensePayment ?expensePayment .
+    ?expensePayment in:expensePaymentAmount ?expensePaymentAmount .
+  }
+}
+ORDER BY ?claimNumber

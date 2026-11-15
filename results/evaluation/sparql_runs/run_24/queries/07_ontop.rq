@@ -1,0 +1,59 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber ?policyNumber ?policyHolder ?premiumAmount
+       ((COALESCE(?sumLossPayment, 0) + COALESCE(?sumLossReserve, 0) + COALESCE(?sumExpensePayment, 0) + COALESCE(?sumExpenseReserve, 0)) AS ?totalLoss)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber ;
+           in:against ?pcd .
+
+    ?pcd a in:PolicyCoverageDetail ;
+         in:hasPolicy ?policy .
+
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:hasPolicyHolder ?policyHolder ;
+            in:hasPremiumAmount ?premium .
+
+    ?premium a in:Premium ;
+             in:premiumAmount ?premiumAmount .
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?lpa) AS ?sumLossPayment)
+      WHERE {
+        ?claim in:hasLossPayment ?lp .
+        ?lp in:lossPaymentAmount ?lpa .
+      }
+      GROUP BY ?claim
+    }
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?lra) AS ?sumLossReserve)
+      WHERE {
+        ?claim in:hasLossReserve ?lr .
+        ?lr in:lossReserveAmount ?lra .
+      }
+      GROUP BY ?claim
+    }
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?epa) AS ?sumExpensePayment)
+      WHERE {
+        ?claim in:hasExpensePayment ?ep .
+        ?ep in:expensePaymentAmount ?epa .
+      }
+      GROUP BY ?claim
+    }
+
+    OPTIONAL {
+      SELECT ?claim (SUM(?era) AS ?sumExpenseReserve)
+      WHERE {
+        ?claim in:hasExpenseReserve ?er .
+        ?er in:expenseReserveAmount ?era .
+      }
+      GROUP BY ?claim
+    }
+  }
+}
+ORDER BY ?claimNumber ?policyNumber ?policyHolder

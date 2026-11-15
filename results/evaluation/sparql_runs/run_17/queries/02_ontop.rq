@@ -1,0 +1,12 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber ?effectiveDate ?expirationDate
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:policyNumber ?policyNumber ;
+            in:policyEffectiveDate ?effectiveDate ;
+            in:policyExpirationDate ?expirationDate .
+  }
+}
+ORDER BY ?policyNumber

@@ -1,0 +1,24 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?claimNumber
+       (SUM(?lossPaymentVal) AS ?totalLossPaymentAmount)
+       (SUM(?lossReserveVal) AS ?totalLossReserveAmount)
+       ((SUM(?lossPaymentVal) + SUM(?lossReserveVal)) AS ?totalLossAmount)
+WHERE {
+  SERVICE <mapped> {
+    ?claim a in:Claim ;
+           in:claimNumber ?claimNumber .
+
+    OPTIONAL {
+      ?claim in:hasLossPayment ?lossPayment .
+      ?lossPayment in:lossPaymentAmount ?lossPaymentVal .
+    }
+
+    OPTIONAL {
+      ?claim in:hasLossReserve ?lossReserve .
+      ?lossReserve in:lossReserveAmount ?lossReserveVal .
+    }
+  }
+}
+GROUP BY ?claimNumber
+ORDER BY ?claimNumber

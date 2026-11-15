@@ -1,0 +1,58 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?agentId ?policy ?policyNumber
+       (COALESCE(?sumLossPayment, 0) + COALESCE(?sumLossReserve, 0) + COALESCE(?sumExpensePayment, 0) + COALESCE(?sumExpenseReserve, 0) AS ?totalLoss)
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:soldByAgent ?agent ;
+            in:policyNumber ?policyNumber .
+
+    ?agent in:agentId ?agentId .
+
+    {
+      SELECT ?policy (SUM(?lpAmt) AS ?sumLossPayment)
+      WHERE {
+        ?pcd in:hasPolicy ?policy .
+        ?claim in:against ?pcd ;
+               in:hasLossPayment ?lp .
+        ?lp in:lossPaymentAmount ?lpAmt .
+      }
+      GROUP BY ?policy
+    }
+
+    OPTIONAL {
+      SELECT ?policy (SUM(?lrAmt) AS ?sumLossReserve)
+      WHERE {
+        ?pcd in:hasPolicy ?policy .
+        ?claim in:against ?pcd ;
+               in:hasLossReserve ?lr .
+        ?lr in:lossReserveAmount ?lrAmt .
+      }
+      GROUP BY ?policy
+    }
+
+    OPTIONAL {
+      SELECT ?policy (SUM(?epAmt) AS ?sumExpensePayment)
+      WHERE {
+        ?pcd in:hasPolicy ?policy .
+        ?claim in:against ?pcd ;
+               in:hasExpensePayment ?ep .
+        ?ep in:expensePaymentAmount ?epAmt .
+      }
+      GROUP BY ?policy
+    }
+
+    OPTIONAL {
+      SELECT ?policy (SUM(?erAmt) AS ?sumExpenseReserve)
+      WHERE {
+        ?pcd in:hasPolicy ?policy .
+        ?claim in:against ?pcd ;
+               in:hasExpenseReserve ?er .
+        ?er in:expenseReserveAmount ?erAmt .
+      }
+      GROUP BY ?policy
+    }
+  }
+}
+ORDER BY ?agentId ?policyNumber

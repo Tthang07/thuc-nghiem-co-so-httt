@@ -1,0 +1,16 @@
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT DISTINCT ?policyHolder ?claim ?catastrophe
+WHERE {
+  {
+    ?policy a in:Policy ;
+            in:hasPolicyHolder ?policyHolder .
+
+    ?coverage a in:PolicyCoverageDetail ;
+              in:hasPolicy ?policy .
+
+    ?claim a in:Claim ;
+           in:against ?coverage ;
+           in:hasCatastrophe ?catastrophe .
+  }
+}

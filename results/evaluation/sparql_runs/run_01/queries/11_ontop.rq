@@ -1,13 +1,13 @@
-PREFIX in: <http://data.world/schema/insurance/>
-
-SELECT ?policyNumber (COUNT(DISTINCT ?claim) AS ?claimCount)
-WHERE {
-  {
-    ?claim a in:Claim ;
-           in:against ?coverage .
-    ?coverage in:hasPolicy ?policy .
-    ?policy in:policyNumber ?policyNumber .
-  }
-}
-GROUP BY ?policyNumber
+PREFIX in: <http://data.world/schema/insurance/>
+
+SELECT ?policyNumber (COUNT(DISTINCT ?claim) AS ?claimCount)
+WHERE {
+  {
+    ?claim a in:Claim ;
+           in:against ?coverage .
+    ?coverage in:hasPolicy ?policy .
+    ?policy in:policyNumber ?policyNumber .
+  }
+}
+GROUP BY ?policyNumber
 ORDER BY ?policyNumber

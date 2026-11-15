@@ -1,0 +1,57 @@
+ID,Status,Error,Time
+1,ERROR,"Binder Error: Table ""pr"" does not have a column named ""Policy_Amount""
+
+Candidate bindings: : ""Policy_Amount_Identifier""
+
+LINE 5:         WHEN COALESCE(SUM(pr.Policy_Amount), 0) = 0 THEN NULL
+                                  ^^^^^^^^^^^^^^^^",0.002
+2,OK,,0.003
+3,OK,,0.015
+4,OK,,0.013
+5,OK,,0.006
+6,OK,,0.005
+7,OK,,0.016
+8,OK,,0.004
+9,ERROR,"Binder Error: Referenced table ""pt"" not found!
+Candidate tables: ""p"", ""pcd"", ""prem""
+
+LINE 45:         MAX(pt.Name) AS party_name
+                     ^^^^^^^",0.004
+10,OK,,0.006
+11,OK,,0.006
+12,OK,,0.005
+13,OK,,0.005
+14,OK,,0.005
+15,OK,,0.007
+16,OK,,0.007
+17,OK,,0.003
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(CAST(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) AS decimal(18...
+                              ^^^",0.001
+19,OK,,0.008
+20,OK,,0.004
+21,OK,,0.007
+22,OK,,0.005
+23,OK,,0.005
+24,OK,,0.007
+25,OK,,0.002
+26,OK,,0.013
+27,OK,,0.004
+28,OK,,0.004
+29,OK,,0.002
+30,OK,,0.005
+31,OK,,0.004
+32,OK,,0.007
+33,OK,,0.007
+34,OK,,0.003
+35,OK,,0.005
+36,OK,,0.005
+37,OK,,0.011
+38,OK,,0.009
+39,OK,,0.005
+40,OK,,0.013
+41,OK,,0.011
+42,OK,,0.002
+43,OK,,0.005

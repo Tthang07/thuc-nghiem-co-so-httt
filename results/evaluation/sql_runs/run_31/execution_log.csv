@@ -1,0 +1,52 @@
+ID,Status,Error,Time
+1,OK,,0.01
+2,OK,,0.003
+3,OK,,0.015
+4,OK,,0.012
+5,OK,,0.006
+6,OK,,0.005
+7,OK,,0.014
+8,OK,,0.004
+9,ERROR,"Binder Error: Referenced column ""First_Name"" not found in FROM clause!
+Candidate bindings: ""Party_Name"", ""Policy_Number"", ""Expiration_Date"", ""Begin_Date"", ""Catastrophe_Name""
+
+LINE 53:                     COALESCE(First_Name + ' ', '') +
+                                      ^^^^^^^^^^",0.004
+10,OK,,0.006
+11,OK,,0.005
+12,OK,,0.004
+13,OK,,0.005
+14,OK,,0.005
+15,OK,,0.008
+16,OK,,0.006
+17,OK,,0.003
+18,ERROR,"Binder Error: Referenced column ""day"" not found in FROM clause!
+Candidate bindings: ""Company_Claim_Number"", ""Company_Subclaim_Number""
+
+LINE 3:     AVG(DATEDIFF(day, c.Claim_Open_Date, c.Claim_Close_Date) * 1.0) AS Avera...
+                         ^^^",0.001
+19,OK,,0.008
+20,OK,,0.005
+21,OK,,0.007
+22,OK,,0.004
+23,OK,,0.005
+24,OK,,0.006
+25,OK,,0.002
+26,OK,,0.013
+27,OK,,0.004
+28,OK,,0.003
+29,OK,,0.003
+30,OK,,0.005
+31,OK,,0.003
+32,OK,,0.007
+33,OK,,0.006
+34,OK,,0.003
+35,OK,,0.005
+36,OK,,0.004
+37,OK,,0.014
+38,OK,,0.01
+39,OK,,0.004
+40,OK,,0.012
+41,OK,,0.008
+42,OK,,0.012
+43,OK,,0.005
